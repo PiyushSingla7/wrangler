@@ -12,50 +12,107 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  */
+
+/**
+ * Represents a time duration value parsed from a directive argument.
+ * This class provides methods to retrieve the value in nanoseconds and its original string representation.
+ */
 package io.cdap.wrangler.api.parser;
 
 import com.google.gson.JsonObject;
 
 public class TimeDuration implements Token {
+    private static final long NANOSECONDS_IN_MILLISECOND = 1_000_000L;
+    private static final long NANOSECONDS_IN_SECOND = 1_000_000_000L;
+    private static final long SECONDS_IN_MINUTE = 60L;
+    private static final long MINUTES_IN_HOUR = 60L;
+    private static final long HOURS_IN_DAY = 24L;
+
+    /**
+     * The original string representation of the time duration value.
+     */
     private final String originalValue;
+
+    /**
+     * The time duration value converted to nanoseconds.
+     */
     private final long nanoseconds;
 
-    public TimeDuration(String value) {
+    /**
+     * Constructs a new TimeDuration object by parsing the input string.
+     *
+     * @param value The input string representing the time duration (e.g., "5ms", "30s").
+     */
+    public TimeDuration(final String value) {
         this.originalValue = value;
         this.nanoseconds = parseNanoseconds(value);
     }
 
-    private long parseNanoseconds(String value) {
-        // Parse the input string (e.g., "5ms", "30s") and convert to nanoseconds
+    /**
+     * Parses the input string and converts it to nanoseconds.
+     *
+     * @param value The input string representing the time duration (e.g., "5ms", "30s").
+     * @return The time duration value converted to nanoseconds.
+     * @throws IllegalArgumentException If the unit in the input string is unsupported.
+     */
+    private long parseNanoseconds(final String value) {
+        // Parse the numeric part of the input string.
         double number = Double.parseDouble(value.replaceAll("[^0-9.]", ""));
+        // Extract the unit part of the input string.
         String unit = value.replaceAll("[0-9.]", "").toLowerCase();
 
         switch (unit) {
-            case "ms": return (long) (number * 1_000_000);
-            case "s": return (long) (number * 1_000_000_000);
-            case "m": return (long) (number * 60 * 1_000_000_000);
-            case "h": return (long) (number * 60 * 60 * 1_000_000_000);
-            case "d": return (long) (number * 24 * 60 * 60 * 1_000_000_000);
-            default: throw new IllegalArgumentException("Unsupported unit: " + unit);
+            case "ms":
+                return (long) (number * NANOSECONDS_IN_MILLISECOND);
+            case "s":
+                return (long) (number * NANOSECONDS_IN_SECOND);
+            case "m":
+                return (long) (number * SECONDS_IN_MINUTE * NANOSECONDS_IN_SECOND);
+            case "h":
+                return (long) (number * MINUTES_IN_HOUR * SECONDS_IN_MINUTE * NANOSECONDS_IN_SECOND);
+            case "d":
+                return (long) (number * HOURS_IN_DAY * MINUTES_IN_HOUR * SECONDS_IN_MINUTE * NANOSECONDS_IN_SECOND);
+            default:
+                throw new IllegalArgumentException("Unsupported unit: " + unit);
         }
     }
 
-    public long getNanoseconds() {
+    /**
+     * Returns the time duration value in nanoseconds.
+     *
+     * @return The time duration value in nanoseconds.
+     */
+    public final long getNanoseconds() {
         return nanoseconds;
     }
 
+    /**
+     * Returns the original string representation of the time duration value.
+     *
+     * @return The original string representation of the time duration value.
+     */
     @Override
-    public Object value() {
-        return originalValue; // Return the original string representation
+    public final Object value() {
+        return originalValue;
     }
 
+    /**
+     * Returns the type of this token.
+     *
+     * @return The token type, which is {@link TokenType#TIME_DURATION}.
+     */
     @Override
-    public TokenType type() {
+    public final TokenType type() {
         return TokenType.TIME_DURATION;
     }
 
+    /**
+     * Converts this TimeDuration object to a JSON representation.
+     *
+     * @return A JSON object containing the type, original value, and nanoseconds.
+     */
     @Override
-    public JsonObject toJson() {
+    public final JsonObject toJson() {
         JsonObject json = new JsonObject();
         json.addProperty("type", "TIME_DURATION");
         json.addProperty("value", originalValue);
