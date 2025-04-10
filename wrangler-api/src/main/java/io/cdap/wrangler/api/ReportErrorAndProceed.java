@@ -14,36 +14,52 @@
  * the License.
  */
 
-package io.cdap.wrangler.api;
+ package io.cdap.wrangler.api;
 
-/**
- * Exception throw when the record needs to emitted to error collector.
- * This class is similar to {@link ErrorRowException}, but, with a difference
- * that it reports error and continues processing.
- */
-public class ReportErrorAndProceed extends Exception {
-  // Message as to why the record errored.
-  private String message;
-
-  // Code associated with the error message.
-  private int code;
-
-  public ReportErrorAndProceed(String message, int code) {
-    this.message = message;
-    this.code = code;
-  }
-
-  /**
-   * @return Message as why the record errored.
-   */
-  public String getMessage() {
-    return message;
-  }
-
-  /**
-   * @return code related to the message.
-   */
-  public int getCode() {
-    return code;
-  }
-}
+ /**
+  * Exception thrown when the record needs to be emitted to the error collector.
+  * This class is similar to {@link ErrorRowException}, but with the difference
+  * that it reports the error and continues processing.
+  */
+ public final class ReportErrorAndProceed extends Exception {
+ 
+     /**
+      * Message indicating why the record errored.
+      */
+     private final String message;
+ 
+     /**
+      * Code associated with the error message.
+      */
+     private final int code;
+ 
+     /**
+      * Constructs a new {@link ReportErrorAndProceed} exception with the specified message and code.
+      *
+      * @param message The message describing why the record errored.
+      * @param code The code associated with the error message.
+      */
+     public ReportErrorAndProceed(final String message, final int code) {
+         super(message);
+         this.message = message;
+         this.code = code;
+     }
+ 
+     /**
+      * Returns the message describing why the record errored.
+      *
+      * @return The error message.
+      */
+     public final String getMessage() {
+         return message;
+     }
+ 
+     /**
+      * Returns the code associated with the error message.
+      *
+      * @return The error code.
+      */
+     public final int getCode() {
+         return code;
+     }
+ }

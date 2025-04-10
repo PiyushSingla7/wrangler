@@ -652,33 +652,39 @@ public class Wrangler extends Transform<StructuredRecord, StructuredRecord> impl
    */
   private void emitDirectiveMetrics(List<Directive> directives, Metrics metrics) {
     for (Directive directive : directives) {
-      // skip emitting metrics if the directive is not system directive
       try {
-        if (registry.get(Contexts.SYSTEM, directive.define().getDirectiveName()) == null) {
+        // Use class name as the directive name
+        String directiveName = directive.getClass().getSimpleName();
+  
+        if (registry.get(Contexts.SYSTEM, directiveName) == null) {
           continue;
         }
+  
+        List<EntityCountMetric> countMetrics = new ArrayList<>();
+  
+        // Add usage metric for the directive
+        countMetrics.add(getDirectiveUsageMetric(directiveName));
+  
+        // Add custom metrics if available
+        if (directive.getCountMetrics() != null) {
+          countMetrics.addAll(directive.getCountMetrics());
+        }
+  
+        for (EntityCountMetric countMetric : countMetrics) {
+          Metrics child = metrics.child(getEntityMetricTags(countMetric));
+          child.countLong(countMetric.getName(), countMetric.getCount());
+        }
       } catch (Exception e) {
-        String errorReason = String.format("Unable to load directive %s",
-            directive.define().getDirectiveName());
-        throw WranglerErrorUtil.getProgramFailureExceptionDetailsFromChain(e, errorReason, null,
-            ErrorType.USER);
-      }
-      List<EntityCountMetric> countMetrics = new ArrayList<>();
-
-      // add usage metric
-      countMetrics.add(getDirectiveUsageMetric(directive.define().getDirectiveName()));
-
-      // add custom directive metrics
-      if (directive.getCountMetrics() != null) {
-        countMetrics.addAll(directive.getCountMetrics());
-      }
-
-      for (EntityCountMetric countMetric : countMetrics) {
-        Metrics child = metrics.child(getEntityMetricTags(countMetric));
-        child.countLong(countMetric.getName(), countMetric.getCount());
+        String directiveName = directive.getClass().getSimpleName(); // fallback name
+        String errorReason = String.format("Unable to load directive %s", directiveName);
+        throw WranglerErrorUtil.getProgramFailureExceptionDetailsFromChain(
+            e, errorReason, null, ErrorType.USER
+        );
       }
     }
   }
+  
+  
 
   private EntityCountMetric getDirectiveUsageMetric(String directiveName) {
     return new EntityCountMetric(

@@ -17,11 +17,11 @@
  package io.cdap.wrangler.api.parser;
 
  import java.io.Serializable;
- 
+
  import io.cdap.wrangler.api.annotations.PublicEvolving;
  
  /**
-  * The TokenType class provides the enumerated types for different types of tokens
+  * The <code>TokenType</code> class provides the enumerated types for different types of tokens
   * that are supported by the grammar.
   *
   * Each of the enumerated types specified in this class also has an associated object
@@ -44,126 +44,126 @@
  @PublicEvolving
  public enum TokenType implements Serializable {
  
-   /**
-    * Represents the enumerated type for the object {@code DirectiveName} type.
-    * This type is associated with the token that is recognized as a directive name
-    * within the recipe.
-    */
-   DIRECTIVE_NAME,
+     /**
+      * Represents the enumerated type for the object {@code DirectiveName} type.
+      * This type is associated with the token that is recognized as a directive name
+      * within the recipe.
+      */
+     DIRECTIVE_NAME,
  
-   /**
-    * Represents the enumerated type for the object of {@code ColumnName} type.
-    * This type is associated with the token that represents the column as defined
-    * by the grammar as :<column-name>.
-    */
-   COLUMN_NAME,
+     /**
+      * Represents the enumerated type for the object of {@code ColumnName} type.
+      * This type is associated with the token that represents the column as defined
+      * by the grammar as :<column-name>.
+      */
+     COLUMN_NAME,
  
-   /**
-    * Represents the enumerated type for the object of {@code Text} type.
-    * This type is associated with the token that is either enclosed within a single quote(')
-    * or a double quote (") as a string.
-    */
-   TEXT,
+     /**
+      * Represents the enumerated type for the object of {@code Text} type.
+      * This type is associated with the token that is either enclosed within a single quote(')
+      * or a double quote (") as a string.
+      */
+     TEXT,
  
-   /**
-    * Represents the enumerated type for the object of {@code Numeric} type.
-    * This type is associated with the token that is either an integer or real number.
-    */
-   NUMERIC,
+     /**
+      * Represents the enumerated type for the object of {@code Numeric} type.
+      * This type is associated with the token that is either an integer or real number.
+      */
+     NUMERIC,
  
-   /**
-    * Represents the enumerated type for the object of {@code Bool} type.
-    * This type is associated with the token that either represents the string 'true' or 'false'.
-    */
-   BOOLEAN,
+     /**
+      * Represents the enumerated type for the object of {@code Bool} type.
+      * This type is associated with the token that either represents the string 'true' or 'false'.
+      */
+     BOOLEAN,
  
-   /**
-    * Represents the enumerated type for the object of type {@code ColumnNameList} type.
-    * This type is associated with the rule that is a collection of {@code ColumnName} values
-    * separated by a comma(,). For example:
-    * <pre>
-    *   ColumnName[,ColumnName]*
-    * </pre>
-    */
-   COLUMN_NAME_LIST,
+     /**
+      * Represents the enumerated type for the object of type {@code ColumnNameList} type.
+      * This type is associated with the rule that is a collection of {@code ColumnName} values
+      * separated by a comma(,). For example:
+      * <pre>
+      *   ColumnName[,ColumnName]*
+      * </pre>
+      */
+     COLUMN_NAME_LIST,
  
-   /**
-    * Represents the enumerated type for the object of type {@code TextList} type.
-    * This type is associated with the comma-separated text where each text is enclosed
-    * within a single quote (') or double quote (") and each text is separated by a comma(,).
-    * For example:
-    * <pre>
-    *   Text[,Text]*
-    * </pre>
-    */
-   TEXT_LIST,
+     /**
+      * Represents the enumerated type for the object of type {@code TextList} type.
+      * This type is associated with the comma-separated text where each text is enclosed
+      * within a single quote (') or double quote (") and each text is separated by a comma(,).
+      * For example:
+      * <pre>
+      *   Text[,Text]*
+      * </pre>
+      */
+     TEXT_LIST,
  
-   /**
-    * Represents the enumerated type for the object of type {@code NumericList} type.
-    * This type is associated with the collection of {@code Numeric} values separated by
-    * a comma(,). For example:
-    * <pre>
-    *   Numeric[,Numeric]*
-    * </pre>
-    */
-   NUMERIC_LIST,
+     /**
+      * Represents the enumerated type for the object of type {@code NumericList} type.
+      * This type is associated with the collection of {@code Numeric} values separated by
+      * a comma(,). For example:
+      * <pre>
+      *   Numeric[,Numeric]*
+      * </pre>
+      */
+     NUMERIC_LIST,
  
-   /**
-    * Represents the enumerated type for the object of type {@code BoolList} type.
-    * This type is associated with the collection of {@code Boolean} values separated by
-    * a comma(,). For example:
-    * <pre>
-    *   Boolean[,Boolean]*
-    * </pre>
-    */
-   BOOLEAN_LIST,
+     /**
+      * Represents the enumerated type for the object of type {@code BoolList} type.
+      * This type is associated with the collection of {@code Boolean} values separated by
+      * a comma(,). For example:
+      * <pre>
+      *   Boolean[,Boolean]*
+      * </pre>
+      */
+     BOOLEAN_LIST,
  
-   /**
-    * Represents the enumerated type for the object of type {@code Expression} type.
-    * This type is associated with a code block that either represents a condition or
-    * an expression. For example:
-    * <pre>
-    *   exp:{ <expression || condition> }
-    * </pre>
-    */
-   EXPRESSION,
+     /**
+      * Represents the enumerated type for the object of type {@code Expression} type.
+      * This type is associated with a code block that either represents a condition or
+      * an expression. For example:
+      * <pre>
+      *   exp:{ <expression || condition> }
+      * </pre>
+      */
+     EXPRESSION,
  
-   /**
-    * Represents the enumerated type for the object of type {@code Properties} type.
-    * This type is associated with a collection of key-value pairs all separated
-    * by a comma(,). For example:
-    * <pre>
-    *   prop:{ <key>=<value>[,<key>=<value>]*}
-    * </pre>
-    */
-   PROPERTIES,
+     /**
+      * Represents the enumerated type for the object of type {@code Properties} type.
+      * This type is associated with a collection of key-value pairs all separated
+      * by a comma(,). For example:
+      * <pre>
+      *   prop:{ <key>=<value>[,<key>=<value>]*}
+      * </pre>
+      */
+     PROPERTIES,
  
-   /**
-    * Represents the enumerated type for the object of type {@code Ranges} type.
-    * This type is associated with a collection of ranges represented in the form shown
-    * below:
-    * <pre>
-    *   <start>:<end>=value[,<start>:<end>=value]*
-    * </pre>
-    */
-   RANGES,
+     /**
+      * Represents the enumerated type for the object of type {@code Ranges} type.
+      * This type is associated with a collection of ranges represented in the form shown
+      * below:
+      * <pre>
+      *   <start>:<end>=value[,<start>:<end>=value]*
+      * </pre>
+      */
+     RANGES,
  
-   /**
-    * Represents the enumerated type for the object of type {@code Identifier} type.
-    * This type is associated with a string with restrictions on the characters
-    * that can be present in the string.
-    */
-   IDENTIFIER,
+     /**
+      * Represents the enumerated type for the object of type {@code Identifier} type.
+      * This type is associated with a string with restrictions on the characters
+      * that can be present in the string.
+      */
+     IDENTIFIER,
  
-   /**
-    * Represents the enumerated type for the object of type {@code ByteSize} type.
-    * This type is associated with byte size values such as "10KB", "1.5MB".
-    */
-   BYTE_SIZE,
+     /**
+      * Represents the enumerated type for the object of type {@code ByteSize} type.
+      * This type is associated with byte size values such as "10KB", "1.5MB".
+      */
+     BYTE_SIZE,
  
-   /**
-    * Represents the enumerated type for the object of type {@code TimeDuration} type.
-    * This type is associated with time duration values such as "5ms", "30s".
-    */
-   TIME_DURATION;
+     /**
+      * Represents the enumerated type for the object of type {@code TimeDuration} type.
+      * This type is associated with time duration values such as "5ms", "30s".
+      */
+     TIME_DURATION;
  }

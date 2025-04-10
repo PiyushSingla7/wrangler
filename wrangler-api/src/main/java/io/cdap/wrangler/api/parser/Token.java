@@ -23,7 +23,7 @@
  import io.cdap.wrangler.api.annotations.PublicEvolving;
  
  /**
-  * The Token class represents the object that contains the value and type of
+  * The <code>Token</code> class represents the object that contains the value and type of
   * the token as parsed by the parser of the grammar defined for the recipe.
   *
   * <p>This class provides methods for retrieving the wrapped value of the token parsed,
@@ -39,7 +39,7 @@
       * Returns the {@code value} of the object wrapped by the implementation
       * of this interface.
       *
-      * @return the {@code value} wrapped by the implementation of this interface.
+      * @return The {@code value} wrapped by the implementation of this interface.
       */
      Object value();
  
@@ -47,7 +47,7 @@
       * Returns the {@code TokenType} of the object represented by the implementation
       * of this interface.
       *
-      * @return the {@code TokenType} of the implementation object.
+      * @return The {@code TokenType} of the implementation object.
       */
      TokenType type();
  
@@ -55,7 +55,7 @@
       * The class implementing this interface will return the {@code JsonElement}
       * instance including the values of the object.
       *
-      * @return the {@code JsonElement} object containing members of the implementing class.
+      * @return The {@code JsonElement} object containing members of the implementing class.
       */
      JsonElement toJson();
  }
