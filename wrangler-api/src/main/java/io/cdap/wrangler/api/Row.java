@@ -20,7 +20,7 @@
  import java.util.ArrayList;
  import java.util.List;
  import java.util.Objects;
-
+ 
  import io.cdap.wrangler.api.annotations.PublicEvolving;
  
  /**
@@ -53,7 +53,7 @@
       *
       * @param row The row to be copied to 'this' object.
       */
-     public Row(final Row row) {
+     public Row(Row row) {
          this.columns = new ArrayList<>(row.columns);
          this.values = new ArrayList<>(row.values);
      }
@@ -63,7 +63,7 @@
       *
       * @param columns The list of columns to set in the row.
       */
-     public Row(final List<String> columns) {
+     public Row(List<String> columns) {
          this.columns = new ArrayList<>(columns);
          this.values = new ArrayList<>(columns.size());
      }
@@ -74,7 +74,7 @@
       * @param name The name of the column to be added to the row.
       * @param value The value for the column defined above.
       */
-     public Row(final String name, final Object value) {
+     public Row(String name, Object value) {
          this.columns = new ArrayList<>(1);
          this.values = new ArrayList<>(1);
          this.columns.add(name);
@@ -87,7 +87,7 @@
       * @param idx The index to retrieve the name of the column.
       * @return The name of the column.
       */
-     public final String getColumn(final int idx) {
+     public String getColumn(int idx) {
          return columns.get(idx);
      }
  
@@ -97,7 +97,7 @@
       * @param idx The index at which the new name should be set.
       * @param name The name of the column to be set at the specified index.
       */
-     public final void setColumn(final int idx, final String name) {
+     public void setColumn(int idx, String name) {
          columns.set(idx, name);
      }
  
@@ -107,7 +107,7 @@
       * @param idx The index from where the value should be retrieved.
       * @return The value at the specified index.
       */
-     public final Object getValue(final int idx) {
+     public Object getValue(int idx) {
          return values.get(idx);
      }
  
@@ -117,9 +117,9 @@
       * @param col The name of the column for which the value is retrieved.
       * @return The value associated with the column, or null if the column is not found.
       */
-     public final Object getValue(final String col) {
+     public Object getValue(String col) {
          if (col != null && !col.isEmpty()) {
-             final int idx = find(col);
+             int idx = find(col);
              if (idx != -1) {
                  return values.get(idx);
              }
@@ -134,7 +134,7 @@
       * @param value The value to be updated at the specified index.
       * @return This {@link Row} instance for method chaining.
       */
-     public final Row setValue(final int idx, final Object value) {
+     public Row setValue(int idx, Object value) {
          values.set(idx, value);
          return this;
      }
@@ -146,7 +146,7 @@
       * @param value The value to be added to the row.
       * @return This {@link Row} instance for method chaining.
       */
-     public final Row add(final String name, final Object value) {
+     public Row add(String name, Object value) {
          columns.add(name);
          values.add(value);
          return this;
@@ -158,7 +158,7 @@
       * @param idx The index for which the value and column are removed.
       * @return This {@link Row} instance for method chaining.
       */
-     public final Row remove(final int idx) {
+     public Row remove(int idx) {
          columns.remove(idx);
          values.remove(idx);
          return this;
@@ -170,7 +170,7 @@
       * @param col The column name to be searched within the row.
       * @return -1 if not present, else the index at which the column is found.
       */
-     public final int find(final String col) {
+     public int find(String col) {
          return find(col, 0);
      }
  
@@ -182,9 +182,9 @@
       * @param firstIdx The first index to check.
       * @return -1 if not present, else the index at which the column is found.
       */
-     public final int find(final String col, final int firstIdx) {
+     public int find(String col, int firstIdx) {
          for (int i = firstIdx, columnsSize = columns.size(); i < columnsSize; i++) {
-             final String name = columns.get(i);
+             String name = columns.get(i);
              if (col.equalsIgnoreCase(name)) {
                  return i;
              }
@@ -198,7 +198,7 @@
       * @return The width of the row.
       */
      @Deprecated
-     public final int length() {
+     public int length() {
          return columns.size();
      }
  
@@ -207,7 +207,7 @@
       *
       * @return The width of the row.
       */
-     public final int width() {
+     public int width() {
          return columns.size();
      }
  
@@ -216,10 +216,10 @@
       *
       * @return A list of pairs containing column names and their corresponding values.
       */
-     public final List<Pair<String, Object>> getFields() {
-         final List<Pair<String, Object>> v = new ArrayList<>();
+     public List<Pair<String, Object>> getFields() {
+         List<Pair<String, Object>> v = new ArrayList<>();
          int i = 0;
-         for (final String column : columns) {
+         for (String column : columns) {
              v.add(new Pair<>(column, values.get(i)));
              ++i;
          }
@@ -232,8 +232,8 @@
       * @param name The name of the field to be either set or added to the record.
       * @param value The value to be added.
       */
-     public final void addOrSet(final String name, final Object value) {
-         final int idx = find(name);
+     public void addOrSet(String name, Object value) {
+         int idx = find(name);
          if (idx != -1) {
              setValue(idx, value);
          } else {
@@ -248,8 +248,8 @@
       * @param name The name of the field to be either set or added to the record.
       * @param value The value to be added.
       */
-     public final void addOrSetAtIndex(final int index, final String name, final Object value) {
-         final int idx = find(name);
+     public void addOrSetAtIndex(int index, String name, Object value) {
+         int idx = find(name);
          if (idx != -1) {
              setValue(idx, value);
          } else {
@@ -261,7 +261,7 @@
      }
  
      @Override
-     public final boolean equals(final Object o) {
+     public boolean equals(Object o) {
          if (this == o) {
              return true;
          }
@@ -269,12 +269,12 @@
              return false;
          }
  
-         final Row row = (Row) o;
+         Row row = (Row) o;
          return Objects.equals(columns, row.columns) && Objects.equals(values, row.values);
      }
  
      @Override
-     public final int hashCode() {
+     public int hashCode() {
          return Objects.hash(columns, values);
      }
  }

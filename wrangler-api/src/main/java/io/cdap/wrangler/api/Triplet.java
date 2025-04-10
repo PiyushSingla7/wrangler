@@ -21,7 +21,7 @@
  /**
   * A triplet consisting of three elements - first, second, and third.
   *
-  * This class provides immutable access to elements of the triplet.
+  * <p>This class provides immutable access to elements of the triplet.</p>
   *
   * @param <F> The type of the first element.
   * @param <S> The type of the second element.
@@ -51,7 +51,7 @@
       * @param second The second element of the triplet.
       * @param third The third element of the triplet.
       */
-     public Triplet(final F first, final S second, final T third) {
+     public Triplet(F first, S second, T third) {
          this.first = first;
          this.second = second;
          this.third = third;
@@ -62,7 +62,7 @@
       *
       * @return The first element of the triplet.
       */
-     public final F getFirst() {
+     public F getFirst() {
          return first;
      }
  
@@ -71,7 +71,7 @@
       *
       * @return The second element of the triplet.
       */
-     public final S getSecond() {
+     public S getSecond() {
          return second;
      }
  
@@ -80,7 +80,8 @@
       *
       * @return The third element of the triplet.
       */
-     public final T getThird() {
+     public T getThird() {
          return third;
      }
- }
+}
+// Add this newline at the end of file

@@ -46,10 +46,10 @@
       * @param directiveIndex The index of the directive in the recipe that caused the error.
       */
      public RecipeException(
-             final String message,
-             final Throwable throwable,
-             final int rowIndex,
-             final int directiveIndex
+             String message,
+             Throwable throwable,
+             int rowIndex,
+             int directiveIndex
      ) {
          super(message, throwable);
          this.rowIndex = rowIndex;
@@ -65,9 +65,9 @@
       * @param directiveIndex The index of the directive in the recipe that caused the error.
       */
      public RecipeException(
-             final String message,
-             final Throwable throwable,
-             final int directiveIndex
+             String message,
+             Throwable throwable,
+             int directiveIndex
      ) {
          this(message, throwable, UNKNOWN_INDEX, directiveIndex);
      }
@@ -79,7 +79,7 @@
       * @param message The detail message describing the exception.
       * @param throwable The cause of the exception.
       */
-     public RecipeException(final String message, final Throwable throwable) {
+     public RecipeException(String message, Throwable throwable) {
          this(message, throwable, UNKNOWN_INDEX, UNKNOWN_INDEX);
      }
  
@@ -88,7 +88,7 @@
       *
       * @return The index of the row, or {@code UNKNOWN_INDEX} if not applicable.
       */
-     public final int getRowIndex() {
+     public int getRowIndex() {
          return rowIndex;
      }
  
@@ -97,7 +97,7 @@
       *
       * @return The index of the directive, or {@code UNKNOWN_INDEX} if not applicable.
       */
-     public final int getDirectiveIndex() {
+     public int getDirectiveIndex() {
          return directiveIndex;
      }
  }
