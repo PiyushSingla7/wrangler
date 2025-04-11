@@ -2,14 +2,13 @@
 
 The FILTER-ROW-IF-MATCHED directive filters records that match a pattern for a column.
 
-
 ## Syntax
+
 ```
 filter-row-if-matched <column> <regex>
 ```
 
 The `<regex>` is a valid regular expression that is evaluated on the column value for every record.
-
 
 ## Usage Notes
 
@@ -19,10 +18,10 @@ is passed as-is to the input of the next directive.
 
 If the regex is `null`, the value is compared against all the `null` as well as JSON null values.
 
-
 ## Examples
 
 Using this record as an example:
+
 ```
 {
   "id": 1,
@@ -35,15 +34,19 @@ Using this record as an example:
 ```
 
 Applying this directive:
+
 ```
 filter-row-if-matched country !~ US
 ```
+
 would result in filtering out records for individuals that are not in the US (where
 `country` does not match "US").
 
 Applying this directive:
+
 ```
 filter-row-if-matched (country !~ US && hrlywage > 12)
 ```
+
 would result in filtering out records for individuals that are not in the US (where
 `country` does not match "US") and whose hourly wage (`hrlywage`) is greater than 12.

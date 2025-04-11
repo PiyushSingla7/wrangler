@@ -28,18 +28,19 @@ import java.util.List;
  * Utility methods for Stores
  */
 public class Stores {
-  /**
-   * Constructs a list of {@link Field}s that map table column names to values
-   * @param namespaceField table column name for storing namespace name
-   * @param generationField table column name for storing namespace generation
-   * @param namespace {@link NamespaceSummary} object that contains namespace metadata
-   * @return list of {@link Field} objects
-   */
-  public static Collection<Field<?>> getNamespaceKeys(
-    String namespaceField, String generationField, NamespaceSummary namespace) {
-    List<Field<?>> keys = new ArrayList<>();
-    keys.add(Fields.stringField(namespaceField, namespace.getName()));
-    keys.add(Fields.longField(generationField, namespace.getGeneration()));
-    return keys;
-  }
+    /**
+     * Constructs a list of {@link Field}s that map table column names to values
+     *
+     * @param namespaceField  table column name for storing namespace name
+     * @param generationField table column name for storing namespace generation
+     * @param namespace       {@link NamespaceSummary} object that contains namespace metadata
+     * @return list of {@link Field} objects
+     */
+    public static Collection<Field<?>> getNamespaceKeys(
+            String namespaceField, String generationField, NamespaceSummary namespace) {
+        List<Field<?>> keys = new ArrayList<>();
+        keys.add(Fields.stringField(namespaceField, namespace.getName()));
+        keys.add(Fields.longField(generationField, namespace.getGeneration()));
+        return keys;
+    }
 }

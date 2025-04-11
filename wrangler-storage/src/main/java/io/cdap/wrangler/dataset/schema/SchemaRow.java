@@ -23,89 +23,89 @@ import javax.annotation.Nullable;
  */
 public class SchemaRow {
 
-  private final SchemaDescriptor descriptor;
-  private final long created;
-  private final long updated;
-  private final long autoVersion;
-  private final Long currentVersion;
-
-  private SchemaRow(SchemaDescriptor descriptor, long created, long updated, long autoVersion,
-                    @Nullable Long currentVersion) {
-    this.descriptor = descriptor;
-    this.created = created;
-    this.updated = updated;
-    this.autoVersion = autoVersion;
-    this.currentVersion = currentVersion;
-  }
-
-  public SchemaDescriptor getDescriptor() {
-    return descriptor;
-  }
-
-  public long getCreated() {
-    return created;
-  }
-
-  public long getUpdated() {
-    return updated;
-  }
-
-  public long getAutoVersion() {
-    return autoVersion;
-  }
-
-  @Nullable
-  public Long getCurrentVersion() {
-    return currentVersion;
-  }
-
-  static Builder builder(SchemaRow existing) {
-    return new Builder(existing.getDescriptor())
-      .setUpdated(existing.getUpdated())
-      .setAutoVersion(existing.getAutoVersion())
-      .setCurrentVersion(existing.getCurrentVersion());
-  }
-
-  static Builder builder(SchemaDescriptor descriptor) {
-    return new Builder(descriptor);
-  }
-
-  /**
-   * Builds a SchemaRow.
-   */
-  public static class Builder {
     private final SchemaDescriptor descriptor;
-    private long created;
-    private long updated;
-    private long autoVersion;
-    private Long currentVersion;
+    private final long created;
+    private final long updated;
+    private final long autoVersion;
+    private final Long currentVersion;
 
-    public Builder(SchemaDescriptor descriptor) {
-      this.descriptor = descriptor;
+    private SchemaRow(SchemaDescriptor descriptor, long created, long updated, long autoVersion,
+                      @Nullable Long currentVersion) {
+        this.descriptor = descriptor;
+        this.created = created;
+        this.updated = updated;
+        this.autoVersion = autoVersion;
+        this.currentVersion = currentVersion;
     }
 
-    public Builder setCreated(long created) {
-      this.created = created;
-      return this;
+    public SchemaDescriptor getDescriptor() {
+        return descriptor;
     }
 
-    public Builder setUpdated(long updated) {
-      this.updated = updated;
-      return this;
+    public long getCreated() {
+        return created;
     }
 
-    public Builder setAutoVersion(long autoVersion) {
-      this.autoVersion = autoVersion;
-      return this;
+    public long getUpdated() {
+        return updated;
     }
 
-    public Builder setCurrentVersion(Long currentVersion) {
-      this.currentVersion = currentVersion;
-      return this;
+    public long getAutoVersion() {
+        return autoVersion;
     }
 
-    public SchemaRow build() {
-      return new SchemaRow(descriptor, created, updated, autoVersion, currentVersion);
+    @Nullable
+    public Long getCurrentVersion() {
+        return currentVersion;
     }
-  }
+
+    static Builder builder(SchemaRow existing) {
+        return new Builder(existing.getDescriptor())
+                .setUpdated(existing.getUpdated())
+                .setAutoVersion(existing.getAutoVersion())
+                .setCurrentVersion(existing.getCurrentVersion());
+    }
+
+    static Builder builder(SchemaDescriptor descriptor) {
+        return new Builder(descriptor);
+    }
+
+    /**
+     * Builds a SchemaRow.
+     */
+    public static class Builder {
+        private final SchemaDescriptor descriptor;
+        private long created;
+        private long updated;
+        private long autoVersion;
+        private Long currentVersion;
+
+        public Builder(SchemaDescriptor descriptor) {
+            this.descriptor = descriptor;
+        }
+
+        public Builder setCreated(long created) {
+            this.created = created;
+            return this;
+        }
+
+        public Builder setUpdated(long updated) {
+            this.updated = updated;
+            return this;
+        }
+
+        public Builder setAutoVersion(long autoVersion) {
+            this.autoVersion = autoVersion;
+            return this;
+        }
+
+        public Builder setCurrentVersion(Long currentVersion) {
+            this.currentVersion = currentVersion;
+            return this;
+        }
+
+        public SchemaRow build() {
+            return new SchemaRow(descriptor, created, updated, autoVersion, currentVersion);
+        }
+    }
 }

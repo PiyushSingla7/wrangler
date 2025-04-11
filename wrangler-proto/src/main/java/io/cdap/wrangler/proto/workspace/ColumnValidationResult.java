@@ -22,11 +22,11 @@ import javax.annotation.Nullable;
  * Whether a column is valid or not.
  */
 public class ColumnValidationResult {
-  private final boolean valid;
-  private final String message;
+    private final boolean valid;
+    private final String message;
 
-  public ColumnValidationResult(@Nullable String message) {
-    this.valid = message != null;
-    this.message = message;
-  }
+    public ColumnValidationResult(@Nullable String message) {
+        this.valid = message != null;
+        this.message = message;
+    }
 }

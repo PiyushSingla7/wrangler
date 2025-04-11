@@ -29,51 +29,51 @@ import java.util.List;
  */
 public class SplitToRowsTest {
 
-  @Test
-  public void testSplitToRows() throws Exception {
-    String[] directives = new String[] {
-      "split-to-rows body \\n",
-    };
+    @Test
+    public void testSplitToRows() throws Exception {
+        String[] directives = new String[]{
+                "split-to-rows body \\n",
+        };
 
-    List<Row> rows = Arrays.asList(
-      new Row("body", "AABBCDE\nEEFFFF")
-    );
+        List<Row> rows = Arrays.asList(
+                new Row("body", "AABBCDE\nEEFFFF")
+        );
 
-    rows = TestingRig.execute(directives, rows);
+        rows = TestingRig.execute(directives, rows);
 
-    Assert.assertTrue(rows.size() == 2);
-    Assert.assertEquals("AABBCDE", rows.get(0).getValue("body"));
-    Assert.assertEquals("EEFFFF", rows.get(1).getValue("body"));
-  }
+        Assert.assertTrue(rows.size() == 2);
+        Assert.assertEquals("AABBCDE", rows.get(0).getValue("body"));
+        Assert.assertEquals("EEFFFF", rows.get(1).getValue("body"));
+    }
 
-  @Test
-  public void testSplitWhenNoPatternMatch() throws Exception {
-    String[] directives = new String[] {
-      "split-to-rows body X",
-    };
+    @Test
+    public void testSplitWhenNoPatternMatch() throws Exception {
+        String[] directives = new String[]{
+                "split-to-rows body X",
+        };
 
-    List<Row> rows = Arrays.asList(
-      new Row("body", "AABBCDE\nEEFFFF")
-    );
+        List<Row> rows = Arrays.asList(
+                new Row("body", "AABBCDE\nEEFFFF")
+        );
 
-    rows = TestingRig.execute(directives, rows);
+        rows = TestingRig.execute(directives, rows);
 
-    Assert.assertTrue(rows.size() == 1);
-  }
+        Assert.assertTrue(rows.size() == 1);
+    }
 
-  @Test
-  public void testDocExample() throws Exception {
-    String[] directives = new String[] {
-      "split-to-rows codes \\|",
-    };
+    @Test
+    public void testDocExample() throws Exception {
+        String[] directives = new String[]{
+                "split-to-rows codes \\|",
+        };
 
-    List<Row> rows = Arrays.asList(
-      new Row("id", "1").add("codes", "USD|AUD|AMD|XCD")
-    );
+        List<Row> rows = Arrays.asList(
+                new Row("id", "1").add("codes", "USD|AUD|AMD|XCD")
+        );
 
-    rows = TestingRig.execute(directives, rows);
+        rows = TestingRig.execute(directives, rows);
 
-    Assert.assertTrue(rows.size() == 4);
-  }
+        Assert.assertTrue(rows.size() == 4);
+    }
 
 }

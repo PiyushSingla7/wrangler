@@ -24,87 +24,87 @@ import java.util.Objects;
  * Specifies the V1 version of the {@link Request} object.
  */
 public final class RequestV1 implements Request {
-  // Version of request.
-  private final int version;
+    // Version of request.
+    private final int version;
 
-  // Workspace information associated with request.
-  private final Workspace workspace;
+    // Workspace information associated with request.
+    private final Workspace workspace;
 
-  // TestRecipe information associated with request.
-  private final Recipe recipe;
+    // TestRecipe information associated with request.
+    private final Recipe recipe;
 
-  // Sampling information associated with request.
-  private final Sampling sampling;
+    // Sampling information associated with request.
+    private final Sampling sampling;
 
-  // Additional properties that is of type json.
-  private final JsonObject properties;
+    // Additional properties that is of type json.
+    private final JsonObject properties;
 
-  public RequestV1(Workspace workspace, Recipe recipe, Sampling sampling, JsonObject properties) {
-    this.version = 1;
-    this.workspace = workspace;
-    this.recipe = recipe;
-    this.sampling = sampling;
-    this.properties = properties;
-  }
-
-  /**
-   * @return Version number of request specification.
-   */
-  @Override
-  public int getVersion() {
-    return version;
-  }
-
-  /**
-   * @return {@link Workspace} information associated with this request.
-   */
-  @Override
-  public Workspace getWorkspace() {
-    return workspace;
-  }
-
-  /**
-   * @return {@link Sampling} information associated with this request.
-   */
-  @Override
-  public Sampling getSampling() {
-    return sampling;
-  }
-
-  /**
-   * @return {@link Recipe} information associated with this request.
-   */
-  @Override
-  public Recipe getRecipe() {
-    return recipe;
-  }
-
-  /**
-   * @return Properties associated with the execution request.
-   */
-  @Override
-  public JsonObject getProperties() {
-    return properties;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
+    public RequestV1(Workspace workspace, Recipe recipe, Sampling sampling, JsonObject properties) {
+        this.version = 1;
+        this.workspace = workspace;
+        this.recipe = recipe;
+        this.sampling = sampling;
+        this.properties = properties;
     }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    RequestV1 requestV1 = (RequestV1) o;
-    return version == requestV1.version &&
-      Objects.equals(workspace, requestV1.workspace) &&
-      Objects.equals(recipe, requestV1.recipe) &&
-      Objects.equals(sampling, requestV1.sampling) &&
-      Objects.equals(properties, requestV1.properties);
-  }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(version, workspace, recipe, sampling, properties);
-  }
+    /**
+     * @return Version number of request specification.
+     */
+    @Override
+    public int getVersion() {
+        return version;
+    }
+
+    /**
+     * @return {@link Workspace} information associated with this request.
+     */
+    @Override
+    public Workspace getWorkspace() {
+        return workspace;
+    }
+
+    /**
+     * @return {@link Sampling} information associated with this request.
+     */
+    @Override
+    public Sampling getSampling() {
+        return sampling;
+    }
+
+    /**
+     * @return {@link Recipe} information associated with this request.
+     */
+    @Override
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    /**
+     * @return Properties associated with the execution request.
+     */
+    @Override
+    public JsonObject getProperties() {
+        return properties;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        RequestV1 requestV1 = (RequestV1) o;
+        return version == requestV1.version &&
+                Objects.equals(workspace, requestV1.workspace) &&
+                Objects.equals(recipe, requestV1.recipe) &&
+                Objects.equals(sampling, requestV1.sampling) &&
+                Objects.equals(properties, requestV1.properties);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(version, workspace, recipe, sampling, properties);
+    }
 }

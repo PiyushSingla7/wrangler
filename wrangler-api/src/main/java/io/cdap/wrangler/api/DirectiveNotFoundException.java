@@ -20,7 +20,7 @@ package io.cdap.wrangler.api;
  * Class description here.
  */
 public class DirectiveNotFoundException extends Exception {
-  public DirectiveNotFoundException(String s) {
-    super(s);
-  }
+    public DirectiveNotFoundException(String s) {
+        super(s);
+    }
 }

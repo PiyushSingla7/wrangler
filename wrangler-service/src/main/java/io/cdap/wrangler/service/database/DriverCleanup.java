@@ -19,27 +19,27 @@ package io.cdap.wrangler.service.database;
 import com.google.common.base.Throwables;
 import io.cdap.cdap.etl.api.Destroyable;
 
+import javax.annotation.Nullable;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import javax.annotation.Nullable;
 
 /**
  * Cleans up JDBC drivers.
  */
 public class DriverCleanup implements Destroyable {
-  private final JDBCDriverShim driverShim;
+    private final JDBCDriverShim driverShim;
 
-  DriverCleanup(@Nullable JDBCDriverShim driverShim) {
-    this.driverShim = driverShim;
-  }
-
-  public void destroy() {
-    if (driverShim != null) {
-      try {
-        DriverManager.deregisterDriver(driverShim);
-      } catch (SQLException e) {
-        throw Throwables.propagate(e);
-      }
+    DriverCleanup(@Nullable JDBCDriverShim driverShim) {
+        this.driverShim = driverShim;
     }
-  }
+
+    public void destroy() {
+        if (driverShim != null) {
+            try {
+                DriverManager.deregisterDriver(driverShim);
+            } catch (SQLException e) {
+                throw Throwables.propagate(e);
+            }
+        }
+    }
 }

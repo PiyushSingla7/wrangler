@@ -22,37 +22,37 @@ import javax.annotation.Nullable;
  * Information about a GCS object.
  */
 public class GCSObjectInfo {
-  private final String name;
-  private final String type;
-  private final String bucket;
-  private final String path;
-  private final String blob;
-  private final Long generation;
-  private final Long created;
-  private final Long updated;
-  private final Long size;
-  private final boolean directory;
-  private final Boolean wrangle;
+    private final String name;
+    private final String type;
+    private final String bucket;
+    private final String path;
+    private final String blob;
+    private final Long generation;
+    private final Long created;
+    private final Long updated;
+    private final Long size;
+    private final boolean directory;
+    private final Boolean wrangle;
 
-  public GCSObjectInfo(String name, String bucket, String path, String blob, @Nullable Long generation,
-                       boolean directory) {
-    this(name, bucket, path, blob, generation, directory, null, null, null, null, null);
-  }
+    public GCSObjectInfo(String name, String bucket, String path, String blob, @Nullable Long generation,
+                         boolean directory) {
+        this(name, bucket, path, blob, generation, directory, null, null, null, null, null);
+    }
 
-  public GCSObjectInfo(String name, String bucket, String path, String blob, @Nullable Long generation,
-                       boolean directory,
-                       @Nullable String type, @Nullable Long created, @Nullable Long updated, @Nullable Long size,
-                       @Nullable Boolean wrangle) {
-    this.name = name;
-    this.type = type;
-    this.bucket = bucket;
-    this.path = path;
-    this.blob = blob;
-    this.generation = generation;
-    this.created = created;
-    this.updated = updated;
-    this.size = size;
-    this.directory = directory;
-    this.wrangle = wrangle;
-  }
+    public GCSObjectInfo(String name, String bucket, String path, String blob, @Nullable Long generation,
+                         boolean directory,
+                         @Nullable String type, @Nullable Long created, @Nullable Long updated, @Nullable Long size,
+                         @Nullable Boolean wrangle) {
+        this.name = name;
+        this.type = type;
+        this.bucket = bucket;
+        this.path = path;
+        this.blob = blob;
+        this.generation = generation;
+        this.created = created;
+        this.updated = updated;
+        this.size = size;
+        this.directory = directory;
+        this.wrangle = wrangle;
+    }
 }

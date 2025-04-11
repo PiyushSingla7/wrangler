@@ -20,28 +20,28 @@ package io.cdap.wrangler.api;
  * A Executor specific exception used for communicating issues with execution of pipeline in that step.
  */
 public class DirectiveExecutionException extends Exception {
-  public DirectiveExecutionException(Exception e) {
-    super(e);
-  }
+    public DirectiveExecutionException(Exception e) {
+        super(e);
+    }
 
-  public DirectiveExecutionException(String message) {
-    super(message);
-  }
+    public DirectiveExecutionException(String message) {
+        super(message);
+    }
 
-  public DirectiveExecutionException(String s, Throwable e) {
-    super(s, e);
-  }
+    public DirectiveExecutionException(String s, Throwable e) {
+        super(s, e);
+    }
 
-  public DirectiveExecutionException(Throwable e) {
-    super(e);
-  }
+    public DirectiveExecutionException(Throwable e) {
+        super(e);
+    }
 
-  public DirectiveExecutionException(String directiveName, String errorMessage) {
-    this(String.format("Error encountered while executing '%s' : %s", directiveName, errorMessage));
-  }
+    public DirectiveExecutionException(String directiveName, String errorMessage) {
+        this(String.format("Error encountered while executing '%s' : %s", directiveName, errorMessage));
+    }
 
-  public DirectiveExecutionException(String directiveName, String errorMessage, Throwable e) {
-    this(String.format("Error encountered while executing '%s' : %s", directiveName, errorMessage), e);
-  }
+    public DirectiveExecutionException(String directiveName, String errorMessage, Throwable e) {
+        this(String.format("Error encountered while executing '%s' : %s", directiveName, errorMessage), e);
+    }
 }
 

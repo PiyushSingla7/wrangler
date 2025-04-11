@@ -5,8 +5,8 @@
 * [Uploading a File to a Workspace](#uploading-a-file-to-a-workspace)
 * [Downloading a File from a Workspace](#downloading-a-file-from-a-workspace)
 
-
 <a name="creating-a-workspace"></a>
+
 ## Creating a Workspace
 
 This RESTful API call creates a workspace, a scratch pad for temporarily storing the data to be wrangled in the backend.
@@ -30,32 +30,32 @@ A workspace is identified by a name containing either alphanumeric or underscore
 
 * **Success Response**
 
-  * **Code** 200
-    **Content**
-    ```
-      {
-        'status': 200,
-        'message': "Successfully created workspace ':workspaceid'"
-      }
-    ```
+    * **Code** 200
+      **Content**
+      ```
+        {
+          'status': 200,
+          'message': "Successfully created workspace ':workspaceid'"
+        }
+      ```
 
 * **Error Responses**
 
-  * **Code** 500 Server Error
-    **Content**
-    ```
-      {
-        'status': 500,
-        'message': "<appropriate error message>"
-      }
-    ```
-    or
+    * **Code** 500 Server Error
+      **Content**
+      ```
+        {
+          'status': 500,
+          'message': "<appropriate error message>"
+        }
+      ```
+      or
 
-  * **Code** 500 Server Error
-    **Content**
-    ```
-      Unable to route to service <url>
-    ```
+    * **Code** 500 Server Error
+      **Content**
+      ```
+        Unable to route to service <url>
+      ```
 
 * **Sample Call**
 
@@ -74,8 +74,8 @@ A workspace is identified by a name containing either alphanumeric or underscore
 
 The API call will fail if the backend service is not started or if the dataset write fails.
 
-
 <a name="deleting-a-workspace"></a>
+
 ## Deleting a Workspace
 
 This RESTful API call deletes a workspace. This will also delete any data associated with it.
@@ -98,32 +98,32 @@ This RESTful API call deletes a workspace. This will also delete any data associ
 
 * **Success Response**
 
-  * **Code** 200
-    **Content**
-    ```
-      {
-        'status': 200,
-        'message': "Successfully deleted workspace ':workspaceid'"
-      }
-    ```
+    * **Code** 200
+      **Content**
+      ```
+        {
+          'status': 200,
+          'message': "Successfully deleted workspace ':workspaceid'"
+        }
+      ```
 
 * **Error Responses**
 
-  * **Code** 500 Server Error
-    **Content**
-    ```
-      {
-        'status': 500,
-        'message': "<appropriate error message>"
-      }
-    ```
-    or
+    * **Code** 500 Server Error
+      **Content**
+      ```
+        {
+          'status': 500,
+          'message': "<appropriate error message>"
+        }
+      ```
+      or
 
-  * **Code** 500 Server Error
-    **Content**
-    ```
-      Unable to route to service <url>
-    ```
+    * **Code** 500 Server Error
+      **Content**
+      ```
+        Unable to route to service <url>
+      ```
 
 
 * **Sample Call**
@@ -143,8 +143,8 @@ This RESTful API call deletes a workspace. This will also delete any data associ
 
 The API call will fail if the backend service is not started or if the dataset write fails.
 
-
 <a name="uploading-a-file-to-a-workspace"></a>
+
 ## Uploading a File to a Workspace
 
 This RESTful API call will upload a file to a workspace. The file is split into lines based on a line delimiter (EOL).
@@ -167,43 +167,43 @@ This RESTful API call will upload a file to a workspace. The file is split into 
 
 * **Success Response**
 
-  * **Code** 200
-    **Content**
-    ```
-      {
-        'status': 200,
-        'message': "Successfully uploaded data to workspace ':workspaceid' (records 1000)"
-      }
-    ```
+    * **Code** 200
+      **Content**
+      ```
+        {
+          'status': 200,
+          'message': "Successfully uploaded data to workspace ':workspaceid' (records 1000)"
+        }
+      ```
 
 * **Error Responses**
 
-  * **Code** 500 Server Error
-    **Content**
-    ```
-      {
-        'status': 500,
-        'message': "Body not present, please post the file containing the records to be wrangle."
-      }
-    ```
-    or
+    * **Code** 500 Server Error
+      **Content**
+      ```
+        {
+          'status': 500,
+          'message': "Body not present, please post the file containing the records to be wrangle."
+        }
+      ```
+      or
 
-  * **Code** 500 Server Error
-    **Content**
-    ```
-      Unable to route to service <url>
-    ```
+    * **Code** 500 Server Error
+      **Content**
+      ```
+        Unable to route to service <url>
+      ```
 
-    or
+      or
 
-  * **Code** 500 Server Error
-    **Content**
-    ```
-      {
-        'status': 500,
-        'message': "<appropriate error message>"
-      }
-    ```
+    * **Code** 500 Server Error
+      **Content**
+      ```
+        {
+          'status': 500,
+          'message': "<appropriate error message>"
+        }
+      ```
 
 * **Sample Call**
 
@@ -225,8 +225,8 @@ This RESTful API call will upload a file to a workspace. The file is split into 
     });
   ```
 
-
 <a name="downloading-a-file-from-a-workspace"></a>
+
 ## Downloading a File from a Workspace
 
 This RESTful API will download to a file the data stores in a workspace.
@@ -249,40 +249,40 @@ This RESTful API will download to a file the data stores in a workspace.
 
 * **Success Response**
 
-  * **Code** 200
-    **Content**
-    ```
-      <data stored in workspace>
-    ```
+    * **Code** 200
+      **Content**
+      ```
+        <data stored in workspace>
+      ```
 
 * **Error Responses**
 
-  * **Code** 500 Server Error
-    **Content**
-    ```
-      {
-        'status': 500,
-        'message': "No data exists in the workspace. Please upload the data to this workspace."
-      }
-    ```
-    or
+    * **Code** 500 Server Error
+      **Content**
+      ```
+        {
+          'status': 500,
+          'message': "No data exists in the workspace. Please upload the data to this workspace."
+        }
+      ```
+      or
 
-  * **Code** 500 Server Error
-    **Content**
-    ```
-      Unable to route to service <url>
-    ```
+    * **Code** 500 Server Error
+      **Content**
+      ```
+        Unable to route to service <url>
+      ```
 
-    or
+      or
 
-  * **Code** 500 Server Error
-    **Content**
-    ```
-      {
-        'status': 500,
-        'message': "<appropriate error message>"
-      }
-    ```
+    * **Code** 500 Server Error
+      **Content**
+      ```
+        {
+          'status': 500,
+          'message': "<appropriate error message>"
+        }
+      ```
 
 * **Sample Call**
 

@@ -25,17 +25,17 @@ import java.util.List;
  * A simple class for collecting rows to be used for testing wrangler directives.
  */
 public class TestRows {
-  private final List<Row> rows;
+    private final List<Row> rows;
 
-  public TestRows() {
-    this.rows = new ArrayList<>();
-  }
+    public TestRows() {
+        this.rows = new ArrayList<>();
+    }
 
-  public void add(Row row) {
-    rows.add(row);
-  }
+    public void add(Row row) {
+        rows.add(row);
+    }
 
-  public List<Row> toList() {
-    return rows;
-  }
+    public List<Row> toList() {
+        return rows;
+    }
 }

@@ -24,22 +24,22 @@ import java.util.Map;
  * Information about an artifact that contains a directive.
  */
 public class DirectiveArtifact {
-  private final String name;
-  private final String version;
-  private final String scope;
-  private final Map<String, String> properties;
+    private final String name;
+    private final String version;
+    private final String scope;
+    private final Map<String, String> properties;
 
-  public DirectiveArtifact(ArtifactInfo artifactInfo) {
-    this.name = artifactInfo.getName();
-    this.version = artifactInfo.getVersion();
-    this.scope = artifactInfo.getScope().name();
-    this.properties = artifactInfo.getProperties();
-  }
+    public DirectiveArtifact(ArtifactInfo artifactInfo) {
+        this.name = artifactInfo.getName();
+        this.version = artifactInfo.getVersion();
+        this.scope = artifactInfo.getScope().name();
+        this.properties = artifactInfo.getProperties();
+    }
 
-  public DirectiveArtifact(String name, String version, String scope) {
-    this.name = name;
-    this.version = version;
-    this.scope = scope;
-    this.properties = null;
-  }
+    public DirectiveArtifact(String name, String version, String scope) {
+        this.name = name;
+        this.version = version;
+        this.scope = scope;
+        this.properties = null;
+    }
 }

@@ -30,41 +30,41 @@ import java.util.List;
  */
 public class BasicStatisticsTest {
 
-  @Test
-  public void testFinderXMLFormat() throws Exception {
-    FinderEngine engine = new FinderEngine("wrangler-finder.xml", true, false);
-    Assert.assertNotNull(engine);
-    Assert.assertTrue(engine.getFinders().size() > 5); // 5 is minimal.
-  }
+    @Test
+    public void testFinderXMLFormat() throws Exception {
+        FinderEngine engine = new FinderEngine("wrangler-finder.xml", true, false);
+        Assert.assertNotNull(engine);
+        Assert.assertTrue(engine.getFinders().size() > 5); // 5 is minimal.
+    }
 
-  @Test
-  public void testMetaBasic() throws Exception {
-    String[] directives = new String[] {
-      "parse-as-csv body ,",
-      "drop body"
-    };
+    @Test
+    public void testMetaBasic() throws Exception {
+        String[] directives = new String[]{
+                "parse-as-csv body ,",
+                "drop body"
+        };
 
-    List<Row> rows = Arrays.asList(
-      new Row("body", "1234.45,650-897-3839,111-11-1111,32826,02/29/2000,\"$1234.56\",http://www.yahoo.com"),
-      new Row("body", "45.56,670-897-3839,111-12-1111,32826,02/01/2011,\"$56,789\",http://mars.io"),
-      new Row("body", "45.56,670-897-3839,222,32826,9/14/2016,\"\",http://mars.io")
-    );
+        List<Row> rows = Arrays.asList(
+                new Row("body", "1234.45,650-897-3839,111-11-1111,32826,02/29/2000,\"$1234.56\",http://www.yahoo.com"),
+                new Row("body", "45.56,670-897-3839,111-12-1111,32826,02/01/2011,\"$56,789\",http://mars.io"),
+                new Row("body", "45.56,670-897-3839,222,32826,9/14/2016,\"\",http://mars.io")
+        );
 
-    rows = TestingRig.execute(directives, rows);
+        rows = TestingRig.execute(directives, rows);
 
-    Statistics meta = new BasicStatistics();
-    Row summary = meta.aggregate(rows);
+        Statistics meta = new BasicStatistics();
+        Row summary = meta.aggregate(rows);
 
-    Assert.assertTrue(rows.size() > 1);
+        Assert.assertTrue(rows.size() > 1);
 
-    Assert.assertEquals(3, summary.width());
-    Assert.assertEquals(3.0, summary.getValue("total"));
+        Assert.assertEquals(3, summary.width());
+        Assert.assertEquals(3.0, summary.getValue("total"));
 
-    Row stats = (Row) summary.getValue("stats");
-    Row types = (Row) summary.getValue("types");
+        Row stats = (Row) summary.getValue("stats");
+        Row types = (Row) summary.getValue("types");
 
-    Assert.assertEquals(7, stats.width());
-    Assert.assertEquals(7, types.width());
-  }
+        Assert.assertEquals(7, stats.width());
+        Assert.assertEquals(7, types.width());
+    }
 }
 

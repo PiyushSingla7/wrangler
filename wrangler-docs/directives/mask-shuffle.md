@@ -2,14 +2,13 @@
 
 The MASK-SHUFFLE directive applies shuffle masking on the column values.
 
-
 ## Syntax
+
 ```
 mask-shuffle <columm>
 ```
 
 The `<column>` specifies the name of an existing column to be masked.
-
 
 ## Usage Notes
 
@@ -24,6 +23,7 @@ case.
 ## Examples
 
 Using this record as an example:
+
 ```
 {
   "first": "Root",
@@ -34,6 +34,7 @@ Using this record as an example:
 ```
 
 Applying these directives:
+
 ```
 mask-shuffle first
 mask-shuffle last
@@ -42,6 +43,7 @@ mask-shuffle cc
 ```
 
 would result in this record:
+
 ```
 {
   "first": "Buek",

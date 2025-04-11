@@ -20,12 +20,7 @@ import com.google.common.base.Strings;
 import io.cdap.cdap.api.annotation.Description;
 import io.cdap.cdap.api.annotation.Name;
 import io.cdap.cdap.api.annotation.Plugin;
-import io.cdap.wrangler.api.Arguments;
-import io.cdap.wrangler.api.Directive;
-import io.cdap.wrangler.api.DirectiveExecutionException;
-import io.cdap.wrangler.api.DirectiveParseException;
-import io.cdap.wrangler.api.ExecutorContext;
-import io.cdap.wrangler.api.Row;
+import io.cdap.wrangler.api.*;
 import io.cdap.wrangler.api.annotations.Categories;
 import io.cdap.wrangler.api.parser.ColumnName;
 import io.cdap.wrangler.api.parser.Text;
@@ -40,69 +35,69 @@ import java.util.List;
  */
 @Plugin(type = Directive.TYPE)
 @Name(Split.NAME)
-@Categories(categories = { "readable"})
+@Categories(categories = {"readable"})
 @Description("Use 'split-to-columns' or 'split-to-rows'.")
 @Deprecated
 public class Split implements Directive {
-  public static final String NAME = "split";
-  // Name of the column to be split
-  private String col;
+    public static final String NAME = "split";
+    // Name of the column to be split
+    private String col;
 
-  private String delimiter;
+    private String delimiter;
 
-  // Destination column names
-  private String firstColumnName, secondColumnName;
+    // Destination column names
+    private String firstColumnName, secondColumnName;
 
-  @Override
-  public UsageDefinition define() {
-    UsageDefinition.Builder builder = UsageDefinition.builder(NAME);
-    builder.define("source", TokenType.COLUMN_NAME);
-    builder.define("delimiter", TokenType.TEXT);
-    builder.define("column1", TokenType.COLUMN_NAME);
-    builder.define("column2", TokenType.COLUMN_NAME);
-    return builder.build();
-  }
-
-  @Override
-  public void initialize(Arguments args) throws DirectiveParseException {
-    this.col = ((ColumnName) args.value("source")).value();
-    this.delimiter = ((Text) args.value("delimiter")).value();
-    this.firstColumnName = ((ColumnName) args.value("column1")).value();
-    this.secondColumnName = ((ColumnName) args.value("column2")).value();
-  }
-
-  @Override
-  public void destroy() {
-    // no-op
-  }
-
-  @Override
-  public List<Row> execute(List<Row> rows, ExecutorContext context) throws DirectiveExecutionException {
-    List<Row> results = new ArrayList<>();
-    for (Row row : rows) {
-      int idx = row.find(col);
-      if (idx != -1) {
-        String val = (String) row.getValue(idx);
-        if (val != null) {
-          String[] parts = val.split(delimiter, 2);
-          if (Strings.isNullOrEmpty(parts[0])) {
-            row.add(firstColumnName, parts[1]);
-            row.add(secondColumnName, null);
-          } else {
-            row.add(firstColumnName, parts[0]);
-            row.add(secondColumnName, parts[1]);
-          }
-        } else {
-          row.add(firstColumnName, null);
-          row.add(secondColumnName, null);
-        }
-      } else {
-        throw new DirectiveExecutionException(
-          col + " is not of type string. Please check the wrangle configuration."
-        );
-      }
-      results.add(row);
+    @Override
+    public UsageDefinition define() {
+        UsageDefinition.Builder builder = UsageDefinition.builder(NAME);
+        builder.define("source", TokenType.COLUMN_NAME);
+        builder.define("delimiter", TokenType.TEXT);
+        builder.define("column1", TokenType.COLUMN_NAME);
+        builder.define("column2", TokenType.COLUMN_NAME);
+        return builder.build();
     }
-    return results;
-  }
+
+    @Override
+    public void initialize(Arguments args) throws DirectiveParseException {
+        this.col = ((ColumnName) args.value("source")).value();
+        this.delimiter = ((Text) args.value("delimiter")).value();
+        this.firstColumnName = ((ColumnName) args.value("column1")).value();
+        this.secondColumnName = ((ColumnName) args.value("column2")).value();
+    }
+
+    @Override
+    public void destroy() {
+        // no-op
+    }
+
+    @Override
+    public List<Row> execute(List<Row> rows, ExecutorContext context) throws DirectiveExecutionException {
+        List<Row> results = new ArrayList<>();
+        for (Row row : rows) {
+            int idx = row.find(col);
+            if (idx != -1) {
+                String val = (String) row.getValue(idx);
+                if (val != null) {
+                    String[] parts = val.split(delimiter, 2);
+                    if (Strings.isNullOrEmpty(parts[0])) {
+                        row.add(firstColumnName, parts[1]);
+                        row.add(secondColumnName, null);
+                    } else {
+                        row.add(firstColumnName, parts[0]);
+                        row.add(secondColumnName, parts[1]);
+                    }
+                } else {
+                    row.add(firstColumnName, null);
+                    row.add(secondColumnName, null);
+                }
+            } else {
+                throw new DirectiveExecutionException(
+                        col + " is not of type string. Please check the wrangle configuration."
+                );
+            }
+            results.add(row);
+        }
+        return results;
+    }
 }

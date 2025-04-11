@@ -23,23 +23,23 @@ import java.util.List;
  * Class description here.
  */
 public final class TestRecipe {
-  private final List<String> directives;
+    private final List<String> directives;
 
-  public TestRecipe() {
-    this.directives = new ArrayList<>();
-  }
+    public TestRecipe() {
+        this.directives = new ArrayList<>();
+    }
 
-  public void add(String directive) {
-    directives.add(directive);
-  }
+    public void add(String directive) {
+        directives.add(directive);
+    }
 
-  public List<String> toList() {
-    return directives;
-  }
+    public List<String> toList() {
+        return directives;
+    }
 
-  public String[] toArray() {
-    String[] array = new String[directives.size()];
-    array = directives.toArray(array);
-    return array;
-  }
+    public String[] toArray() {
+        String[] array = new String[directives.size()];
+        array = directives.toArray(array);
+        return array;
+    }
 }

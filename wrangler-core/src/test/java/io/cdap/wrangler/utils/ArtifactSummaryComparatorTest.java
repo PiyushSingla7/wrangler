@@ -24,16 +24,16 @@ import org.junit.Test;
 
 public class ArtifactSummaryComparatorTest {
 
-  @Test
-  public void testArtifactCompare() throws Exception {
-    ArtifactSummary summary1 = new ArtifactSummary("wrangler-transform", "1.0.0", ArtifactScope.USER);
-    ArtifactSummary summary2 = new ArtifactSummary("wrangler-transform", "1.0.1", ArtifactScope.SYSTEM);
-    Assert.assertEquals(summary2, ArtifactSummaryComparator.pickLatest(summary1, summary2));
+    @Test
+    public void testArtifactCompare() throws Exception {
+        ArtifactSummary summary1 = new ArtifactSummary("wrangler-transform", "1.0.0", ArtifactScope.USER);
+        ArtifactSummary summary2 = new ArtifactSummary("wrangler-transform", "1.0.1", ArtifactScope.SYSTEM);
+        Assert.assertEquals(summary2, ArtifactSummaryComparator.pickLatest(summary1, summary2));
 
-    summary2 = new ArtifactSummary("wrangler-transform", "1.0.0", ArtifactScope.SYSTEM);
-    Assert.assertEquals(summary1, ArtifactSummaryComparator.pickLatest(summary1, summary2));
+        summary2 = new ArtifactSummary("wrangler-transform", "1.0.0", ArtifactScope.SYSTEM);
+        Assert.assertEquals(summary1, ArtifactSummaryComparator.pickLatest(summary1, summary2));
 
-    summary1 = new ArtifactSummary("wrangler-transform", "2.0.0", ArtifactScope.SYSTEM);
-    Assert.assertEquals(summary1, ArtifactSummaryComparator.pickLatest(summary1, summary2));
-  }
+        summary1 = new ArtifactSummary("wrangler-transform", "2.0.0", ArtifactScope.SYSTEM);
+        Assert.assertEquals(summary1, ArtifactSummaryComparator.pickLatest(summary1, summary2));
+    }
 }

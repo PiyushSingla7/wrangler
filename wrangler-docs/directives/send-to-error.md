@@ -4,8 +4,8 @@ The SEND-TO-ERROR directive allows the filtering of records and directs the filt
 records that match a given condition to an error collector. If the error collector is not
 connected as the next stage in a pipeline, then the filtered records will be dropped.
 
-
 ## Syntax
+
 ```
 send-to-error <condition> [[metric-name] [error-message]]
 ```
@@ -14,7 +14,6 @@ The `<condition>` is a EL specifing the condition that governs if the record
 should be sent to the error collector. Optionally you can specify the metric
 name that should be registered everytime a record is sent to error combined
 with optional ability to specify a error message that should be recorded.
-
 
 ## Usage Notes
 

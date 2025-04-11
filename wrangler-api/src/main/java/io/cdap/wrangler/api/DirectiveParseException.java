@@ -24,40 +24,40 @@ import java.util.Iterator;
  * An exception thrown when there is error in parsing specification.
  */
 public class DirectiveParseException extends Exception {
-  private Iterator<SyntaxError> errors;
+    private Iterator<SyntaxError> errors;
 
-  public DirectiveParseException(String message, Iterator<SyntaxError> errors) {
-    super(message);
-    this.errors = errors;
-  }
+    public DirectiveParseException(String message, Iterator<SyntaxError> errors) {
+        super(message);
+        this.errors = errors;
+    }
 
-  public DirectiveParseException(String message, Iterator<SyntaxError> errors, Throwable cause) {
-    super(message, cause);
-    this.errors = errors;
-  }
+    public DirectiveParseException(String message, Iterator<SyntaxError> errors, Throwable cause) {
+        super(message, cause);
+        this.errors = errors;
+    }
 
-  public DirectiveParseException(String message, Throwable e) {
-    super(message, e);
-  }
+    public DirectiveParseException(String message, Throwable e) {
+        super(message, e);
+    }
 
-  public DirectiveParseException(Throwable e) {
-    super(e);
-  }
+    public DirectiveParseException(Throwable e) {
+        super(e);
+    }
 
-  public DirectiveParseException(String message) {
-    super(message);
-  }
+    public DirectiveParseException(String message) {
+        super(message);
+    }
 
-  public DirectiveParseException(String directiveName, String errorMessage) {
-    this(String.format("Error encountered while parsing '%s' : %s", directiveName, errorMessage));
-  }
+    public DirectiveParseException(String directiveName, String errorMessage) {
+        this(String.format("Error encountered while parsing '%s' : %s", directiveName, errorMessage));
+    }
 
-  public DirectiveParseException(String directiveName, String errorMessage, Throwable e) {
-    this(String.format("Error encountered while parsing '%s' : %s", directiveName, errorMessage), e);
-  }
+    public DirectiveParseException(String directiveName, String errorMessage, Throwable e) {
+        this(String.format("Error encountered while parsing '%s' : %s", directiveName, errorMessage), e);
+    }
 
-  public Iterator<SyntaxError> errors() {
-    return errors;
-  }
+    public Iterator<SyntaxError> errors() {
+        return errors;
+    }
 }
 

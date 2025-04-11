@@ -32,36 +32,36 @@ import java.util.function.Supplier;
  */
 public interface Conformer<T> {
 
-  /**
-   * Initialize should setup this instance to check conformance against a specific set of requirements, for example it
-   * can load a specific JSON Schema into memory.
-   */
-  void initialize() throws IOException;
-
-  /**
-   * Validate the given value against the loaded schema. It is up to the implementation to decide whether to return the
-   * first occurring error or all at once.
-   *
-   * @param value the value to validate
-   * @return the deviations/failures (if any; otherwise an empty list) that the value ran into when validating
-   */
-  List<ConformanceIssue> checkConformance(T value);
-
-  /**
-   * Factory interface for Conformers.
-   *
-   * @param <T> The type of value the conformer (that this factory produces) checks.
-   */
-  interface Factory<T> {
+    /**
+     * Initialize should setup this instance to check conformance against a specific set of requirements, for example it
+     * can load a specific JSON Schema into memory.
+     */
+    void initialize() throws IOException;
 
     /**
-     * Sets the stream containing schema data for the Conformer.
+     * Validate the given value against the loaded schema. It is up to the implementation to decide whether to return the
+     * first occurring error or all at once.
+     *
+     * @param value the value to validate
+     * @return the deviations/failures (if any; otherwise an empty list) that the value ran into when validating
      */
-    Factory<T> setSchemaStreamSupplier(Supplier<InputStream> schemaStream);
+    List<ConformanceIssue> checkConformance(T value);
 
     /**
-     * Instantiates a new Conformer.
+     * Factory interface for Conformers.
+     *
+     * @param <T> The type of value the conformer (that this factory produces) checks.
      */
-    Conformer<T> build();
-  }
+    interface Factory<T> {
+
+        /**
+         * Sets the stream containing schema data for the Conformer.
+         */
+        Factory<T> setSchemaStreamSupplier(Supplier<InputStream> schemaStream);
+
+        /**
+         * Instantiates a new Conformer.
+         */
+        Conformer<T> build();
+    }
 }

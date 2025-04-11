@@ -22,8 +22,8 @@ import io.cdap.cdap.api.data.schema.Schema;
  * Interface to pass contextual information related to getting or generating the output schema of a {@link Executor}
  */
 public interface SchemaResolutionContext {
-  /**
-   * @return {@link Schema} of the input data before transformation
-   */
-  Schema getInputSchema();
+    /**
+     * @return {@link Schema} of the input data before transformation
+     */
+    Schema getInputSchema();
 }

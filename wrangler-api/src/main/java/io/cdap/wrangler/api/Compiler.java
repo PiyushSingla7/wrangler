@@ -35,27 +35,27 @@ import java.nio.file.Path;
  */
 @PublicEvolving
 public interface Compiler {
-  /**
-   * Compiles the recipe that is supplied in a <code>String</code> format.
-   *
-   * @param recipe representing the <code>String</code> form of recipe.
-   * @return <code>CompileStatus</code> status of compilation.
-   */
-  CompileStatus compile(String recipe) throws CompileException;
+    /**
+     * Compiles the recipe that is supplied in a <code>String</code> format.
+     *
+     * @param recipe representing the <code>String</code> form of recipe.
+     * @return <code>CompileStatus</code> status of compilation.
+     */
+    CompileStatus compile(String recipe) throws CompileException;
 
-  /**
-   * Compiles the recipe that is supplied in a <code>Location</code> on HDFS.
-   *
-   * @param location Location to the recipe being compiled.
-   * @return <code>CompileStatus</code> status of compilation.
-   */
-  CompileStatus compile(Location location) throws CompileException;
+    /**
+     * Compiles the recipe that is supplied in a <code>Location</code> on HDFS.
+     *
+     * @param location Location to the recipe being compiled.
+     * @return <code>CompileStatus</code> status of compilation.
+     */
+    CompileStatus compile(Location location) throws CompileException;
 
-  /**
-   * Compiles the recipe that is supplied in a <code>Path</code> on Filesystem.
-   *
-   * @param path <code>Path</code> to the recipe being compiled.
-   * @return <code>CompileStatus</code> status of compilation.
-   */
-  CompileStatus compile(Path path) throws CompileException;
+    /**
+     * Compiles the recipe that is supplied in a <code>Path</code> on Filesystem.
+     *
+     * @param path <code>Path</code> to the recipe being compiled.
+     * @return <code>CompileStatus</code> status of compilation.
+     */
+    CompileStatus compile(Path path) throws CompileException;
 }

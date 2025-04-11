@@ -20,10 +20,10 @@ package io.cdap.wrangler.api;
  * This is a interface for migrating grammar from one version to other.
  */
 public interface GrammarMigrator {
-  /**
-   * Migrates each directive from one version to other.
-   *
-   * @return directives transformed into a newer version.
-   */
-  String migrate() throws DirectiveParseException;
+    /**
+     * Migrates each directive from one version to other.
+     *
+     * @return directives transformed into a newer version.
+     */
+    String migrate() throws DirectiveParseException;
 }

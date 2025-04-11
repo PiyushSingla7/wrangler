@@ -3,15 +3,14 @@
 The FAIL directive will fail processing of pipeline when condition is evaulated
 to `true`.
 
-
 ## Syntax
+
 ```
 fail <condition>
 ```
 
 The `<condition>` is a JEXL expression specifing the condition that governs if the record
 should be sent to the error collector.
-
 
 ## Usage Notes
 

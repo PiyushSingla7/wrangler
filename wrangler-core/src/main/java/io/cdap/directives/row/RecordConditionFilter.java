@@ -20,14 +20,7 @@ import com.google.common.collect.ImmutableList;
 import io.cdap.cdap.api.annotation.Description;
 import io.cdap.cdap.api.annotation.Name;
 import io.cdap.cdap.api.annotation.Plugin;
-import io.cdap.wrangler.api.Arguments;
-import io.cdap.wrangler.api.Directive;
-import io.cdap.wrangler.api.DirectiveExecutionException;
-import io.cdap.wrangler.api.DirectiveParseException;
-import io.cdap.wrangler.api.EntityCountMetric;
-import io.cdap.wrangler.api.ExecutorContext;
-import io.cdap.wrangler.api.Optional;
-import io.cdap.wrangler.api.Row;
+import io.cdap.wrangler.api.*;
 import io.cdap.wrangler.api.annotations.Categories;
 import io.cdap.wrangler.api.lineage.Lineage;
 import io.cdap.wrangler.api.lineage.Mutation;
@@ -48,85 +41,85 @@ import static io.cdap.wrangler.metrics.JexlCategoryMetricUtils.getJexlCategoryMe
  * A Wrangle step for filtering rows based on the condition.
  *
  * <p>
- *   This step will evaluate the condition, if the condition evaluates to
- *   true, then the row will be skipped. If the condition evaluates to
- *   false, then the row will be accepted.
+ * This step will evaluate the condition, if the condition evaluates to
+ * true, then the row will be skipped. If the condition evaluates to
+ * false, then the row will be accepted.
  * </p>
  */
 @Plugin(type = Directive.TYPE)
 @Name(RecordConditionFilter.NAME)
-@Categories(categories = { "row", "data-quality"})
+@Categories(categories = {"row", "data-quality"})
 @Description("Filters rows based on condition type specified.")
 public class RecordConditionFilter implements Directive, Lineage {
-  public static final String NAME = "filter-row";
-  private EL el;
-  private boolean isTrue;
+    public static final String NAME = "filter-row";
+    private EL el;
+    private boolean isTrue;
 
-  @Override
-  public UsageDefinition define() {
-    UsageDefinition.Builder builder = UsageDefinition.builder(NAME);
-    builder.define("condition", TokenType.EXPRESSION);
-    builder.define("type", TokenType.BOOLEAN, Optional.TRUE);
-    return builder.build();
-  }
-
-  @Override
-  public void initialize(Arguments args) throws DirectiveParseException {
-    isTrue = true;
-    if (args.contains("type")) {
-      isTrue = ((Bool) args.value("type")).value();
+    @Override
+    public UsageDefinition define() {
+        UsageDefinition.Builder builder = UsageDefinition.builder(NAME);
+        builder.define("condition", TokenType.EXPRESSION);
+        builder.define("type", TokenType.BOOLEAN, Optional.TRUE);
+        return builder.build();
     }
-    String condition = ((Expression) args.value("condition")).value();
-    try {
-      el = EL.compile(condition);
-    } catch (ELException e) {
-      throw new DirectiveParseException(NAME, e.getMessage(), e);
+
+    @Override
+    public void initialize(Arguments args) throws DirectiveParseException {
+        isTrue = true;
+        if (args.contains("type")) {
+            isTrue = ((Bool) args.value("type")).value();
+        }
+        String condition = ((Expression) args.value("condition")).value();
+        try {
+            el = EL.compile(condition);
+        } catch (ELException e) {
+            throw new DirectiveParseException(NAME, e.getMessage(), e);
+        }
     }
-  }
 
-  @Override
-  public void destroy() {
-    // no-op
-  }
-
-  @Override
-  public List<Row> execute(List<Row> rows, ExecutorContext context) throws DirectiveExecutionException {
-    List<Row> results = new ArrayList<>();
-    for (Row row : rows) {
-      // Move the fields from the row into the context.
-      ELContext ctx = new ELContext(context, el, row);
-      if (context != null) {
-        for (String variable : context.getTransientStore().getVariables()) {
-          ctx.set(variable, context.getTransientStore().get(variable));
-        }
-      }
-      try {
-        Boolean result = el.execute(ctx).getBoolean();
-        if (!isTrue) {
-          result = !result;
-        }
-        if (result) {
-          continue;
-        }
-      } catch (ELException e) {
-        throw new DirectiveExecutionException(NAME, e.getMessage(), e);
-      }
-      results.add(row);
+    @Override
+    public void destroy() {
+        // no-op
     }
-    return results;
-  }
 
-  @Override
-  public Mutation lineage() {
-    Mutation.Builder builder = Mutation.builder()
-      .readable("Filtered records based on columns '%s'", el.variables());
-    el.variables().forEach(column -> builder.relation(column, column));
-    return builder.build();
-  }
+    @Override
+    public List<Row> execute(List<Row> rows, ExecutorContext context) throws DirectiveExecutionException {
+        List<Row> results = new ArrayList<>();
+        for (Row row : rows) {
+            // Move the fields from the row into the context.
+            ELContext ctx = new ELContext(context, el, row);
+            if (context != null) {
+                for (String variable : context.getTransientStore().getVariables()) {
+                    ctx.set(variable, context.getTransientStore().get(variable));
+                }
+            }
+            try {
+                Boolean result = el.execute(ctx).getBoolean();
+                if (!isTrue) {
+                    result = !result;
+                }
+                if (result) {
+                    continue;
+                }
+            } catch (ELException e) {
+                throw new DirectiveExecutionException(NAME, e.getMessage(), e);
+            }
+            results.add(row);
+        }
+        return results;
+    }
 
-  @Override
-  public List<EntityCountMetric> getCountMetrics() {
-    EntityCountMetric jexlCategoryMetric = getJexlCategoryMetric(el.getScriptParsedText());
-    return (jexlCategoryMetric == null) ? null : ImmutableList.of(jexlCategoryMetric);
-  }
+    @Override
+    public Mutation lineage() {
+        Mutation.Builder builder = Mutation.builder()
+                .readable("Filtered records based on columns '%s'", el.variables());
+        el.variables().forEach(column -> builder.relation(column, column));
+        return builder.build();
+    }
+
+    @Override
+    public List<EntityCountMetric> getCountMetrics() {
+        EntityCountMetric jexlCategoryMetric = getJexlCategoryMetric(el.getScriptParsedText());
+        return (jexlCategoryMetric == null) ? null : ImmutableList.of(jexlCategoryMetric);
+    }
 }

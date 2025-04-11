@@ -21,43 +21,42 @@ import io.cdap.wrangler.expression.EL;
 import org.apache.commons.jexl3.parser.ParserTokenManager;
 import org.apache.commons.jexl3.parser.SimpleCharStream;
 
+import javax.annotation.Nullable;
 import java.io.ByteArrayInputStream;
 import java.util.Map;
-
-import javax.annotation.Nullable;
 
 /**
  * Utility class for the 'JEXL category' metric. This metric counts the number of times a JEXL function category
  * in {@link io.cdap.wrangler.expression.EL.DefaultFunctions} is used.
  */
 public final class JexlCategoryMetricUtils {
-  private static final Map<?, ?> EL_DEFAULT_FUNCTIONS = new EL.DefaultFunctions().functions();
+    private static final Map<?, ?> EL_DEFAULT_FUNCTIONS = new EL.DefaultFunctions().functions();
 
-  // JEXL Metric constants
-  public static final String JEXL_CATEGORY_METRIC_NAME = "wrangler.jexl-category.count";
-  public static final int JEXL_CATEGORY_METRIC_COUNT = 1;
-  public  static final String JEXL_CATEGORY_ENTITY_TYPE = "jexl-category";
+    // JEXL Metric constants
+    public static final String JEXL_CATEGORY_METRIC_NAME = "wrangler.jexl-category.count";
+    public static final int JEXL_CATEGORY_METRIC_COUNT = 1;
+    public static final String JEXL_CATEGORY_ENTITY_TYPE = "jexl-category";
 
-  /**
-   * This method parses the JEXL function category from the given JEXL script and returns the metric if the category is
-   * present in {@link io.cdap.wrangler.expression.EL.DefaultFunctions}
-   *
-   * @param jexlScript the JEXL script from which the JEXL function category will be parsed
-   * @return {@link EntityCountMetric} with the metric name and necessary tags representing a JEXL category metric
-   */
-  @Nullable
-  public static EntityCountMetric getJexlCategoryMetric(String jexlScript) {
-    String category = parseJexlCategory(jexlScript);
-    if (EL_DEFAULT_FUNCTIONS.containsKey(category)) {
-      return new EntityCountMetric(
-        JEXL_CATEGORY_METRIC_NAME, JEXL_CATEGORY_ENTITY_TYPE, category, JEXL_CATEGORY_METRIC_COUNT);
+    /**
+     * This method parses the JEXL function category from the given JEXL script and returns the metric if the category is
+     * present in {@link io.cdap.wrangler.expression.EL.DefaultFunctions}
+     *
+     * @param jexlScript the JEXL script from which the JEXL function category will be parsed
+     * @return {@link EntityCountMetric} with the metric name and necessary tags representing a JEXL category metric
+     */
+    @Nullable
+    public static EntityCountMetric getJexlCategoryMetric(String jexlScript) {
+        String category = parseJexlCategory(jexlScript);
+        if (EL_DEFAULT_FUNCTIONS.containsKey(category)) {
+            return new EntityCountMetric(
+                    JEXL_CATEGORY_METRIC_NAME, JEXL_CATEGORY_ENTITY_TYPE, category, JEXL_CATEGORY_METRIC_COUNT);
+        }
+        return null;
     }
-    return null;
-  }
 
-  private static String parseJexlCategory(String script) {
-    ParserTokenManager manager = new ParserTokenManager(
-      new SimpleCharStream(new ByteArrayInputStream(script.getBytes())));
-    return manager.getNextToken().toString();
-  }
+    private static String parseJexlCategory(String script) {
+        ParserTokenManager manager = new ParserTokenManager(
+                new SimpleCharStream(new ByteArrayInputStream(script.getBytes())));
+        return manager.getNextToken().toString();
+    }
 }

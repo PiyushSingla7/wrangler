@@ -22,15 +22,15 @@ import io.cdap.cdap.api.data.schema.Schema;
  * Different formats for file based sources.
  */
 public enum Format {
-  TEXT(Schema.recordOf("text", Schema.Field.of("body", Schema.of(Schema.Type.STRING)))),
-  BLOB(Schema.recordOf("blob", Schema.Field.of("body", Schema.of(Schema.Type.BYTES))));
-  private final Schema schema;
+    TEXT(Schema.recordOf("text", Schema.Field.of("body", Schema.of(Schema.Type.STRING)))),
+    BLOB(Schema.recordOf("blob", Schema.Field.of("body", Schema.of(Schema.Type.BYTES))));
+    private final Schema schema;
 
-  Format(Schema schema) {
-    this.schema = schema;
-  }
+    Format(Schema schema) {
+        this.schema = schema;
+    }
 
-  public Schema getSchema() {
-    return schema;
-  }
+    public Schema getSchema() {
+        return schema;
+    }
 }

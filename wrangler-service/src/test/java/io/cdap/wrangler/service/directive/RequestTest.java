@@ -29,121 +29,121 @@ import org.junit.Test;
  */
 public class RequestTest {
 
-  @Test
-  public void testDeserialization() throws Exception {
-    String basic = "  {\n" +
-      "    \"version\" : 1,\n" +
-      "    \"workspace\" : {\n" +
-      "      \"name\" : \"body\",\n" +
-      "      \"results\" : 100\n" +
-      "    },\n" +
-      "    \"recipe\" : {\n" +
-      "      \"directives\" : [\n" +
-      "        \"parse-as-csv body ,\",\n" +
-      "        \"drop body\",\n" +
-      "        \"set-columns a,b,c,d\"\n" +
-      "      ],\n" +
-      "      \"save\" : true,\n" +
-      "      \"name\" : \"my-recipe\"\n" +
-      "    },\n" +
-      "    \"sampling\" : {\n" +
-      "      \"method\" : \"FIRST\",\n" +
-      "      \"seed\" : 1,\n" +
-      "      \"limit\" : 1000\n" +
-      "    }\n" +
-      "  }";
-    GsonBuilder builder = new GsonBuilder();
-    builder.registerTypeAdapter(Request.class, new RequestDeserializer());
-    Gson gson = builder.create();
-    Request request = gson.fromJson(basic, Request.class);
-    Assert.assertEquals("body", request.getWorkspace().getName());
-    Assert.assertEquals(100, (int) request.getWorkspace().getResults());
-  }
+    @Test
+    public void testDeserialization() throws Exception {
+        String basic = "  {\n" +
+                "    \"version\" : 1,\n" +
+                "    \"workspace\" : {\n" +
+                "      \"name\" : \"body\",\n" +
+                "      \"results\" : 100\n" +
+                "    },\n" +
+                "    \"recipe\" : {\n" +
+                "      \"directives\" : [\n" +
+                "        \"parse-as-csv body ,\",\n" +
+                "        \"drop body\",\n" +
+                "        \"set-columns a,b,c,d\"\n" +
+                "      ],\n" +
+                "      \"save\" : true,\n" +
+                "      \"name\" : \"my-recipe\"\n" +
+                "    },\n" +
+                "    \"sampling\" : {\n" +
+                "      \"method\" : \"FIRST\",\n" +
+                "      \"seed\" : 1,\n" +
+                "      \"limit\" : 1000\n" +
+                "    }\n" +
+                "  }";
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(Request.class, new RequestDeserializer());
+        Gson gson = builder.create();
+        Request request = gson.fromJson(basic, Request.class);
+        Assert.assertEquals("body", request.getWorkspace().getName());
+        Assert.assertEquals(100, (int) request.getWorkspace().getResults());
+    }
 
-  @Test(expected = JsonParseException.class)
-  public void testVersionMissing() throws Exception {
-    String basic = "  {\n" +
-      "    \"workspace\" : {\n" +
-      "      \"name\" : \"body\",\n" +
-      "      \"results\" : 100\n" +
-      "    },\n" +
-      "    \"recipe\" : {\n" +
-      "      \"directives\" : [\n" +
-      "        \"parse-as-csv body ,\",\n" +
-      "        \"drop body\",\n" +
-      "        \"set-columns a,b,c,d\"\n" +
-      "      ],\n" +
-      "      \"save\" : true,\n" +
-      "      \"name\" : \"my-recipe\"\n" +
-      "    },\n" +
-      "    \"sampling\" : {\n" +
-      "      \"method\" : \"FIRST\",\n" +
-      "      \"seed\" : 1,\n" +
-      "      \"limit\" : 1000\n" +
-      "    }\n" +
-      "  }";
-    GsonBuilder builder = new GsonBuilder();
-    builder.registerTypeAdapter(Request.class, new RequestDeserializer());
-    Gson gson = builder.create();
-    gson.fromJson(basic, Request.class);
-  }
+    @Test(expected = JsonParseException.class)
+    public void testVersionMissing() throws Exception {
+        String basic = "  {\n" +
+                "    \"workspace\" : {\n" +
+                "      \"name\" : \"body\",\n" +
+                "      \"results\" : 100\n" +
+                "    },\n" +
+                "    \"recipe\" : {\n" +
+                "      \"directives\" : [\n" +
+                "        \"parse-as-csv body ,\",\n" +
+                "        \"drop body\",\n" +
+                "        \"set-columns a,b,c,d\"\n" +
+                "      ],\n" +
+                "      \"save\" : true,\n" +
+                "      \"name\" : \"my-recipe\"\n" +
+                "    },\n" +
+                "    \"sampling\" : {\n" +
+                "      \"method\" : \"FIRST\",\n" +
+                "      \"seed\" : 1,\n" +
+                "      \"limit\" : 1000\n" +
+                "    }\n" +
+                "  }";
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(Request.class, new RequestDeserializer());
+        Gson gson = builder.create();
+        gson.fromJson(basic, Request.class);
+    }
 
-  @Test(expected = JsonParseException.class)
-  public void testWithWrongVersion() throws Exception {
-    String basic = "  {\n" +
-      "    \"version\" : 2,\n" +
-      "    \"workspace\" : {\n" +
-      "      \"name\" : \"body\",\n" +
-      "      \"results\" : 100\n" +
-      "    },\n" +
-      "    \"recipe\" : {\n" +
-      "      \"directives\" : [\n" +
-      "        \"parse-as-csv body ,\",\n" +
-      "        \"drop body\",\n" +
-      "        \"set-columns a,b,c,d\"\n" +
-      "      ],\n" +
-      "      \"save\" : true,\n" +
-      "      \"name\" : \"my-recipe\"\n" +
-      "    },\n" +
-      "    \"sampling\" : {\n" +
-      "      \"method\" : \"FIRST\",\n" +
-      "      \"seed\" : 1,\n" +
-      "      \"limit\" : 1000\n" +
-      "    }\n" +
-      "  }";
-    GsonBuilder builder = new GsonBuilder();
-    builder.registerTypeAdapter(Request.class, new RequestDeserializer());
-    Gson gson = builder.create();
-    gson.fromJson(basic, Request.class);
-  }
+    @Test(expected = JsonParseException.class)
+    public void testWithWrongVersion() throws Exception {
+        String basic = "  {\n" +
+                "    \"version\" : 2,\n" +
+                "    \"workspace\" : {\n" +
+                "      \"name\" : \"body\",\n" +
+                "      \"results\" : 100\n" +
+                "    },\n" +
+                "    \"recipe\" : {\n" +
+                "      \"directives\" : [\n" +
+                "        \"parse-as-csv body ,\",\n" +
+                "        \"drop body\",\n" +
+                "        \"set-columns a,b,c,d\"\n" +
+                "      ],\n" +
+                "      \"save\" : true,\n" +
+                "      \"name\" : \"my-recipe\"\n" +
+                "    },\n" +
+                "    \"sampling\" : {\n" +
+                "      \"method\" : \"FIRST\",\n" +
+                "      \"seed\" : 1,\n" +
+                "      \"limit\" : 1000\n" +
+                "    }\n" +
+                "  }";
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(Request.class, new RequestDeserializer());
+        Gson gson = builder.create();
+        gson.fromJson(basic, Request.class);
+    }
 
-  @Test
-  public void testSaveAndNameNotPresent() throws Exception {
-    String basic = "  {\n" +
-      "    \"version\" : 1,\n" +
-      "    \"workspace\" : {\n" +
-      "      \"name\" : \"body\",\n" +
-      "      \"results\" : 100\n" +
-      "    },\n" +
-      "    \"recipe\" : {\n" +
-      "      \"directives\" : [\n" +
-      "        \"parse-as-csv body ,\",\n" +
-      "        \"drop body\",\n" +
-      "        \"set-columns a,b,c,d\"\n" +
-      "      ]\n" +
-      "    },\n" +
-      "    \"sampling\" : {\n" +
-      "      \"method\" : \"FIRST\",\n" +
-      "      \"seed\" : 1,\n" +
-      "      \"limit\" : 1000\n" +
-      "    }\n" +
-      "  }";
-    GsonBuilder builder = new GsonBuilder();
-    builder.registerTypeAdapter(Request.class, new RequestDeserializer());
-    Gson gson = builder.create();
-    Request request = gson.fromJson(basic, Request.class);
-    Assert.assertNotNull(request);
-    Assert.assertNull(request.getRecipe().getName());
-    Assert.assertNull(request.getRecipe().getSave());
-  }
+    @Test
+    public void testSaveAndNameNotPresent() throws Exception {
+        String basic = "  {\n" +
+                "    \"version\" : 1,\n" +
+                "    \"workspace\" : {\n" +
+                "      \"name\" : \"body\",\n" +
+                "      \"results\" : 100\n" +
+                "    },\n" +
+                "    \"recipe\" : {\n" +
+                "      \"directives\" : [\n" +
+                "        \"parse-as-csv body ,\",\n" +
+                "        \"drop body\",\n" +
+                "        \"set-columns a,b,c,d\"\n" +
+                "      ]\n" +
+                "    },\n" +
+                "    \"sampling\" : {\n" +
+                "      \"method\" : \"FIRST\",\n" +
+                "      \"seed\" : 1,\n" +
+                "      \"limit\" : 1000\n" +
+                "    }\n" +
+                "  }";
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(Request.class, new RequestDeserializer());
+        Gson gson = builder.create();
+        Request request = gson.fromJson(basic, Request.class);
+        Assert.assertNotNull(request);
+        Assert.assertNull(request.getRecipe().getName());
+        Assert.assertNull(request.getRecipe().getSave());
+    }
 }

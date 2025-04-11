@@ -29,22 +29,22 @@ import org.apache.hadoop.mapred.TextOutputFormat;
  */
 public class DataPrep extends AbstractApplication<ConnectionTypeConfig> {
 
-  /**
-   * Override this method to declare and configure the application.
-   */
-  @Override
-  public void configure() {
-    setName("dataprep");
-    setDescription("DataPrep Backend Service");
+    /**
+     * Override this method to declare and configure the application.
+     */
+    @Override
+    public void configure() {
+        setName("dataprep");
+        setDescription("DataPrep Backend Service");
 
-    // Used by the file service.
-    createDataset("dataprepfs", FileSet.class, FileSetProperties.builder()
-      .setBasePath("dataprepfs/indexds")
-      .setInputFormat(TextInputFormat.class)
-      .setOutputFormat(TextOutputFormat.class)
-      .setDescription("Store Dataprep Index files")
-      .build());
+        // Used by the file service.
+        createDataset("dataprepfs", FileSet.class, FileSetProperties.builder()
+                .setBasePath("dataprepfs/indexds")
+                .setInputFormat(TextInputFormat.class)
+                .setOutputFormat(TextOutputFormat.class)
+                .setDescription("Store Dataprep Index files")
+                .build());
 
-    addService(new DataPrepService(getConfig()));
-  }
+        addService(new DataPrepService(getConfig()));
+    }
 }

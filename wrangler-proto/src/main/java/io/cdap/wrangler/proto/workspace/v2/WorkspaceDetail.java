@@ -30,57 +30,57 @@ import java.util.Objects;
  * Full information about the workspace, including sample data
  */
 public class WorkspaceDetail {
-  private final Workspace workspace;
-  private final List<Row> sample;
-  private final byte[] sampleAsBytes;
+    private final Workspace workspace;
+    private final List<Row> sample;
+    private final byte[] sampleAsBytes;
 
-  public WorkspaceDetail(Workspace workspace, List<Row> sample) {
-    this.workspace = workspace;
-    this.sample = sample;
-    this.sampleAsBytes = convertToBytes(sample);
-  }
-
-  private byte[] convertToBytes(List<Row> sample) {
-    try (ByteArrayOutputStream bos = new ByteArrayOutputStream();
-         ObjectOutput out = new ObjectOutputStream(bos)) {
-      out.writeObject(sample);
-      out.flush();
-      return bos.toByteArray();
-    } catch (Exception e) {
-      throw new RuntimeException("Error getting bytes from sample", e);
-    }
-  }
-
-  public Workspace getWorkspace() {
-    return workspace;
-  }
-
-  public List<Row> getSample() {
-    return sample;
-  }
-
-  public byte[] getSampleAsBytes() {
-    return sampleAsBytes;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
+    public WorkspaceDetail(Workspace workspace, List<Row> sample) {
+        this.workspace = workspace;
+        this.sample = sample;
+        this.sampleAsBytes = convertToBytes(sample);
     }
 
-    if (o == null || getClass() != o.getClass()) {
-      return false;
+    private byte[] convertToBytes(List<Row> sample) {
+        try (ByteArrayOutputStream bos = new ByteArrayOutputStream();
+             ObjectOutput out = new ObjectOutputStream(bos)) {
+            out.writeObject(sample);
+            out.flush();
+            return bos.toByteArray();
+        } catch (Exception e) {
+            throw new RuntimeException("Error getting bytes from sample", e);
+        }
     }
 
-    WorkspaceDetail detail = (WorkspaceDetail) o;
-    return Objects.equals(workspace, detail.workspace) &&
-      Objects.equals(sample, detail.sample) &&
-      Arrays.equals(sampleAsBytes, detail.sampleAsBytes);
-  }
+    public Workspace getWorkspace() {
+        return workspace;
+    }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(workspace, sample, sampleAsBytes);
-  }
+    public List<Row> getSample() {
+        return sample;
+    }
+
+    public byte[] getSampleAsBytes() {
+        return sampleAsBytes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        WorkspaceDetail detail = (WorkspaceDetail) o;
+        return Objects.equals(workspace, detail.workspace) &&
+                Objects.equals(sample, detail.sample) &&
+                Arrays.equals(sampleAsBytes, detail.sampleAsBytes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(workspace, sample, sampleAsBytes);
+    }
 }

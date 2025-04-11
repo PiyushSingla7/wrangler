@@ -23,18 +23,18 @@ import io.cdap.cdap.api.plugin.PluginClass;
  * Describes a directive.
  */
 public class DirectiveDescriptor {
-  private final String name;
-  private final String description;
-  private final String type;
-  @SerializedName("class")
-  private final String className;
-  private final DirectiveArtifact artifact;
+    private final String name;
+    private final String description;
+    private final String type;
+    @SerializedName("class")
+    private final String className;
+    private final DirectiveArtifact artifact;
 
-  public DirectiveDescriptor(PluginClass pluginClass, DirectiveArtifact artifact) {
-    this.name = pluginClass.getName();
-    this.description = pluginClass.getDescription();
-    this.type = pluginClass.getType();
-    this.className = pluginClass.getClassName();
-    this.artifact = artifact;
-  }
+    public DirectiveDescriptor(PluginClass pluginClass, DirectiveArtifact artifact) {
+        this.name = pluginClass.getName();
+        this.description = pluginClass.getDescription();
+        this.type = pluginClass.getType();
+        this.className = pluginClass.getClassName();
+        this.artifact = artifact;
+    }
 }

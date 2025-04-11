@@ -20,7 +20,7 @@ package io.cdap.wrangler.codec;
  * This exception is thrown when there are issues related decoder.
  */
 public class DecoderException extends Exception {
-  public DecoderException(String message) {
-    super(message);
-  }
+    public DecoderException(String message) {
+        super(message);
+    }
 }

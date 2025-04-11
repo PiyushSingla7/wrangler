@@ -22,7 +22,7 @@ import io.cdap.wrangler.proto.NotFoundException;
  * Thrown when a schema could not be found.
  */
 public class SchemaNotFoundException extends NotFoundException {
-  public SchemaNotFoundException(String message) {
-    super(message);
-  }
+    public SchemaNotFoundException(String message) {
+        super(message);
+    }
 }

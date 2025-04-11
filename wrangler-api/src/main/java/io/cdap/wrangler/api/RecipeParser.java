@@ -25,10 +25,10 @@ import java.util.List;
  */
 @PublicEvolving
 public interface RecipeParser {
-  /**
-   * Generates a configured set of {@link Executor} to be executed.
-   *
-   * @return List of {@link Executor}.
-   */
-  List<Directive> parse() throws RecipeException;
+    /**
+     * Generates a configured set of {@link Executor} to be executed.
+     *
+     * @return List of {@link Executor}.
+     */
+    List<Directive> parse() throws RecipeException;
 }

@@ -25,27 +25,27 @@ import io.cdap.wrangler.api.annotations.PublicEvolving;
  */
 @PublicEvolving
 public class Text implements Token {
-  private String value;
+    private String value;
 
-  public Text(String value) {
-    this.value = value;
-  }
+    public Text(String value) {
+        this.value = value;
+    }
 
-  @Override
-  public String value() {
-    return value;
-  }
+    @Override
+    public String value() {
+        return value;
+    }
 
-  @Override
-  public TokenType type() {
-    return TokenType.TEXT;
-  }
+    @Override
+    public TokenType type() {
+        return TokenType.TEXT;
+    }
 
-  @Override
-  public JsonElement toJson() {
-    JsonObject object = new JsonObject();
-    object.addProperty("type", TokenType.TEXT.name());
-    object.addProperty("value", value);
-    return object;
-  }
+    @Override
+    public JsonElement toJson() {
+        JsonObject object = new JsonObject();
+        object.addProperty("type", TokenType.TEXT.name());
+        object.addProperty("value", value);
+        return object;
+    }
 }

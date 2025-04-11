@@ -23,44 +23,44 @@ import io.cdap.wrangler.api.parser.UsageDefinition;
  * V2 version for directives
  */
 public class DirectiveUsage {
-  private final String directive;
-  private final String usage;
-  private final String description;
-  private final String scope;
-  private final UsageDefinition arguments;
-  private final String[] categories;
+    private final String directive;
+    private final String usage;
+    private final String description;
+    private final String scope;
+    private final UsageDefinition arguments;
+    private final String[] categories;
 
-  public DirectiveUsage(String directive, String usage, String description, String scope,
-                        UsageDefinition arguments, String[] categories) {
-    this.directive = directive;
-    this.usage = usage;
-    this.description = description;
-    this.scope = scope;
-    this.arguments = arguments;
-    this.categories = categories;
-  }
+    public DirectiveUsage(String directive, String usage, String description, String scope,
+                          UsageDefinition arguments, String[] categories) {
+        this.directive = directive;
+        this.usage = usage;
+        this.description = description;
+        this.scope = scope;
+        this.arguments = arguments;
+        this.categories = categories;
+    }
 
-  public String getDirective() {
-    return directive;
-  }
+    public String getDirective() {
+        return directive;
+    }
 
-  public String getUsage() {
-    return usage;
-  }
+    public String getUsage() {
+        return usage;
+    }
 
-  public String getDescription() {
-    return description;
-  }
+    public String getDescription() {
+        return description;
+    }
 
-  public String getScope() {
-    return scope;
-  }
+    public String getScope() {
+        return scope;
+    }
 
-  public UsageDefinition getArguments() {
-    return arguments;
-  }
+    public UsageDefinition getArguments() {
+        return arguments;
+    }
 
-  public String[] getCategories() {
-    return categories;
-  }
+    public String[] getCategories() {
+        return categories;
+    }
 }

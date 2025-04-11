@@ -40,62 +40,63 @@ import java.util.Map;
  */
 public class ValidationHelper {
 
-  private static final Logger LOG = LoggerFactory.getLogger(ValidationHelper.class);
-  static Gson gson = new Gson();
-  public static boolean validateActualDataToExpectedData(String table, String fileName) throws IOException,
-    InterruptedException, URISyntaxException {
-    Map<String, JsonObject> bigQueryMap = new HashMap<>();
-    Map<String, JsonObject> fileMap = new HashMap<>();
-    Path importExpectedFile = Paths.get(ValidationHelper.class.getResource("/" + fileName).toURI());
+    private static final Logger LOG = LoggerFactory.getLogger(ValidationHelper.class);
+    static Gson gson = new Gson();
 
-    getBigQueryTableData(table, bigQueryMap);
-    getFileData(importExpectedFile.toString(), fileMap);
+    public static boolean validateActualDataToExpectedData(String table, String fileName) throws IOException,
+            InterruptedException, URISyntaxException {
+        Map<String, JsonObject> bigQueryMap = new HashMap<>();
+        Map<String, JsonObject> fileMap = new HashMap<>();
+        Path importExpectedFile = Paths.get(ValidationHelper.class.getResource("/" + fileName).toURI());
 
-    boolean isMatched = bigQueryMap.equals(fileMap);
+        getBigQueryTableData(table, bigQueryMap);
+        getFileData(importExpectedFile.toString(), fileMap);
 
-    return isMatched;
-  }
+        boolean isMatched = bigQueryMap.equals(fileMap);
 
-  public static void getFileData(String fileName, Map<String, JsonObject> fileMap) {
-    try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-      String line;
-      while ((line = br.readLine()) != null) {
-        JsonObject json = gson.fromJson(line, JsonObject.class);
-        if (json.has("id")) { // Check if the JSON object has the "id" key
-          JsonElement idElement = json.get("id");
-          if (idElement.isJsonPrimitive()) {
-            String idKey = idElement.getAsString();
-            fileMap.put(idKey, json);
-          } else {
-            Log.error("ID key not found");
-          }
-        }
-      }
-    } catch (IOException e) {
-      System.err.println("Error reading the file: " + e.getMessage());
+        return isMatched;
     }
-  }
 
-  private static void getBigQueryTableData(String targetTable, Map<String, JsonObject> bigQueryMap)
-    throws IOException, InterruptedException {
-    String dataset = PluginPropertyUtils.pluginProp("dataset");
-    String projectId = PluginPropertyUtils.pluginProp("projectId");
-    String selectQuery = "SELECT TO_JSON(t) FROM `" + projectId + "." + dataset + "." + targetTable + "` AS t";
-    TableResult result = BigQueryClient.getQueryResult(selectQuery);
-
-    for (FieldValueList row : result.iterateAll()) {
-      JsonObject json = gson.fromJson(row.get(0).getStringValue(), JsonObject.class);
-      if (json.has("id")) { // Check if the JSON object has the "id" key
-        JsonElement idElement = json.get("id");
-        if (idElement.isJsonPrimitive()) {
-          String idKey = idElement.getAsString();
-          bigQueryMap.put(idKey, json);
-        } else {
-          LOG.error("Data Mismatched");
+    public static void getFileData(String fileName, Map<String, JsonObject> fileMap) {
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                JsonObject json = gson.fromJson(line, JsonObject.class);
+                if (json.has("id")) { // Check if the JSON object has the "id" key
+                    JsonElement idElement = json.get("id");
+                    if (idElement.isJsonPrimitive()) {
+                        String idKey = idElement.getAsString();
+                        fileMap.put(idKey, json);
+                    } else {
+                        Log.error("ID key not found");
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading the file: " + e.getMessage());
         }
-      } else {
-        LOG.error("ID Key not found in JSON object");
-      }
     }
-  }
+
+    private static void getBigQueryTableData(String targetTable, Map<String, JsonObject> bigQueryMap)
+            throws IOException, InterruptedException {
+        String dataset = PluginPropertyUtils.pluginProp("dataset");
+        String projectId = PluginPropertyUtils.pluginProp("projectId");
+        String selectQuery = "SELECT TO_JSON(t) FROM `" + projectId + "." + dataset + "." + targetTable + "` AS t";
+        TableResult result = BigQueryClient.getQueryResult(selectQuery);
+
+        for (FieldValueList row : result.iterateAll()) {
+            JsonObject json = gson.fromJson(row.get(0).getStringValue(), JsonObject.class);
+            if (json.has("id")) { // Check if the JSON object has the "id" key
+                JsonElement idElement = json.get("id");
+                if (idElement.isJsonPrimitive()) {
+                    String idKey = idElement.getAsString();
+                    bigQueryMap.put(idKey, json);
+                } else {
+                    LOG.error("Data Mismatched");
+                }
+            } else {
+                LOG.error("ID Key not found in JSON object");
+            }
+        }
+    }
 }

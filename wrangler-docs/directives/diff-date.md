@@ -2,12 +2,11 @@
 
 The DIFF-DATE directive calculates the difference between two dates.
 
-
 ## Syntax
+
 ```
 diff-date <column1> <column2> <destination>
 ```
-
 
 ## Usage Notes
 
@@ -27,10 +26,10 @@ If any of the columns contains the string `now`, then the current date-time will
 substituted for it. When `now` is encountered, the directive applies the same value for
 `now` across all rows.
 
-
 ## Example
 
 Using this record as an example:
+
 ```
 {
   "create_date": "02/12/2017",
@@ -39,11 +38,13 @@ Using this record as an example:
 ```
 
 Applying this directive:
+
 ```
 diff-date update_date create_date diff_date
 ```
 
 would result in this record:
+
 ```
 {
   "create_date": "02/12/2017",

@@ -19,47 +19,47 @@ package io.cdap.wrangler.proto.workspace.v2;
 
 import io.cdap.cdap.api.data.schema.Schema;
 
-import java.util.Objects;
 import javax.annotation.Nullable;
+import java.util.Objects;
 
 /**
  * Stage spec for a plugin
  */
 public class StageSpec {
-  private final Schema schema;
-  private final Plugin plugin;
+    private final Schema schema;
+    private final Plugin plugin;
 
-  public StageSpec(@Nullable Schema schema, Plugin plugin) {
-    this.schema = schema;
-    this.plugin = plugin;
-  }
-
-  @Nullable
-  public Schema getSchema() {
-    return schema;
-  }
-
-  public Plugin getPlugin() {
-    return plugin;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
+    public StageSpec(@Nullable Schema schema, Plugin plugin) {
+        this.schema = schema;
+        this.plugin = plugin;
     }
 
-    if (o == null || getClass() != o.getClass()) {
-      return false;
+    @Nullable
+    public Schema getSchema() {
+        return schema;
     }
 
-    StageSpec stageSpec = (StageSpec) o;
-    return Objects.equals(schema, stageSpec.schema) &&
-             Objects.equals(plugin, stageSpec.plugin);
-  }
+    public Plugin getPlugin() {
+        return plugin;
+    }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(schema, plugin);
-  }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        StageSpec stageSpec = (StageSpec) o;
+        return Objects.equals(schema, stageSpec.schema) &&
+                Objects.equals(plugin, stageSpec.plugin);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(schema, plugin);
+    }
 }

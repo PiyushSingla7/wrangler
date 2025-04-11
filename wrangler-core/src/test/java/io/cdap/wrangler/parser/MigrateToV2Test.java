@@ -23,34 +23,34 @@ import org.junit.Test;
  * Tests {@link MigrateToV2}
  */
 public class MigrateToV2Test {
-  @Test
-  public void testNullRecipe() throws Exception {
-    GrammarMigrator migrator = new MigrateToV2((String) null);
-    // no exception should be thrown.
-    migrator.migrate();
-  }
+    @Test
+    public void testNullRecipe() throws Exception {
+        GrammarMigrator migrator = new MigrateToV2((String) null);
+        // no exception should be thrown.
+        migrator.migrate();
+    }
 
-  @Test
-  public void testEmptyRecipe() throws Exception {
-    String recipe = "";
-    GrammarMigrator migrator = new MigrateToV2(recipe);
-    // no exception should be thrown.
-    migrator.migrate();
-  }
+    @Test
+    public void testEmptyRecipe() throws Exception {
+        String recipe = "";
+        GrammarMigrator migrator = new MigrateToV2(recipe);
+        // no exception should be thrown.
+        migrator.migrate();
+    }
 
-  @Test
-  public void testCommentOnlyRecipe() throws Exception {
-    String recipe = "// test";
-    GrammarMigrator migrator = new MigrateToV2(recipe);
-    // no exception should be thrown.
-    migrator.migrate();
-  }
+    @Test
+    public void testCommentOnlyRecipe() throws Exception {
+        String recipe = "// test";
+        GrammarMigrator migrator = new MigrateToV2(recipe);
+        // no exception should be thrown.
+        migrator.migrate();
+    }
 
-  @Test
-  public void testOldDirectivesWithNewSyntax() throws Exception {
-    String recipe = "parse-as-csv :body '\t' true; drop :body;";
-    GrammarMigrator migrator = new MigrateToV2(recipe);
-    // no exception should be thrown.
-    migrator.migrate();
-  }
+    @Test
+    public void testOldDirectivesWithNewSyntax() throws Exception {
+        String recipe = "parse-as-csv :body '\t' true; drop :body;";
+        GrammarMigrator migrator = new MigrateToV2(recipe);
+        // no exception should be thrown.
+        migrator.migrate();
+    }
 }

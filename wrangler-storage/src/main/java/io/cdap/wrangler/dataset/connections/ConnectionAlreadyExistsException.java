@@ -23,7 +23,7 @@ import io.cdap.wrangler.proto.ConflictException;
  */
 public class ConnectionAlreadyExistsException extends ConflictException {
 
-  public ConnectionAlreadyExistsException(String message) {
-    super(message);
-  }
+    public ConnectionAlreadyExistsException(String message) {
+        super(message);
+    }
 }

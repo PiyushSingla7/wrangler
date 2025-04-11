@@ -4,20 +4,20 @@ The PARSE-AS-HL7 directive is for parsing Health Level 7 Version 2 (HL7 V2) mess
 [HL7](http://www.hl7.org) is a messaging standard used in the healthcare industry to
 exchange data between systems.
 
-
 ## Syntax
+
 ```
 parse-as-hl7 <column>
 ```
 
 The `<column>` contains HL7 V2 messages, v2.1 through v2.6.
 
-
 ## Usage Notes
 
 This is an example of an [HL7
 V2](http://www.hl7.org/implement/standards/product_brief.cfm?product_id=185) message in a
 record:
+
 ```
 MSH|^~\&||.|||199908180016||ADT^A04|ADT.1.1698593|P|2.6
 PID|1||000395122||LEVERKUHN^ADRIAN^C||19880517180606|M|||6 66TH AVE NE^^WEIMAR^DL^98052||(157)983-3296|||S||12354768|87654321
@@ -52,15 +52,16 @@ Parsing the above message using the directive will generate a record that has fl
 HL7 V2 components and all **fields converted to JSON**. Further parsing can be achieved
 with the [PARSE-AS-JSON](parse-as-json.md) directive.
 
-
 ## Example
 
 Applying this directive to the above message:
+
 ```
 parse-as-hl7 body
 ```
 
 would result in a record of this form:
+
 ```
 {
   "body": "<original-hl7-message>",

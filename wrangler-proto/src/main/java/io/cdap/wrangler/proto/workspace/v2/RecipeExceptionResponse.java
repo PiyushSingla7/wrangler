@@ -19,14 +19,16 @@ package io.cdap.wrangler.proto.workspace.v2;
 /**
  * Response returned when a {@link io.cdap.wrangler.api.RecipeException} occurs. Contains information about row index
  * in dataset and directive index in recipe that caused the error.
+ *
  * @param <T>
  */
 public class RecipeExceptionResponse<T> extends ServiceResponse<T> {
-  private final Integer rowIndex;
-  private final Integer directiveIndex;
-  public RecipeExceptionResponse(String message, Integer rowIndex, Integer directiveIndex) {
-    super(message);
-    this.rowIndex = rowIndex;
-    this.directiveIndex = directiveIndex;
-  }
+    private final Integer rowIndex;
+    private final Integer directiveIndex;
+
+    public RecipeExceptionResponse(String message, Integer rowIndex, Integer directiveIndex) {
+        super(message);
+        this.rowIndex = rowIndex;
+        this.directiveIndex = directiveIndex;
+    }
 }

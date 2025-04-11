@@ -24,45 +24,45 @@ import java.util.Objects;
  * Uniquely identifies a namespace generation.
  */
 public class Namespace {
-  protected final String name;
-  protected final long generation;
+    protected final String name;
+    protected final long generation;
 
-  protected Namespace(Namespace other) {
-    this(other.name, other.generation);
-  }
-
-  public Namespace(String name, long generation) {
-    this.name = name;
-    this.generation = generation;
-  }
-
-  public Namespace(NamespaceSummary summary) {
-    this(summary.getName(), summary.getGeneration());
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public long getGeneration() {
-    return generation;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
+    protected Namespace(Namespace other) {
+        this(other.name, other.generation);
     }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Namespace that = (Namespace) o;
-    return generation == that.generation &&
-      Objects.equals(name, that.name);
-  }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(name, generation);
-  }
+    public Namespace(String name, long generation) {
+        this.name = name;
+        this.generation = generation;
+    }
+
+    public Namespace(NamespaceSummary summary) {
+        this(summary.getName(), summary.getGeneration());
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public long getGeneration() {
+        return generation;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Namespace that = (Namespace) o;
+        return generation == that.generation &&
+                Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, generation);
+    }
 }

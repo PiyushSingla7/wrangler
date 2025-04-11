@@ -29,56 +29,58 @@ import java.util.Map;
  */
 @PublicEvolving
 public interface ExecutorContext extends LookupProvider, Serializable {
-  /**
-   * Specifies the environment in which wrangler is running.
-   */
-  enum Environment {
-    SERVICE,
-    TRANSFORM,
-    MICROSERVICE,
-    TESTING
-  };
+    /**
+     * Specifies the environment in which wrangler is running.
+     */
+    enum Environment {
+        SERVICE,
+        TRANSFORM,
+        MICROSERVICE,
+        TESTING
+    }
 
-  /**
-   * @return Environment this context is prepared for.
-   */
-  Environment getEnvironment();
+    ;
 
-  /**
-   * @return namespace that the program is being executed in
-   */
-  String getNamespace();
+    /**
+     * @return Environment this context is prepared for.
+     */
+    Environment getEnvironment();
 
-  /**
-   * @return Measurements handler.
-   */
-  StageMetrics getMetrics();
+    /**
+     * @return namespace that the program is being executed in
+     */
+    String getNamespace();
 
-  /**
-   * @return Context name.
-   */
-  String getContextName();
+    /**
+     * @return Measurements handler.
+     */
+    StageMetrics getMetrics();
 
-  /**
-   * @return Properties associated with run and pipeline.
-   */
-  Map<String, String> getProperties();
+    /**
+     * @return Context name.
+     */
+    String getContextName();
 
-  /**
-   * Returns a valid service url.
-   *
-   * @param applicationId id of the application to which a service url.
-   * @param serviceId id of the service within application.
-   * @return URL if service exists, else null.
-   */
-  URL getService(String applicationId, String serviceId);
+    /**
+     * @return Properties associated with run and pipeline.
+     */
+    Map<String, String> getProperties();
 
-  /**
-   * @return A transient store.
-   */
-  TransientStore getTransientStore();
+    /**
+     * Returns a valid service url.
+     *
+     * @param applicationId id of the application to which a service url.
+     * @param serviceId     id of the service within application.
+     * @return URL if service exists, else null.
+     */
+    URL getService(String applicationId, String serviceId);
 
-  default boolean isSchemaManagementEnabled() {
-    return false;
-  }
+    /**
+     * @return A transient store.
+     */
+    TransientStore getTransientStore();
+
+    default boolean isSchemaManagementEnabled() {
+        return false;
+    }
 }

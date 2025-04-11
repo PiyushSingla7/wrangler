@@ -23,11 +23,11 @@ import java.net.HttpURLConnection;
  */
 public class NotFoundException extends StatusCodeException {
 
-  public NotFoundException(String message) {
-    super(message, HttpURLConnection.HTTP_NOT_FOUND);
-  }
+    public NotFoundException(String message) {
+        super(message, HttpURLConnection.HTTP_NOT_FOUND);
+    }
 
-  public NotFoundException(String message, Throwable cause) {
-    super(message, cause, HttpURLConnection.HTTP_NOT_FOUND);
-  }
+    public NotFoundException(String message, Throwable cause) {
+        super(message, cause, HttpURLConnection.HTTP_NOT_FOUND);
+    }
 }

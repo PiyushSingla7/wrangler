@@ -20,26 +20,26 @@ package io.cdap.wrangler.dq;
  * Class that specifies type of data.
  */
 public enum DataType {
-  BOOLEAN,
-  INTEGER,
-  DOUBLE,
-  STRING,
-  DATE,
-  TIME,
-  EMPTY;
+    BOOLEAN,
+    INTEGER,
+    DOUBLE,
+    STRING,
+    DATE,
+    TIME,
+    EMPTY;
 
-  /**
-   * Get the type of the data.
-   *
-   * @param name of type.
-   * @return {@link DataType}.
-   */
-  public static DataType get(String name) {
-    try {
-      return DataType.valueOf(name.toUpperCase());
-    } catch (Exception e) {
-      return DataType.STRING;
+    /**
+     * Get the type of the data.
+     *
+     * @param name of type.
+     * @return {@link DataType}.
+     */
+    public static DataType get(String name) {
+        try {
+            return DataType.valueOf(name.toUpperCase());
+        } catch (Exception e) {
+            return DataType.STRING;
+        }
     }
-  }
 
 }

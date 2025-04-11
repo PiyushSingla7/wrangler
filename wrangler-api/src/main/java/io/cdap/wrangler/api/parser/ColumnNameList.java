@@ -30,31 +30,31 @@ import java.util.List;
  */
 @PublicEvolving
 public class ColumnNameList implements Token {
-  private List<String> values = new ArrayList<>();
+    private List<String> values = new ArrayList<>();
 
-  public ColumnNameList(List<String> values) {
-    this.values = values;
-  }
-
-  @Override
-  public List<String> value() {
-    return values;
-  }
-
-  @Override
-  public TokenType type() {
-    return TokenType.COLUMN_NAME_LIST;
-  }
-
-  @Override
-  public JsonElement toJson() {
-    JsonObject object = new JsonObject();
-    object.addProperty("type", TokenType.COLUMN_NAME_LIST.name());
-    JsonArray array = new JsonArray();
-    for (String value : values) {
-      array.add(new JsonPrimitive(value));
+    public ColumnNameList(List<String> values) {
+        this.values = values;
     }
-    object.add("value", array);
-    return object;
-  }
+
+    @Override
+    public List<String> value() {
+        return values;
+    }
+
+    @Override
+    public TokenType type() {
+        return TokenType.COLUMN_NAME_LIST;
+    }
+
+    @Override
+    public JsonElement toJson() {
+        JsonObject object = new JsonObject();
+        object.addProperty("type", TokenType.COLUMN_NAME_LIST.name());
+        JsonArray array = new JsonArray();
+        for (String value : values) {
+            array.add(new JsonPrimitive(value));
+        }
+        object.add("value", array);
+        return object;
+    }
 }

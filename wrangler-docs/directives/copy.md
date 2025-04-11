@@ -2,8 +2,8 @@
 
 The COPY directive copies values from a source column into a destination column.
 
-
 ## Syntax
+
 ```
 copy <source> <destination> [<force>]
 ```
@@ -14,7 +14,6 @@ If the `<destination>` column already exists, the `<force>` option can be set to
 override any existing data in that column. By default, the `<force>` option is set to
 `false`.
 
-
 ## Usage Notes
 
 The COPY directive will copy data from `<source>` if and only if `<source>` column exists.
@@ -23,10 +22,10 @@ If the `<source>` doesn't exist in the record, the execution will fail with an e
 Copying makes a deep copy of the source into the destination. The type of data from the
 source in the destination column is maintained as-is.
 
-
 ## Example
 
 Using this record as an example:
+
 ```
 {
   "id": 1,
@@ -41,12 +40,14 @@ Using this record as an example:
 ```
 
 Applying these directives:
+
 ```
 copy timestamp datetime
 copy message status
 ```
 
 would result in this record:
+
 ```
 {
   "id": 1,

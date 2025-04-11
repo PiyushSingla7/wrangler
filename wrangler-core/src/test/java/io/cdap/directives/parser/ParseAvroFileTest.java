@@ -33,34 +33,34 @@ import java.util.List;
  */
 public class ParseAvroFileTest {
 
-  @Test
-  public void testParseAsAvroFile() throws Exception {
-    InputStream stream = ParseAvroFileTest.class.getClassLoader().getResourceAsStream("cdap-log.avro");
-    byte[] data = IOUtils.toByteArray(stream);
+    @Test
+    public void testParseAsAvroFile() throws Exception {
+        InputStream stream = ParseAvroFileTest.class.getClassLoader().getResourceAsStream("cdap-log.avro");
+        byte[] data = IOUtils.toByteArray(stream);
 
-    String[] directives = new String[] {
-      "parse-as-avro-file body",
-    };
+        String[] directives = new String[]{
+                "parse-as-avro-file body",
+        };
 
-    List<Row> rows = new ArrayList<>();
-    rows.add(new Row("body", data));
+        List<Row> rows = new ArrayList<>();
+        rows.add(new Row("body", data));
 
-    List<Row> results = TestingRig.execute(directives, rows);
-    Assert.assertEquals(1689, results.size());
-    Assert.assertEquals(15, results.get(0).width());
-    Assert.assertEquals(1495172588118L, results.get(0).getValue("timestamp"));
-    Assert.assertEquals(1495194308245L, results.get(1688).getValue("timestamp"));
-  }
+        List<Row> results = TestingRig.execute(directives, rows);
+        Assert.assertEquals(1689, results.size());
+        Assert.assertEquals(15, results.get(0).width());
+        Assert.assertEquals(1495172588118L, results.get(0).getValue("timestamp"));
+        Assert.assertEquals(1495194308245L, results.get(1688).getValue("timestamp"));
+    }
 
-  @Test(expected = RecipeException.class)
-  public void testIncorrectType() throws Exception {
-    String[] directives = new String[] {
-      "parse-as-avro-file body",
-    };
+    @Test(expected = RecipeException.class)
+    public void testIncorrectType() throws Exception {
+        String[] directives = new String[]{
+                "parse-as-avro-file body",
+        };
 
-    List<Row> rows = new ArrayList<>();
-    rows.add(new Row("body", new String("failure").getBytes(Charsets.UTF_8)));
-    TestingRig.execute(directives, rows);
-  }
+        List<Row> rows = new ArrayList<>();
+        rows.add(new Row("body", new String("failure").getBytes(Charsets.UTF_8)));
+        TestingRig.execute(directives, rows);
+    }
 
 }

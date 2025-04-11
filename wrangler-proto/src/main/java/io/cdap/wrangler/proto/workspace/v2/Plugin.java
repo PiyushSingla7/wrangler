@@ -24,53 +24,53 @@ import java.util.Objects;
  * Plugin information
  */
 public class Plugin {
-  private final String name;
-  private final String type;
-  private final Map<String, String> properties;
-  private final Artifact artifact;
+    private final String name;
+    private final String type;
+    private final Map<String, String> properties;
+    private final Artifact artifact;
 
-  public Plugin(String name, String type, Map<String, String> properties, Artifact artifact) {
-    this.name = name;
-    this.type = type;
-    this.properties = properties;
-    this.artifact = artifact;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public String getType() {
-    return type;
-  }
-
-  public Artifact getArtifact() {
-    return artifact;
-  }
-
-  public Map<String, String> getProperties() {
-    return properties;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
+    public Plugin(String name, String type, Map<String, String> properties, Artifact artifact) {
+        this.name = name;
+        this.type = type;
+        this.properties = properties;
+        this.artifact = artifact;
     }
 
-    if (o == null || getClass() != o.getClass()) {
-      return false;
+    public String getName() {
+        return name;
     }
 
-    Plugin that = (Plugin) o;
-    return Objects.equals(name, that.name) &&
-             Objects.equals(type, that.type) &&
-             Objects.equals(properties, that.properties) &&
-             Objects.equals(artifact, that.artifact);
-  }
+    public String getType() {
+        return type;
+    }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(name, type, properties, artifact);
-  }
+    public Artifact getArtifact() {
+        return artifact;
+    }
+
+    public Map<String, String> getProperties() {
+        return properties;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Plugin that = (Plugin) o;
+        return Objects.equals(name, that.name) &&
+                Objects.equals(type, that.type) &&
+                Objects.equals(properties, that.properties) &&
+                Objects.equals(artifact, that.artifact);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, type, properties, artifact);
+    }
 }

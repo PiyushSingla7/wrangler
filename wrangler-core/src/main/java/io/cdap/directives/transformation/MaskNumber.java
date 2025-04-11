@@ -19,12 +19,7 @@ package io.cdap.directives.transformation;
 import io.cdap.cdap.api.annotation.Description;
 import io.cdap.cdap.api.annotation.Name;
 import io.cdap.cdap.api.annotation.Plugin;
-import io.cdap.wrangler.api.Arguments;
-import io.cdap.wrangler.api.Directive;
-import io.cdap.wrangler.api.DirectiveExecutionException;
-import io.cdap.wrangler.api.DirectiveParseException;
-import io.cdap.wrangler.api.ExecutorContext;
-import io.cdap.wrangler.api.Row;
+import io.cdap.wrangler.api.*;
 import io.cdap.wrangler.api.annotations.Categories;
 import io.cdap.wrangler.api.lineage.Lineage;
 import io.cdap.wrangler.api.lineage.Mutation;
@@ -40,9 +35,9 @@ import java.util.List;
  * A directive that applies substitution masking on the column.
  *
  * <p>
- *  Substitution masking is generally used for masking credit card or SSN numbers.
- *  This type of masking is fixed masking, where the pattern is applied on the
- *  fixed length string.
+ * Substitution masking is generally used for masking credit card or SSN numbers.
+ * This type of masking is fixed masking, where the pattern is applied on the
+ * fixed length string.
  *
  *  <ul>
  *    <li>Use of # will include the digit from the position.</li>
@@ -60,91 +55,91 @@ import java.util.List;
  */
 @Plugin(type = Directive.TYPE)
 @Name(MaskNumber.NAME)
-@Categories(categories = { "transform"})
+@Categories(categories = {"transform"})
 @Description("Masks a column value using the specified masking pattern.")
 public class MaskNumber implements Directive, Lineage {
-  public static final String NAME = "mask-number";
-  // Specifies types of mask
-  public static final int MASK_NUMBER = 1;
-  public static final int MASK_SHUFFLE = 2;
+    public static final String NAME = "mask-number";
+    // Specifies types of mask
+    public static final int MASK_NUMBER = 1;
+    public static final int MASK_SHUFFLE = 2;
 
-  // Masking pattern
-  private String mask;
+    // Masking pattern
+    private String mask;
 
-  // Column on which to apply mask.
-  private String column;
+    // Column on which to apply mask.
+    private String column;
 
-  @Override
-  public UsageDefinition define() {
-    UsageDefinition.Builder builder = UsageDefinition.builder(NAME);
-    builder.define("column", TokenType.COLUMN_NAME);
-    builder.define("mask", TokenType.TEXT);
-    return builder.build();
-  }
-
-  @Override
-  public void initialize(Arguments args) throws DirectiveParseException {
-    this.column = ((ColumnName) args.value("column")).value();
-    this.mask = ((Text) args.value("mask")).value();
-  }
-
-  @Override
-  public void destroy() {
-    // no-op
-  }
-
-  @Override
-  public List<Row> execute(List<Row> rows, ExecutorContext context) throws DirectiveExecutionException {
-    for (Row row : rows) {
-      int idx = row.find(column);
-      if (idx != -1) {
-        String value = TypeConvertor.toString(row.getValue(idx));
-        if (value == null) {
-          continue;
-        }
-        row.setValue(idx, maskNumber(value, mask));
-      } else {
-        row.add(column, new String(""));
-      }
+    @Override
+    public UsageDefinition define() {
+        UsageDefinition.Builder builder = UsageDefinition.builder(NAME);
+        builder.define("column", TokenType.COLUMN_NAME);
+        builder.define("mask", TokenType.TEXT);
+        return builder.build();
     }
-    return rows;
-  }
 
-  @Override
-  public Mutation lineage() {
-    return Mutation.builder()
-      .readable("Masked numbers in the column '%s' using masking pattern '%s'", column, mask)
-      .relation(column, column)
-      .build();
-  }
-
-  private String maskNumber(String number, String mask) {
-    int index = 0;
-    StringBuilder masked = new StringBuilder();
-    for (int i = 0; i < mask.length(); i++) {
-      char c = mask.charAt(i);
-      if (c == '#') {
-        // if we have print numbers and the mask index has exceed, we continue further.
-        if (index > number.length() - 1) {
-          continue;
-        }
-        masked.append(number.charAt(index));
-        index++;
-      } else if (c == 'x' || c == 'X') {
-        masked.append(Character.toLowerCase(c));
-        index++;
-      } else {
-        if (index < number.length()) {
-          char c1 = number.charAt(index);
-          if (c1 == c) {
-            index++;
-          }
-        }
-        masked.append(c);
-      }
+    @Override
+    public void initialize(Arguments args) throws DirectiveParseException {
+        this.column = ((ColumnName) args.value("column")).value();
+        this.mask = ((Text) args.value("mask")).value();
     }
-    return masked.toString();
-  }
+
+    @Override
+    public void destroy() {
+        // no-op
+    }
+
+    @Override
+    public List<Row> execute(List<Row> rows, ExecutorContext context) throws DirectiveExecutionException {
+        for (Row row : rows) {
+            int idx = row.find(column);
+            if (idx != -1) {
+                String value = TypeConvertor.toString(row.getValue(idx));
+                if (value == null) {
+                    continue;
+                }
+                row.setValue(idx, maskNumber(value, mask));
+            } else {
+                row.add(column, new String(""));
+            }
+        }
+        return rows;
+    }
+
+    @Override
+    public Mutation lineage() {
+        return Mutation.builder()
+                .readable("Masked numbers in the column '%s' using masking pattern '%s'", column, mask)
+                .relation(column, column)
+                .build();
+    }
+
+    private String maskNumber(String number, String mask) {
+        int index = 0;
+        StringBuilder masked = new StringBuilder();
+        for (int i = 0; i < mask.length(); i++) {
+            char c = mask.charAt(i);
+            if (c == '#') {
+                // if we have print numbers and the mask index has exceed, we continue further.
+                if (index > number.length() - 1) {
+                    continue;
+                }
+                masked.append(number.charAt(index));
+                index++;
+            } else if (c == 'x' || c == 'X') {
+                masked.append(Character.toLowerCase(c));
+                index++;
+            } else {
+                if (index < number.length()) {
+                    char c1 = number.charAt(index);
+                    if (c1 == c) {
+                        index++;
+                    }
+                }
+                masked.append(c);
+            }
+        }
+        return masked.toString();
+    }
 }
 
 

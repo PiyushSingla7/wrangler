@@ -22,41 +22,43 @@ import io.cdap.wrangler.utils.AvroSchemaGlossary;
  */
 public class DataModelGlossary {
 
-  private static AvroSchemaGlossary glossary;
+    private static AvroSchemaGlossary glossary;
 
-  /**
-   * Initializes the data model glossary with the data models located at the url. All available
-   * data models should be listed within a manifest.json file found at the root of the url.
-   * The manifest.json should have the schema of {@link io.cdap.wrangler.utils.Manifest}. If
-   * the loader is unable to download the manifest or referenced data models, the
-   * initialization will fail. Below is an example manifest file.
-   * e.g.
-   *    {
-   *      "standards": {
-   *        "OMOP_6_0_0": {
-   *          "format": "avsc"
-   *        }
-   *      }
-   *    }
-   * @param dataModelUrl the url to download the data models from.
-   * @return true if successfully downloaded and store data models into glossary, otherwise
-   *          false for all other errors.
-   */
-  public static boolean initialize(String dataModelUrl) {
-    HTTPSchemaLoader schemaLoader = new HTTPSchemaLoader(dataModelUrl, "manifest.json");
-    if (glossary == null) {
-      glossary = new AvroSchemaGlossary(schemaLoader);
-    } else {
-      glossary.setAvroSchemaLoader(schemaLoader);
+    /**
+     * Initializes the data model glossary with the data models located at the url. All available
+     * data models should be listed within a manifest.json file found at the root of the url.
+     * The manifest.json should have the schema of {@link io.cdap.wrangler.utils.Manifest}. If
+     * the loader is unable to download the manifest or referenced data models, the
+     * initialization will fail. Below is an example manifest file.
+     * e.g.
+     * {
+     * "standards": {
+     * "OMOP_6_0_0": {
+     * "format": "avsc"
+     * }
+     * }
+     * }
+     *
+     * @param dataModelUrl the url to download the data models from.
+     * @return true if successfully downloaded and store data models into glossary, otherwise
+     * false for all other errors.
+     */
+    public static boolean initialize(String dataModelUrl) {
+        HTTPSchemaLoader schemaLoader = new HTTPSchemaLoader(dataModelUrl, "manifest.json");
+        if (glossary == null) {
+            glossary = new AvroSchemaGlossary(schemaLoader);
+        } else {
+            glossary.setAvroSchemaLoader(schemaLoader);
+        }
+        return glossary.configure();
     }
-    return glossary.configure();
-  }
 
-  /**
-   * Accessor for the data model glossary.
-   * @return the {@link AvroSchemaGlossary} instance.
-   */
-  public static AvroSchemaGlossary getGlossary() {
-    return glossary;
-  }
+    /**
+     * Accessor for the data model glossary.
+     *
+     * @return the {@link AvroSchemaGlossary} instance.
+     */
+    public static AvroSchemaGlossary getGlossary() {
+        return glossary;
+    }
 }

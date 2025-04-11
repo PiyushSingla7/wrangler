@@ -19,12 +19,7 @@ package io.cdap.directives.transformation;
 import io.cdap.cdap.api.annotation.Description;
 import io.cdap.cdap.api.annotation.Name;
 import io.cdap.cdap.api.annotation.Plugin;
-import io.cdap.wrangler.api.Arguments;
-import io.cdap.wrangler.api.Directive;
-import io.cdap.wrangler.api.DirectiveExecutionException;
-import io.cdap.wrangler.api.DirectiveParseException;
-import io.cdap.wrangler.api.ExecutorContext;
-import io.cdap.wrangler.api.Row;
+import io.cdap.wrangler.api.*;
 import io.cdap.wrangler.api.annotations.Categories;
 import io.cdap.wrangler.api.lineage.Lineage;
 import io.cdap.wrangler.api.lineage.Mutation;
@@ -41,67 +36,67 @@ import java.util.List;
  */
 @Plugin(type = Directive.TYPE)
 @Name(FillNullOrEmpty.NAME)
-@Categories(categories = { "transform"})
+@Categories(categories = {"transform"})
 @Description("Fills a value of a column with a fixed value if it is either null or empty.")
 public class FillNullOrEmpty implements Directive, Lineage {
-  public static final String NAME = "fill-null-or-empty";
-  private String column;
-  private String value;
+    public static final String NAME = "fill-null-or-empty";
+    private String column;
+    private String value;
 
-  @Override
-  public UsageDefinition define() {
-    UsageDefinition.Builder builder = UsageDefinition.builder(NAME);
-    builder.define("column", TokenType.COLUMN_NAME);
-    builder.define("value", TokenType.TEXT);
-    return builder.build();
-  }
-
-  @Override
-  public void initialize(Arguments args) throws DirectiveParseException {
-    this.column = ((ColumnName) args.value("column")).value();
-    this.value = ((Text) args.value("value")).value();
-    if (value != null && value.isEmpty()) {
-      throw new DirectiveParseException(NAME, "Fixed value cannot be an empty string");
+    @Override
+    public UsageDefinition define() {
+        UsageDefinition.Builder builder = UsageDefinition.builder(NAME);
+        builder.define("column", TokenType.COLUMN_NAME);
+        builder.define("value", TokenType.TEXT);
+        return builder.build();
     }
-  }
 
-  @Override
-  public void destroy() {
-    // no-op
-  }
-
-  @Override
-  public List<Row> execute(List<Row> rows, ExecutorContext context)
-    throws DirectiveExecutionException {
-    for (Row row : rows) {
-      int idx = row.find(column);
-      if (idx == -1) {
-        row.add(column, value);
-        continue;
-      }
-      Object object = row.getValue(idx);
-      if (object == null) {
-        row.setValue(idx, value);
-      } else {
-        if (object instanceof String) {
-          if (((String) object).isEmpty()) {
-            row.setValue(idx, value);
-          }
-        } else if (object instanceof JSONObject) {
-          if (JSONObject.NULL.equals(object)) {
-            row.setValue(idx, value);
-          }
+    @Override
+    public void initialize(Arguments args) throws DirectiveParseException {
+        this.column = ((ColumnName) args.value("column")).value();
+        this.value = ((Text) args.value("value")).value();
+        if (value != null && value.isEmpty()) {
+            throw new DirectiveParseException(NAME, "Fixed value cannot be an empty string");
         }
-      }
     }
-    return rows;
-  }
 
-  @Override
-  public Mutation lineage() {
-    return Mutation.builder()
-      .readable("Filled column '%s' values that were null or empty with value %s", column, value)
-      .relation(column, column)
-      .build();
-  }
+    @Override
+    public void destroy() {
+        // no-op
+    }
+
+    @Override
+    public List<Row> execute(List<Row> rows, ExecutorContext context)
+            throws DirectiveExecutionException {
+        for (Row row : rows) {
+            int idx = row.find(column);
+            if (idx == -1) {
+                row.add(column, value);
+                continue;
+            }
+            Object object = row.getValue(idx);
+            if (object == null) {
+                row.setValue(idx, value);
+            } else {
+                if (object instanceof String) {
+                    if (((String) object).isEmpty()) {
+                        row.setValue(idx, value);
+                    }
+                } else if (object instanceof JSONObject) {
+                    if (JSONObject.NULL.equals(object)) {
+                        row.setValue(idx, value);
+                    }
+                }
+            }
+        }
+        return rows;
+    }
+
+    @Override
+    public Mutation lineage() {
+        return Mutation.builder()
+                .readable("Filled column '%s' values that were null or empty with value %s", column, value)
+                .relation(column, column)
+                .build();
+    }
 }

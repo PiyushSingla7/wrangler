@@ -23,11 +23,11 @@ import java.net.HttpURLConnection;
  */
 public class UnauthorizedException extends StatusCodeException {
 
-  public UnauthorizedException(String message) {
-    super(message, HttpURLConnection.HTTP_UNAUTHORIZED);
-  }
+    public UnauthorizedException(String message) {
+        super(message, HttpURLConnection.HTTP_UNAUTHORIZED);
+    }
 
-  public UnauthorizedException(String message, Throwable cause) {
-    super(message, cause, HttpURLConnection.HTTP_UNAUTHORIZED);
-  }
+    public UnauthorizedException(String message, Throwable cause) {
+        super(message, cause, HttpURLConnection.HTTP_UNAUTHORIZED);
+    }
 }

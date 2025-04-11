@@ -20,19 +20,19 @@ package io.cdap.wrangler.proto.workspace;
  */
 public final class DataModelRequest {
 
-  private final String id;
-  private final Long revision;
+    private final String id;
+    private final Long revision;
 
-  public DataModelRequest(String id, Long revision) {
-    this.id = id;
-    this.revision = revision;
-  }
+    public DataModelRequest(String id, Long revision) {
+        this.id = id;
+        this.revision = revision;
+    }
 
-  public String getId() {
-    return this.id;
-  }
+    public String getId() {
+        return this.id;
+    }
 
-  public Long getRevision() {
-    return this.revision;
-  }
+    public Long getRevision() {
+        return this.revision;
+    }
 }

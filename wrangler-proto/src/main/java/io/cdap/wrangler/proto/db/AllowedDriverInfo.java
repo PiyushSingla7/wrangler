@@ -22,22 +22,22 @@ import com.google.gson.annotations.SerializedName;
  * Information about an allowed JDBC driver plugin.
  */
 public class AllowedDriverInfo {
-  @SerializedName("class")
-  private final String clazz;
-  private final String label;
-  private final String tag;
-  private final String name;
-  @SerializedName("default.port")
-  private final String port;
-  private final boolean basicAllowed;
+    @SerializedName("class")
+    private final String clazz;
+    private final String label;
+    private final String tag;
+    private final String name;
+    @SerializedName("default.port")
+    private final String port;
+    private final boolean basicAllowed;
 
-  // TODO: CDAP-15132 Check if this class can be reconciled with DriverInfo class
-  public AllowedDriverInfo(String clazz, String label, String tag, String name, String port, boolean basicAllowed) {
-    this.clazz = clazz;
-    this.label = label;
-    this.tag = tag;
-    this.name = name;
-    this.port = port;
-    this.basicAllowed = basicAllowed;
-  }
+    // TODO: CDAP-15132 Check if this class can be reconciled with DriverInfo class
+    public AllowedDriverInfo(String clazz, String label, String tag, String name, String port, boolean basicAllowed) {
+        this.clazz = clazz;
+        this.label = label;
+        this.tag = tag;
+        this.name = name;
+        this.port = port;
+        this.basicAllowed = basicAllowed;
+    }
 }

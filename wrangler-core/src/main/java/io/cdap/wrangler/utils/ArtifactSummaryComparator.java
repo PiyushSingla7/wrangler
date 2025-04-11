@@ -27,28 +27,28 @@ import java.util.Comparator;
  * Comparator for artifact summary
  */
 public class ArtifactSummaryComparator implements Comparator<ArtifactSummary> {
-  private static final ArtifactSummaryComparator COMPARATOR = new ArtifactSummaryComparator();
+    private static final ArtifactSummaryComparator COMPARATOR = new ArtifactSummaryComparator();
 
-  @Override
-  public int compare(ArtifactSummary summary1, ArtifactSummary summary2) {
-    if (summary1.equals(summary2)) {
-      return 0;
+    @Override
+    public int compare(ArtifactSummary summary1, ArtifactSummary summary2) {
+        if (summary1.equals(summary2)) {
+            return 0;
+        }
+
+        // first compare the artifact
+        int cmp = new ArtifactVersion(summary1.getVersion()).compareTo(new ArtifactVersion(summary2.getVersion()));
+        if (cmp != 0) {
+            return cmp;
+        }
+
+        // if scope is different, whoever has user scope is latest
+        return summary1.getScope().equals(ArtifactScope.USER) ? 1 : -1;
     }
 
-    // first compare the artifact
-    int cmp = new ArtifactVersion(summary1.getVersion()).compareTo(new ArtifactVersion(summary2.getVersion()));
-    if (cmp != 0) {
-      return cmp;
+    /**
+     * Pick up the latest artifact, this method assumes the name of the artifact is same
+     */
+    public static ArtifactSummary pickLatest(ArtifactSummary artifact1, ArtifactSummary artifact2) {
+        return COMPARATOR.compare(artifact1, artifact2) > 0 ? artifact1 : artifact2;
     }
-
-    // if scope is different, whoever has user scope is latest
-    return summary1.getScope().equals(ArtifactScope.USER) ? 1 : -1;
-  }
-
-  /**
-   * Pick up the latest artifact, this method assumes the name of the artifact is same
-   */
-  public static ArtifactSummary pickLatest(ArtifactSummary artifact1, ArtifactSummary artifact2) {
-    return COMPARATOR.compare(artifact1, artifact2) > 0 ? artifact1 : artifact2;
-  }
 }

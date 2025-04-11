@@ -20,15 +20,11 @@ import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.esotericsoftware.kryo.serializers.JavaSerializer;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonNull;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
+import com.google.gson.*;
 import io.cdap.cdap.api.data.schema.Schema;
 import io.cdap.wrangler.api.RemoteDirectiveResponse;
 import io.cdap.wrangler.api.Row;
+
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -45,56 +41,56 @@ import java.util.Map;
  **/
 public class KryoSerializer {
 
-  private final Kryo kryo;
-  private static final Gson GSON = new Gson();
+    private final Kryo kryo;
+    private static final Gson GSON = new Gson();
 
-  public KryoSerializer() {
-    kryo = new Kryo();
-    // Register all classes from RemoteDirectiveResponse
-    kryo.register(RemoteDirectiveResponse.class);
-    // Schema does not have no-arg constructor but implements Serializable
-    kryo.register(Schema.class, new JavaSerializer());
-    // Register all classes from SchemaConverter
-    kryo.register(Row.class);
-    kryo.register(ArrayList.class);
-    kryo.register(LocalDate.class);
-    kryo.register(LocalTime.class);
-    kryo.register(ZonedDateTime.class);
-    kryo.register(Map.class);
-    kryo.register(JsonNull.class);
-    // JsonPrimitive does not have no-arg constructor hence we need a
-    // custom serializer as it is not serializable by JavaSerializer
-    kryo.register(JsonPrimitive.class, new JsonSerializer());
-    kryo.register(JsonArray.class);
-    kryo.register(JsonObject.class);
-    // Support deprecated util.date classes
-    kryo.register(Date.class);
-    kryo.register(java.sql.Date.class);
-    kryo.register(Time.class);
-    kryo.register(Timestamp.class);
-  }
-
-  public byte[] fromRemoteDirectiveResponse(RemoteDirectiveResponse response) {
-    Output output = new Output(1024, -1);
-    kryo.writeClassAndObject(output, response);
-    return output.getBuffer();
-  }
-
-  public RemoteDirectiveResponse toRemoteDirectiveResponse(byte[] bytes) {
-    Input input = new Input(bytes);
-    return (RemoteDirectiveResponse) kryo.readClassAndObject(input);
-  }
-
-  static class JsonSerializer extends Serializer<JsonElement> {
-
-    @Override
-    public void write(Kryo kryo, Output output, JsonElement object) {
-      output.writeString(GSON.toJson(object));
+    public KryoSerializer() {
+        kryo = new Kryo();
+        // Register all classes from RemoteDirectiveResponse
+        kryo.register(RemoteDirectiveResponse.class);
+        // Schema does not have no-arg constructor but implements Serializable
+        kryo.register(Schema.class, new JavaSerializer());
+        // Register all classes from SchemaConverter
+        kryo.register(Row.class);
+        kryo.register(ArrayList.class);
+        kryo.register(LocalDate.class);
+        kryo.register(LocalTime.class);
+        kryo.register(ZonedDateTime.class);
+        kryo.register(Map.class);
+        kryo.register(JsonNull.class);
+        // JsonPrimitive does not have no-arg constructor hence we need a
+        // custom serializer as it is not serializable by JavaSerializer
+        kryo.register(JsonPrimitive.class, new JsonSerializer());
+        kryo.register(JsonArray.class);
+        kryo.register(JsonObject.class);
+        // Support deprecated util.date classes
+        kryo.register(Date.class);
+        kryo.register(java.sql.Date.class);
+        kryo.register(Time.class);
+        kryo.register(Timestamp.class);
     }
 
-    @Override
-    public JsonElement read(Kryo kryo, Input input, Class<JsonElement> type) {
-      return GSON.fromJson(input.readString(), type);
+    public byte[] fromRemoteDirectiveResponse(RemoteDirectiveResponse response) {
+        Output output = new Output(1024, -1);
+        kryo.writeClassAndObject(output, response);
+        return output.getBuffer();
     }
-  }
+
+    public RemoteDirectiveResponse toRemoteDirectiveResponse(byte[] bytes) {
+        Input input = new Input(bytes);
+        return (RemoteDirectiveResponse) kryo.readClassAndObject(input);
+    }
+
+    static class JsonSerializer extends Serializer<JsonElement> {
+
+        @Override
+        public void write(Kryo kryo, Output output, JsonElement object) {
+            output.writeString(GSON.toJson(object));
+        }
+
+        @Override
+        public JsonElement read(Kryo kryo, Input input, Class<JsonElement> type) {
+            return GSON.fromJson(input.readString(), type);
+        }
+    }
 }

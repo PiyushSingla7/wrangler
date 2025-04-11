@@ -20,6 +20,6 @@ package io.cdap.wrangler.registry;
  * Enum to represent the scope of a directive
  */
 public enum DirectiveScope {
-  SYSTEM,
-  USER
+    SYSTEM,
+    USER
 }

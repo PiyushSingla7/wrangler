@@ -23,72 +23,72 @@ import java.util.Objects;
  * Defines the recipe object that is part of the {@link Request}
  */
 public class Recipe {
-  // RecipeParser specified by the user
-  private final List<String> directives;
+    // RecipeParser specified by the user
+    private final List<String> directives;
 
-  // Ability to save the directives
-  private final Boolean save;
+    // Ability to save the directives
+    private final Boolean save;
 
-  // Name of the recipe.
-  private final String name;
+    // Name of the recipe.
+    private final String name;
 
-  public Recipe(List<String> directives, Boolean save, String name) {
-    this.directives = directives;
-    this.save = save;
-    this.name = name;
-  }
-
-  /**
-   * @return List of directives specified by the user.
-   */
-  public List<String> getDirectives() {
-    return directives;
-  }
-
-  /**
-   * Adds a pragma directive at the front of the recipe.
-   */
-  public void setPragma(String directive) {
-    if (directive != null) {
-      String pragma = directives.size() > 0 ? directives.get(0) : null;
-      if (pragma != null && !pragma.matches("(.*)load-directives(.*)")) {
-        directives.add(0, directive);
-      } else {
-        directives.set(0, directive);
-      }
+    public Recipe(List<String> directives, Boolean save, String name) {
+        this.directives = directives;
+        this.save = save;
+        this.name = name;
     }
-  }
 
-  /**
-   * @return true if directives need to be saved, else false.
-   */
-  public Boolean getSave() {
-    return save;
-  }
-
-  /**
-   * @return name of the recipe.
-   */
-  public String getName() {
-    return name;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
+    /**
+     * @return List of directives specified by the user.
+     */
+    public List<String> getDirectives() {
+        return directives;
     }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Recipe recipe = (Recipe) o;
-    return Objects.equals(directives, recipe.directives) &&
-      Objects.equals(save, recipe.save) &&
-      Objects.equals(name, recipe.name);
-  }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(directives, save, name);
-  }
+    /**
+     * Adds a pragma directive at the front of the recipe.
+     */
+    public void setPragma(String directive) {
+        if (directive != null) {
+            String pragma = directives.size() > 0 ? directives.get(0) : null;
+            if (pragma != null && !pragma.matches("(.*)load-directives(.*)")) {
+                directives.add(0, directive);
+            } else {
+                directives.set(0, directive);
+            }
+        }
+    }
+
+    /**
+     * @return true if directives need to be saved, else false.
+     */
+    public Boolean getSave() {
+        return save;
+    }
+
+    /**
+     * @return name of the recipe.
+     */
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Recipe recipe = (Recipe) o;
+        return Objects.equals(directives, recipe.directives) &&
+                Objects.equals(save, recipe.save) &&
+                Objects.equals(name, recipe.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(directives, save, name);
+    }
 }

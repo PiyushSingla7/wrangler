@@ -20,15 +20,15 @@ package io.cdap.wrangler.proto.workspace;
  * Summary of executing directives on a workspace.
  */
 public class WorkspaceSummaryResponse {
-  private final int status;
-  private final int count;
-  private final String message;
-  private final WorkspaceValidationResult values;
+    private final int status;
+    private final int count;
+    private final String message;
+    private final WorkspaceValidationResult values;
 
-  public WorkspaceSummaryResponse(WorkspaceValidationResult values) {
-    this.status = 200;
-    this.count = 2;
-    this.message = "Success";
-    this.values = values;
-  }
+    public WorkspaceSummaryResponse(WorkspaceValidationResult values) {
+        this.status = 200;
+        this.count = 2;
+        this.message = "Success";
+        this.values = values;
+    }
 }

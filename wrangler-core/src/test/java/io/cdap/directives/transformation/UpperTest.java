@@ -29,46 +29,46 @@ import java.util.List;
  */
 public class UpperTest {
 
-  @Test
-  public void testSingleWordLowerCasing() throws Exception {
-    String[] directives = new String[] {
-      "uppercase body",
-    };
+    @Test
+    public void testSingleWordLowerCasing() throws Exception {
+        String[] directives = new String[]{
+                "uppercase body",
+        };
 
-    List<Row> rows = Arrays.asList(
-      new Row("body", "TITLE"),
-      new Row("body", "tiTLE"),
-      new Row("body", "title"),
-      new Row("body", "TitlE")
-    );
+        List<Row> rows = Arrays.asList(
+                new Row("body", "TITLE"),
+                new Row("body", "tiTLE"),
+                new Row("body", "title"),
+                new Row("body", "TitlE")
+        );
 
-    rows = TestingRig.execute(directives, rows);
+        rows = TestingRig.execute(directives, rows);
 
-    Assert.assertEquals(4, rows.size());
-    Assert.assertEquals("TITLE", rows.get(0).getValue("body"));
-    Assert.assertEquals("TITLE", rows.get(1).getValue("body"));
-    Assert.assertEquals("TITLE", rows.get(2).getValue("body"));
-    Assert.assertEquals("TITLE", rows.get(3).getValue("body"));
-  }
+        Assert.assertEquals(4, rows.size());
+        Assert.assertEquals("TITLE", rows.get(0).getValue("body"));
+        Assert.assertEquals("TITLE", rows.get(1).getValue("body"));
+        Assert.assertEquals("TITLE", rows.get(2).getValue("body"));
+        Assert.assertEquals("TITLE", rows.get(3).getValue("body"));
+    }
 
-  @Test
-  public void testSentenceLowercasing() throws Exception {
-    String[] directives = new String[] {
-      "uppercase body",
-    };
+    @Test
+    public void testSentenceLowercasing() throws Exception {
+        String[] directives = new String[]{
+                "uppercase body",
+        };
 
-    List<Row> rows = Arrays.asList(
-      new Row("body", "TITLE is TITLE"),
-      new Row("body", "tiTLE IS tItle"),
-      new Row("body", "title is title"),
-      new Row("body", "TitlE Is TiTLE")
-    );
+        List<Row> rows = Arrays.asList(
+                new Row("body", "TITLE is TITLE"),
+                new Row("body", "tiTLE IS tItle"),
+                new Row("body", "title is title"),
+                new Row("body", "TitlE Is TiTLE")
+        );
 
-    rows = TestingRig.execute(directives, rows);
-    Assert.assertEquals(4, rows.size());
-    Assert.assertEquals("TITLE IS TITLE", rows.get(0).getValue("body"));
-    Assert.assertEquals("TITLE IS TITLE", rows.get(1).getValue("body"));
-    Assert.assertEquals("TITLE IS TITLE", rows.get(2).getValue("body"));
-    Assert.assertEquals("TITLE IS TITLE", rows.get(3).getValue("body"));
-  }
+        rows = TestingRig.execute(directives, rows);
+        Assert.assertEquals(4, rows.size());
+        Assert.assertEquals("TITLE IS TITLE", rows.get(0).getValue("body"));
+        Assert.assertEquals("TITLE IS TITLE", rows.get(1).getValue("body"));
+        Assert.assertEquals("TITLE IS TITLE", rows.get(2).getValue("body"));
+        Assert.assertEquals("TITLE IS TITLE", rows.get(3).getValue("body"));
+    }
 }

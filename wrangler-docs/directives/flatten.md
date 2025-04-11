@@ -2,14 +2,13 @@
 
 The FLATTEN directive separates the elements in a repeated field into individual records.
 
-
 ## Syntax
+
 ```
 flatten <column>[,<column>]*
 ```
 
 The `<column>` is the name of a column that is a JSON array.
-
 
 ## Usage Notes
 
@@ -17,7 +16,6 @@ The FLATTEN directive is useful for the flexible exploration of repeated data.
 
 To maintain the association between each flattened value and the other fields in the
 record, the FLATTEN directive copies all of the other columns into each new record.
-
 
 ## Examples
 
@@ -27,6 +25,7 @@ The array in `col2` is flattened and the values in `col3` are repeated for each 
 `col2`:
 
 **Input Record**
+
 ```
 [
   { "col1": "A" },
@@ -35,7 +34,9 @@ The array in `col2` is flattened and the values in `col3` are repeated for each 
   { "col2": [x2, y2], "col3": 11 }
 ]
 ```
+
 **Output Record**
+
 ```
 [
   { "col1": "A" },
@@ -52,6 +53,7 @@ The array in `col2` is flattened and the values in `col3` are repeated for each 
 The arrays in `col2` and `col3` are flattened:
 
 **Input Record**
+
 ```
 [
   { "col1": "A" },
@@ -60,7 +62,9 @@ The arrays in `col2` and `col3` are flattened:
   { "col2": [ "x2", "y2" ], "col3": [ "a2", "b2" ] }
 ]
 ```
+
 **Output Record**
+
 ```
 [
   { "col1": "A" },
@@ -78,6 +82,7 @@ The arrays in `col2` and `col3` are flattened:
 The arrays in `col2` and `col3` are flattened:
 
 **Input Record**
+
 ```
 [
   { "col1": "A" },
@@ -86,7 +91,9 @@ The arrays in `col2` and `col3` are flattened:
   { "col2": [ "x2", "y2" ], "col3": [ "a2", "b2", "c2" ] }
 ]
 ```
+
 **Output Record**
+
 ```
 [
   { "col1": "A" },
@@ -103,6 +110,7 @@ The arrays in `col2` and `col3` are flattened:
 ### Case 4
 
 Using this record as an example:
+
 ```
 {
   "x": 5,
@@ -113,11 +121,11 @@ Using this record as an example:
 
 The directive would result in these three distinct records:
 
-| x   | y          | z   |
-| --- | ---------- | --- |
-| 5   | "a string" | 1   |
-| 5   | "a string" | 2   |
-| 5   | "a string" | 3   |
+| x | y          | z |
+|---|------------|---|
+| 5 | "a string" | 1 |
+| 5 | "a string" | 2 |
+| 5 | "a string" | 3 |
 
 The directive takes a single argument, which must be an array (the `z` column in this
 example). In this case, using the "all" (`*`) wildcard as the argument to flatten is not

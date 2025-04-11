@@ -28,21 +28,21 @@ import java.util.List;
  * Tests {@link SplitToColumns}
  */
 public class SplitToColumnsTest {
-  @Test
-  public void testSplitToColumns() throws Exception {
-    String[] directives = new String[] {
-      "split-to-columns body \\n",
-    };
+    @Test
+    public void testSplitToColumns() throws Exception {
+        String[] directives = new String[]{
+                "split-to-columns body \\n",
+        };
 
-    List<Row> rows = Arrays.asList(
-      new Row("body", "AABBCDE\nEEFFFF")
-    );
+        List<Row> rows = Arrays.asList(
+                new Row("body", "AABBCDE\nEEFFFF")
+        );
 
-    rows = TestingRig.execute(directives, rows);
+        rows = TestingRig.execute(directives, rows);
 
-    Assert.assertTrue(rows.size() == 1);
-    Assert.assertEquals("AABBCDE", rows.get(0).getValue("body_1"));
-    Assert.assertEquals("EEFFFF", rows.get(0).getValue("body_2"));
-  }
+        Assert.assertTrue(rows.size() == 1);
+        Assert.assertEquals("AABBCDE", rows.get(0).getValue("body_1"));
+        Assert.assertEquals("EEFFFF", rows.get(0).getValue("body_2"));
+    }
 }
 

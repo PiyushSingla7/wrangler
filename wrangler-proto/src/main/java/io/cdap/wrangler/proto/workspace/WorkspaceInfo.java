@@ -22,24 +22,24 @@ import com.google.gson.annotations.SerializedName;
  * Information about a workspace
  */
 public class WorkspaceInfo {
-  private final String id;
-  private final String name;
-  private final String delimiter;
-  private final String charset;
-  @SerializedName("Content-Type")
-  private final String contentType;
-  // this is the connection type
-  private final String connection;
-  private final String sampler;
+    private final String id;
+    private final String name;
+    private final String delimiter;
+    private final String charset;
+    @SerializedName("Content-Type")
+    private final String contentType;
+    // this is the connection type
+    private final String connection;
+    private final String sampler;
 
-  public WorkspaceInfo(String id, String name, String delimiter, String charset, String contentType,
-                       String connection, String sampler) {
-    this.id = id;
-    this.name = name;
-    this.delimiter = delimiter;
-    this.charset = charset;
-    this.contentType = contentType;
-    this.connection = connection;
-    this.sampler = sampler;
-  }
+    public WorkspaceInfo(String id, String name, String delimiter, String charset, String contentType,
+                         String connection, String sampler) {
+        this.id = id;
+        this.name = name;
+        this.delimiter = delimiter;
+        this.charset = charset;
+        this.contentType = contentType;
+        this.connection = connection;
+        this.sampler = sampler;
+    }
 }

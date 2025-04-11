@@ -3,7 +3,6 @@
 The URL-DECODE directive decodes a string from the `application/x-www-form-urlencoded`
 MIME format to a string.
 
-
 ## Syntax
 
 ```
@@ -11,7 +10,6 @@ url-decode <column>
 ```
 
 The `<column>` contains an encoded URL to be decoded.
-
 
 ## Usage Notes
 

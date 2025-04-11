@@ -20,11 +20,11 @@ package io.cdap.wrangler.api;
  * Class description here.
  */
 public class DirectiveLoadException extends Exception {
-  public DirectiveLoadException(String s) {
-    super(s);
-  }
+    public DirectiveLoadException(String s) {
+        super(s);
+    }
 
-  public DirectiveLoadException(String s, Exception e) {
-    super(s, e);
-  }
+    public DirectiveLoadException(String s, Exception e) {
+        super(s, e);
+    }
 }

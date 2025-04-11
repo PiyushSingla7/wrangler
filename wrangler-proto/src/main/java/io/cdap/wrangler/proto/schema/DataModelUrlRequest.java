@@ -22,14 +22,14 @@ import javax.annotation.Nullable;
  */
 public class DataModelUrlRequest {
 
-  private String url;
+    private String url;
 
-  DataModelUrlRequest(String url) {
-    this.url = url;
-  }
+    DataModelUrlRequest(String url) {
+        this.url = url;
+    }
 
-  @Nullable
-  public String getUrl() {
-    return url;
-  }
+    @Nullable
+    public String getUrl() {
+        return url;
+    }
 }

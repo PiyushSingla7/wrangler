@@ -23,11 +23,11 @@ import io.cdap.wrangler.api.Row;
  * Throw when there is issue with conversion of {@link Row} to {@link StructuredRecord}
  */
 public class RecordConvertorException extends Exception {
-  public RecordConvertorException(String message) {
-    super(message);
-  }
+    public RecordConvertorException(String message) {
+        super(message);
+    }
 
-  public RecordConvertorException(String message, Throwable cause) {
-    super(message, cause);
-  }
+    public RecordConvertorException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

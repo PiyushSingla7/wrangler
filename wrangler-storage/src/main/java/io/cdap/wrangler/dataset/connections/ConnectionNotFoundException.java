@@ -23,7 +23,7 @@ import io.cdap.wrangler.proto.NotFoundException;
  */
 public class ConnectionNotFoundException extends NotFoundException {
 
-  public ConnectionNotFoundException(String message) {
-    super(message);
-  }
+    public ConnectionNotFoundException(String message) {
+        super(message);
+    }
 }

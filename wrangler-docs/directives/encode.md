@@ -3,14 +3,13 @@
 The ENCODE directive encodes a column value as one of `base32`, `base64`, or `hex`
 following [RFC-4648](https://tools.ietf.org/html/rfc4648).
 
-
 ## Syntax
+
 ```
 encode <base32|base64|hex> <column>
 ```
 
 The `<column>` is the name of the column to which the encoding is applied.
-
 
 ## Usage Notes
 
@@ -30,10 +29,10 @@ Different column values are handled following these rules:
 
 See also the [DECODE](dedcode.md) directive.
 
-
 ## Example
 
 Using this record as an example:
+
 ```
 {
   "col1": "Base32 Encoding",
@@ -43,6 +42,7 @@ Using this record as an example:
 ```
 
 Applying these directives:
+
 ```
 encode base32 col1
 encode base64 col2
@@ -50,6 +50,7 @@ encode hex col3
 ```
 
 would result in this record:
+
 ```
 {
   "col1": "Base32 Encoding",

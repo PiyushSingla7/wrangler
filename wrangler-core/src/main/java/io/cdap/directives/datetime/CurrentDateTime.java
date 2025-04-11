@@ -18,12 +18,7 @@ package io.cdap.directives.datetime;
 import io.cdap.cdap.api.annotation.Description;
 import io.cdap.cdap.api.annotation.Name;
 import io.cdap.cdap.api.annotation.Plugin;
-import io.cdap.wrangler.api.Arguments;
-import io.cdap.wrangler.api.Directive;
-import io.cdap.wrangler.api.DirectiveParseException;
-import io.cdap.wrangler.api.ExecutorContext;
-import io.cdap.wrangler.api.Optional;
-import io.cdap.wrangler.api.Row;
+import io.cdap.wrangler.api.*;
 import io.cdap.wrangler.api.annotations.Categories;
 import io.cdap.wrangler.api.lineage.Lineage;
 import io.cdap.wrangler.api.lineage.Mutation;
@@ -45,57 +40,57 @@ import java.util.List;
 @Description("Generates current datetime using the given zone")
 public class CurrentDateTime implements Directive, Lineage {
 
-  public static final String NAME = "current-datetime";
-  private static final String COLUMN = "column";
-  private static final String ZONE = "timezone";
-  private static final String UTC = "UTC";
-  private String column;
-  private String zone;
-  private ZoneId zoneId;
+    public static final String NAME = "current-datetime";
+    private static final String COLUMN = "column";
+    private static final String ZONE = "timezone";
+    private static final String UTC = "UTC";
+    private String column;
+    private String zone;
+    private ZoneId zoneId;
 
-  @Override
-  public UsageDefinition define() {
-    UsageDefinition.Builder builder = UsageDefinition.builder(NAME);
-    builder.define(COLUMN, TokenType.COLUMN_NAME);
-    builder.define(ZONE, TokenType.TEXT, Optional.TRUE);
-    return builder.build();
-  }
-
-  @Override
-  public void initialize(Arguments args) throws DirectiveParseException {
-    this.column = ((ColumnName) args.value(COLUMN)).value();
-    if (args.value(ZONE) == null) {
-      this.zone = UTC;
-      this.zoneId = ZoneId.of(UTC);
-      return;
+    @Override
+    public UsageDefinition define() {
+        UsageDefinition.Builder builder = UsageDefinition.builder(NAME);
+        builder.define(COLUMN, TokenType.COLUMN_NAME);
+        builder.define(ZONE, TokenType.TEXT, Optional.TRUE);
+        return builder.build();
     }
 
-    this.zone = args.value(ZONE).value().toString();
-    try {
-      this.zoneId = ZoneId.of(this.zone);
-    } catch (IllegalArgumentException | ZoneRulesException exception) {
-      throw new DirectiveParseException(NAME, String.format("Zone '%s' is invalid.", this.zone), exception);
+    @Override
+    public void initialize(Arguments args) throws DirectiveParseException {
+        this.column = ((ColumnName) args.value(COLUMN)).value();
+        if (args.value(ZONE) == null) {
+            this.zone = UTC;
+            this.zoneId = ZoneId.of(UTC);
+            return;
+        }
+
+        this.zone = args.value(ZONE).value().toString();
+        try {
+            this.zoneId = ZoneId.of(this.zone);
+        } catch (IllegalArgumentException | ZoneRulesException exception) {
+            throw new DirectiveParseException(NAME, String.format("Zone '%s' is invalid.", this.zone), exception);
+        }
     }
-  }
 
-  @Override
-  public List<Row> execute(List<Row> rows, ExecutorContext context) {
-    for (Row row : rows) {
-      row.addOrSet(column, LocalDateTime.now(zoneId));
+    @Override
+    public List<Row> execute(List<Row> rows, ExecutorContext context) {
+        for (Row row : rows) {
+            row.addOrSet(column, LocalDateTime.now(zoneId));
+        }
+        return rows;
     }
-    return rows;
-  }
 
-  @Override
-  public void destroy() {
-    //no op
-  }
+    @Override
+    public void destroy() {
+        //no op
+    }
 
-  @Override
-  public Mutation lineage() {
-    return Mutation.builder()
-      .readable("Generated current datetime for column '%s' with zone '%s'", column, zone)
-      .relation(column, column)
-      .build();
-  }
+    @Override
+    public Mutation lineage() {
+        return Mutation.builder()
+                .readable("Generated current datetime for column '%s' with zone '%s'", column, zone)
+                .relation(column, column)
+                .build();
+    }
 }

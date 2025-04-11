@@ -24,17 +24,18 @@ import org.junit.Test;
  * Tests {@link Messages}
  */
 public class MessagesTest {
-  private static final Messages MSG = MessagesFactory.getMessages("user/test");
-  private static String expected = "this is a simple test";
-  @Test
-  public void testMessages() throws Exception {
-    Assert.assertEquals(expected, MSG.get("test.simple"));
-  }
+    private static final Messages MSG = MessagesFactory.getMessages("user/test");
+    private static String expected = "this is a simple test";
 
-  @Test
-  public void testWithOneParameter() throws Exception {
-    String value = "this";
-    Assert.assertEquals(expected, MSG.get("test.with.1.parameter", value));
-  }
+    @Test
+    public void testMessages() throws Exception {
+        Assert.assertEquals(expected, MSG.get("test.simple"));
+    }
+
+    @Test
+    public void testWithOneParameter() throws Exception {
+        String value = "this";
+        Assert.assertEquals(expected, MSG.get("test.with.1.parameter", value));
+    }
 
 }

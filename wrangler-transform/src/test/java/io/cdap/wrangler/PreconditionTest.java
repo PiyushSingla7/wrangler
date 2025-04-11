@@ -25,18 +25,18 @@ import org.junit.Test;
  */
 public class PreconditionTest {
 
-  @Test
-  public void testPrecondition() throws Exception {
-    Row row = new Row("a", 1).add("b", "x").add("c", 2.06);
-    Assert.assertEquals(true, new Precondition("a == 1 && b == \"x\"").apply(row));
-    Assert.assertEquals(true, new Precondition("c > 2.0").apply(row));
-    Assert.assertEquals(true, new Precondition("true").apply(row));
-    Assert.assertEquals(false, new Precondition("false").apply(row));
-  }
+    @Test
+    public void testPrecondition() throws Exception {
+        Row row = new Row("a", 1).add("b", "x").add("c", 2.06);
+        Assert.assertEquals(true, new Precondition("a == 1 && b == \"x\"").apply(row));
+        Assert.assertEquals(true, new Precondition("c > 2.0").apply(row));
+        Assert.assertEquals(true, new Precondition("true").apply(row));
+        Assert.assertEquals(false, new Precondition("false").apply(row));
+    }
 
-  @Test(expected = PreconditionException.class)
-  public void testBadCondition() throws Exception {
-    Row row = new Row("a", 1).add("b", "x").add("c", 2.06);
-    Assert.assertEquals(true, new Precondition("c").apply(row));
-  }
+    @Test(expected = PreconditionException.class)
+    public void testBadCondition() throws Exception {
+        Row row = new Row("a", 1).add("b", "x").add("c", 2.06);
+        Assert.assertEquals(true, new Precondition("c").apply(row));
+    }
 }

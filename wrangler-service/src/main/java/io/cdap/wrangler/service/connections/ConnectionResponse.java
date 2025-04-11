@@ -19,20 +19,21 @@ package io.cdap.wrangler.service.connections;
 import com.google.gson.annotations.SerializedName;
 import io.cdap.wrangler.proto.ServiceResponse;
 
-import java.util.List;
 import javax.annotation.Nullable;
+import java.util.List;
 
 /**
  * Response sent by listing connections endpoint
+ *
  * @param <T>
  */
 public class ConnectionResponse<T> extends ServiceResponse {
-  // default connection to show in DataPrep UI
-  @SerializedName("default")
-  String defaultConnection;
+    // default connection to show in DataPrep UI
+    @SerializedName("default")
+    String defaultConnection;
 
-  public ConnectionResponse(List<T> values, @Nullable String defaultConnectionId) {
-    super(values);
-    this.defaultConnection = defaultConnectionId;
-  }
+    public ConnectionResponse(List<T> values, @Nullable String defaultConnectionId) {
+        super(values);
+        this.defaultConnection = defaultConnectionId;
+    }
 }

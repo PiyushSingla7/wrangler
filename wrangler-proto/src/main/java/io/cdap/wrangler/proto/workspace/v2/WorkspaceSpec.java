@@ -17,48 +17,48 @@
 
 package io.cdap.wrangler.proto.workspace.v2;
 
+import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.Set;
-import javax.annotation.Nullable;
 
 /**
  * Workspace specification
  */
 public class WorkspaceSpec {
-  private final Set<StageSpec> sources;
-  private final StageSpec wrangler;
+    private final Set<StageSpec> sources;
+    private final StageSpec wrangler;
 
-  public WorkspaceSpec(Set<StageSpec> sources, StageSpec wrangler) {
-    this.sources = sources;
-    this.wrangler = wrangler;
-  }
-
-  @Nullable
-  public Set<StageSpec> getSources() {
-    return sources;
-  }
-
-  public StageSpec getWrangler() {
-    return wrangler;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
+    public WorkspaceSpec(Set<StageSpec> sources, StageSpec wrangler) {
+        this.sources = sources;
+        this.wrangler = wrangler;
     }
 
-    if (o == null || getClass() != o.getClass()) {
-      return false;
+    @Nullable
+    public Set<StageSpec> getSources() {
+        return sources;
     }
 
-    WorkspaceSpec that = (WorkspaceSpec) o;
-    return Objects.equals(sources, that.sources) &&
-             Objects.equals(wrangler, that.wrangler);
-  }
+    public StageSpec getWrangler() {
+        return wrangler;
+    }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(sources, wrangler);
-  }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        WorkspaceSpec that = (WorkspaceSpec) o;
+        return Objects.equals(sources, that.sources) &&
+                Objects.equals(wrangler, that.wrangler);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(sources, wrangler);
+    }
 }

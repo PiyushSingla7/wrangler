@@ -22,12 +22,12 @@ import java.util.Map;
  * Result of validating a workspace.
  */
 public class WorkspaceValidationResult {
-  private final Map<String, ColumnStatistics> statistics;
-  private final Map<String, ColumnValidationResult> validation;
+    private final Map<String, ColumnStatistics> statistics;
+    private final Map<String, ColumnValidationResult> validation;
 
-  public WorkspaceValidationResult(Map<String, ColumnValidationResult> validation,
-                                   Map<String, ColumnStatistics> statistics) {
-    this.validation = validation;
-    this.statistics = statistics;
-  }
+    public WorkspaceValidationResult(Map<String, ColumnValidationResult> validation,
+                                     Map<String, ColumnStatistics> statistics) {
+        this.validation = validation;
+        this.statistics = statistics;
+    }
 }

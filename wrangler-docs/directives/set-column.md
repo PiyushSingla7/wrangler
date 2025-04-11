@@ -2,16 +2,17 @@
 
 The SET-COLUMN directive sets the column value to the result of an expression execution.
 
-
 ## Syntax
+
 ```
 set-column <columm> <expression>
 ```
 
-* The `<column>` specifies the name of a column. If the column exists already, its value will be overwritten with the result of the specified expression. If the column does not exist, a new column will be created with the result of the specified expression.
+* The `<column>` specifies the name of a column. If the column exists already, its value will be overwritten with the
+  result of the specified expression. If the column does not exist, a new column will be created with the result of the
+  specified expression.
 * The `<expression>` is a valid [Apache Commons JEXL
   expression](http://commons.apache.org/proper/commons-jexl/reference/syntax.html)
-
 
 ## Usage Notes
 
@@ -23,10 +24,10 @@ JEXL](http://commons.apache.org/proper/commons-jexl/reference/syntax.html) notat
 Functions from other namespaces (such as `string` and `math`) can be called by adding the
 namespace and a colon before the function, such as `math:ceil` or `string:upperCase`.
 
-
 ## Examples
 
 Using this record as an example:
+
 ```
 {
   "first": "Root",
@@ -37,6 +38,7 @@ Using this record as an example:
 ```
 
 Applying these directives:
+
 ```
 set-column name concat(last, ", ", first)
 set-column is_adult age > 21 ? 'yes' : 'no'
@@ -46,6 +48,7 @@ set column salutation string:upperCase(concat(first, ' ', last))
 ```
 
 would result in this record:
+
 ```
 {
   "first": "Root",
@@ -60,24 +63,33 @@ would result in this record:
 }
 ```
 
-## Arithmetic and decimal operations example 
+## Arithmetic and decimal operations example
 
-Arithmetic operations can be used in several ways. 
+Arithmetic operations can be used in several ways.
+
 - To apply a simple arithmetic operation to a single, non-Decimal column, use mathematical notation; for example,
+
 ```
 set-column :output wage1 * 2
 ```
+
 - To apply an operation to a single column of type Decimal, use the `decimal` operations; for example,
+
 ```
 set-column :decimal_op_1 decimal:add(wage_1,25)
 ```
-- To apply operations to multiple columns (of any type), use the `arithmetic` operations, e.g. 
+
+- To apply operations to multiple columns (of any type), use the `arithmetic` operations, e.g.
+
 ```
 set-column :arithmetic_op_1 arithmetic:add(wage_1,wage_2)
 ```
-For more information on working with numbers in Wrangler, see https://cdap.atlassian.net/wiki/spaces/DOCS/pages/413466692/Working+with+numbers.
+
+For more information on working with numbers in Wrangler,
+see https://cdap.atlassian.net/wiki/spaces/DOCS/pages/413466692/Working+with+numbers.
 
 Using this record as an example:
+
 ```
 {
   "first": "Root",
@@ -95,7 +107,9 @@ Using this record as an example:
   "wage_9": "16697.200"
 }
 ```
+
 Applying these directives:
+
 ```
 set-column :arithmetic_op_1 arithmetic:add(wage_1,wage_2)
 set-column :arithmetic_op_2 arithmetic:minus(wage_4,wage_3)
@@ -123,7 +137,9 @@ set-column :decimal_op_14 decimal:strip_zero(wage_9)
 set-column :decimal_op_15 decimal:sign(wage_9)
 set-type :wage_2 decimal
 ```
+
 would result in this record:
+
 ```
 {
   "first": "Root",

@@ -29,49 +29,49 @@ import java.util.List;
  */
 public class LeftTrimTest {
 
-  @Test
-  public void testSingleWordLeftTrim() throws Exception {
-    String[] directives = new String[]{
-      "ltrim body",
-    };
+    @Test
+    public void testSingleWordLeftTrim() throws Exception {
+        String[] directives = new String[]{
+                "ltrim body",
+        };
 
-    List<Row> rows = Arrays.asList(
-      new Row("body", "TITLE"),
-      new Row("body", "  TITLE"),
-      new Row("body", "TITLE  "),
-      new Row("body", " TITLE "),
-      new Row("body", "  TITLE  ")
-    );
+        List<Row> rows = Arrays.asList(
+                new Row("body", "TITLE"),
+                new Row("body", "  TITLE"),
+                new Row("body", "TITLE  "),
+                new Row("body", " TITLE "),
+                new Row("body", "  TITLE  ")
+        );
 
-    rows = TestingRig.execute(directives, rows);
-    Assert.assertEquals(5, rows.size());
-    Assert.assertEquals("TITLE", rows.get(0).getValue("body"));
-    Assert.assertEquals("TITLE", rows.get(1).getValue("body"));
-    Assert.assertEquals("TITLE  ", rows.get(2).getValue("body"));
-    Assert.assertEquals("TITLE ", rows.get(3).getValue("body"));
-    Assert.assertEquals("TITLE  ", rows.get(4).getValue("body"));
-  }
+        rows = TestingRig.execute(directives, rows);
+        Assert.assertEquals(5, rows.size());
+        Assert.assertEquals("TITLE", rows.get(0).getValue("body"));
+        Assert.assertEquals("TITLE", rows.get(1).getValue("body"));
+        Assert.assertEquals("TITLE  ", rows.get(2).getValue("body"));
+        Assert.assertEquals("TITLE ", rows.get(3).getValue("body"));
+        Assert.assertEquals("TITLE  ", rows.get(4).getValue("body"));
+    }
 
-  @Test
-  public void testSentenceLeftTrim() throws Exception {
-    String[] directives = new String[]{
-      "ltrim body",
-    };
+    @Test
+    public void testSentenceLeftTrim() throws Exception {
+        String[] directives = new String[]{
+                "ltrim body",
+        };
 
-    List<Row> rows = Arrays.asList(
-      new Row("body", "TITLE IS TITLE"),
-      new Row("body", "    TITLE IS TITLE"),
-      new Row("body", "TITLE IS TITLE    "),
-      new Row("body", " TITLE    IS TITLE "),
-      new Row("body", "   TITLE IS TITLE   ")
-    );
+        List<Row> rows = Arrays.asList(
+                new Row("body", "TITLE IS TITLE"),
+                new Row("body", "    TITLE IS TITLE"),
+                new Row("body", "TITLE IS TITLE    "),
+                new Row("body", " TITLE    IS TITLE "),
+                new Row("body", "   TITLE IS TITLE   ")
+        );
 
-    rows = TestingRig.execute(directives, rows);
-    Assert.assertEquals(5, rows.size());
-    Assert.assertEquals("TITLE IS TITLE", rows.get(0).getValue("body"));
-    Assert.assertEquals("TITLE IS TITLE", rows.get(1).getValue("body"));
-    Assert.assertEquals("TITLE IS TITLE    ", rows.get(2).getValue("body"));
-    Assert.assertEquals("TITLE    IS TITLE ", rows.get(3).getValue("body"));
-    Assert.assertEquals("TITLE IS TITLE   ", rows.get(4).getValue("body"));
-  }
+        rows = TestingRig.execute(directives, rows);
+        Assert.assertEquals(5, rows.size());
+        Assert.assertEquals("TITLE IS TITLE", rows.get(0).getValue("body"));
+        Assert.assertEquals("TITLE IS TITLE", rows.get(1).getValue("body"));
+        Assert.assertEquals("TITLE IS TITLE    ", rows.get(2).getValue("body"));
+        Assert.assertEquals("TITLE    IS TITLE ", rows.get(3).getValue("body"));
+        Assert.assertEquals("TITLE IS TITLE   ", rows.get(4).getValue("body"));
+    }
 }

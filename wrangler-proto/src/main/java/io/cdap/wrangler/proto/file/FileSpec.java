@@ -21,14 +21,14 @@ import io.cdap.wrangler.proto.PluginSpec;
 
 /**
  * Plugin specification for a File pipeline source.
- *
+ * <p>
  * TODO: (CDAP-14652) clean up this API. There is no reason for this class to exist.
  */
 public class FileSpec {
-  @SerializedName("File")
-  private final PluginSpec spec;
+    @SerializedName("File")
+    private final PluginSpec spec;
 
-  public FileSpec(PluginSpec spec) {
-    this.spec = spec;
-  }
+    public FileSpec(PluginSpec spec) {
+        this.spec = spec;
+    }
 }

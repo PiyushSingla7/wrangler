@@ -2,8 +2,8 @@
 
 The PARSE-AS-CSV is a directive for parsing an input record as comma-separated values.
 
-
 ## Syntax
+
 ```
 parse-as-csv <column> <delimiter> [<header=true|false>]
 ```
@@ -12,10 +12,10 @@ The `<column>` specifies the column in the record that should be parsed as CSV u
 the specified `<delimiter>`. If the values in the first record of the input need to be set as column
 headers, set `<header>` to `true`; by default, it is set to `false`.
 
-
 ## Examples
 
 Consider a single line from a consumer complaint CSV file. Each line of the CSV file is added as a record:
+
 ```
 {
   "body": "07/29/2013,Consumer Loan,Vehicle Loan,Managing the loan or lease,,,,Wells Fargo & Company,VA,24540,,N/A,Phone,07/30/2013,Closed with explanation,Yes,No,468882"
@@ -23,11 +23,13 @@ Consider a single line from a consumer complaint CSV file. Each line of the CSV 
 ```
 
 Applying this directive:
+
 ```
 parse-as-csv body ,
 ```
 
 would result in this record:
+
 ```
 {
   "body": "07/29/2013,Consumer Loan,Vehicle Loan,Managing the loan or lease,,,Wells Fargo & Company,VA,24540,,N/A,Phone,07/30/2013,Closed with explanation,Yes,No,468882",
@@ -52,6 +54,7 @@ would result in this record:
 ```
 
 Using this record, with a header as the first record, as an example:
+
 ```
 [
   {
@@ -64,11 +67,13 @@ Using this record, with a header as the first record, as an example:
 ```
 
 Applying this directive:
+
 ```
 parse-as-csv body , true
 ```
 
 would result in this record:
+
 ```
 {
   "body": "07/29/2013,Consumer Loan,Vehicle Loan,Managing the loan or lease,Wells Fargo & Company"

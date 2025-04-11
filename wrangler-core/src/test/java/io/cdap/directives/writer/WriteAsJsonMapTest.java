@@ -37,38 +37,39 @@ import java.util.Map;
  */
 public class WriteAsJsonMapTest {
 
-  private static final Gson GSON = new Gson();
+    private static final Gson GSON = new Gson();
 
-  @Test
-  public void testWriteToJson() throws Exception {
-    String[] directives = new String[] {
-      "write-as-json-map test",
-      "keep test"
-    };
+    @Test
+    public void testWriteToJson() throws Exception {
+        String[] directives = new String[]{
+                "write-as-json-map test",
+                "keep test"
+        };
 
-    JSONObject o = new JSONObject();
-    o.put("a", 1);
-    o.put("b", "2");
-    String url = "http://www.yahoo.com?a=b c&b=ab&xyz=1";
-    List<Row> rows = Arrays.asList(
-      new Row().add("int", 1).add("string", "this is string"),
-      new Row("url", url)
-      .add("o", o)
-      .add("i1", 1)
-      .add("i2", (double) 1.8f)
-    );
-    rows = TestingRig.execute(directives, rows);
+        JSONObject o = new JSONObject();
+        o.put("a", 1);
+        o.put("b", "2");
+        String url = "http://www.yahoo.com?a=b c&b=ab&xyz=1";
+        List<Row> rows = Arrays.asList(
+                new Row().add("int", 1).add("string", "this is string"),
+                new Row("url", url)
+                        .add("o", o)
+                        .add("i1", 1)
+                        .add("i2", (double) 1.8f)
+        );
+        rows = TestingRig.execute(directives, rows);
 
-    Assert.assertTrue(rows.size() == 2);
-    Type stringStringMapType = new TypeToken<Map<String, String>>() { }.getType();
-    Map<String, String> map = GSON.fromJson((String) rows.get(0).getValue("test"), stringStringMapType);
-    Assert.assertEquals(ImmutableMap.of("string", "this is string", "int", "1"), map);
+        Assert.assertTrue(rows.size() == 2);
+        Type stringStringMapType = new TypeToken<Map<String, String>>() {
+        }.getType();
+        Map<String, String> map = GSON.fromJson((String) rows.get(0).getValue("test"), stringStringMapType);
+        Assert.assertEquals(ImmutableMap.of("string", "this is string", "int", "1"), map);
 
-    JsonObject jsonObject = new JsonParser().parse((String) rows.get(1).getValue("test")).getAsJsonObject();
-    Assert.assertEquals(1, jsonObject.get("i1").getAsInt());
+        JsonObject jsonObject = new JsonParser().parse((String) rows.get(1).getValue("test")).getAsJsonObject();
+        Assert.assertEquals(1, jsonObject.get("i1").getAsInt());
 
-    Assert.assertEquals(1.8f, jsonObject.get("i2").getAsFloat(), 0.001);
-    Assert.assertEquals(url, jsonObject.get("url").getAsString());
-    Assert.assertEquals(GSON.toJson(o), jsonObject.get("o").toString());
-  }
+        Assert.assertEquals(1.8f, jsonObject.get("i2").getAsFloat(), 0.001);
+        Assert.assertEquals(url, jsonObject.get("url").getAsString());
+        Assert.assertEquals(GSON.toJson(o), jsonObject.get("o").toString());
+    }
 }

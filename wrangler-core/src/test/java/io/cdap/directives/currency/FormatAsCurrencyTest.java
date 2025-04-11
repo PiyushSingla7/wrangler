@@ -32,91 +32,91 @@ import java.util.Locale;
  */
 public class FormatAsCurrencyTest {
 
-  @Test
-  public void testDefaultOption() throws Exception {
-    List<Row> rows = Arrays.asList(
-      new Row("src", "$1.56"),
-      new Row("src", "$45.56"),
-      new Row("src", "$6.78"),
-      new Row("src", "$0.09"),
-      new Row("src", "1234.56"),
-      new Row("src", "$8,976.78"),
-      new Row("src", "$58,976.78"),
-      new Row("src", "$1,234,678.67")
-    );
+    @Test
+    public void testDefaultOption() throws Exception {
+        List<Row> rows = Arrays.asList(
+                new Row("src", "$1.56"),
+                new Row("src", "$45.56"),
+                new Row("src", "$6.78"),
+                new Row("src", "$0.09"),
+                new Row("src", "1234.56"),
+                new Row("src", "$8,976.78"),
+                new Row("src", "$58,976.78"),
+                new Row("src", "$1,234,678.67")
+        );
 
-    String[] directives = new String[] {
-      "parse-as-currency :src :dst",
-      "parse-as-currency :src :dst1 'en_US'",
-      "format-as-currency :dst :fmt1 'en_US'"
-    };
+        String[] directives = new String[]{
+                "parse-as-currency :src :dst",
+                "parse-as-currency :src :dst1 'en_US'",
+                "format-as-currency :dst :fmt1 'en_US'"
+        };
 
-    double[] expected = new double[] {
-      1.56,
-      45.56,
-      6.78,
-      0.09,
-      8976.78,
-      58976.78,
-      1234678.67
-    };
+        double[] expected = new double[]{
+                1.56,
+                45.56,
+                6.78,
+                0.09,
+                8976.78,
+                58976.78,
+                1234678.67
+        };
 
-    Pair<List<Row>, List<Row>> result = TestingRig.executeWithErrors(directives, rows);
-    List<Row> results = result.getFirst();
-    List<Row> errors = result.getSecond();
+        Pair<List<Row>, List<Row>> result = TestingRig.executeWithErrors(directives, rows);
+        List<Row> results = result.getFirst();
+        List<Row> errors = result.getSecond();
 
-    Assert.assertEquals(7, results.size());
-    Assert.assertEquals(1, errors.size());
+        Assert.assertEquals(7, results.size());
+        Assert.assertEquals(1, errors.size());
 
-    int i = 0;
-    for (Row row : results) {
-      double val = (double) row.getValue("dst");
-      Assert.assertEquals(expected[i], val, 0.001);
-      ++i;
+        int i = 0;
+        for (Row row : results) {
+            double val = (double) row.getValue("dst");
+            Assert.assertEquals(expected[i], val, 0.001);
+            ++i;
+        }
+
+        i = 0;
+        for (Row row : results) {
+            double val = (double) row.getValue("dst1");
+            Assert.assertEquals(expected[i], val, 0.001);
+            ++i;
+        }
+
+        for (Row row : results) {
+            String src = (String) row.getValue("src");
+            String dst = (String) row.getValue("fmt1");
+            Assert.assertEquals(src, dst);
+        }
     }
 
-    i = 0;
-    for (Row row : results) {
-      double val = (double) row.getValue("dst1");
-      Assert.assertEquals(expected[i], val, 0.001);
-      ++i;
+    @Test
+    public void testUSDToEUR() throws Exception {
+        List<Row> rows = Arrays.asList(
+                new Row("src", 1.56),
+                new Row("src", 45.56),
+                new Row("src", 6.78),
+                new Row("src", 0.09),
+                new Row("src", 1234.56),
+                new Row("src", 8976.78),
+                new Row("src", 58976.78),
+                new Row("src", 1234678.67)
+        );
+
+        String[] directives = new String[]{
+                "format-as-currency :src :dst 'en_IE'"
+        };
+
+        Pair<List<Row>, List<Row>> result = TestingRig.executeWithErrors(directives, rows);
+        List<Row> results = result.getFirst();
+        List<Row> errors = result.getSecond();
+
+        Assert.assertEquals(8, results.size());
+        Assert.assertEquals(0, errors.size());
     }
 
-    for (Row row : results) {
-      String src = (String) row.getValue("src");
-      String dst = (String) row.getValue("fmt1");
-      Assert.assertEquals(src, dst);
+    @Test
+    public void testGetLocale() throws Exception {
+        List<Locale> locales = LocaleUtils.availableLocaleList();
+        Assert.assertTrue(locales.size() > 0);
     }
-  }
-
-  @Test
-  public void testUSDToEUR() throws Exception {
-    List<Row> rows = Arrays.asList(
-      new Row("src", 1.56),
-      new Row("src", 45.56),
-      new Row("src", 6.78),
-      new Row("src", 0.09),
-      new Row("src", 1234.56),
-      new Row("src", 8976.78),
-      new Row("src", 58976.78),
-      new Row("src", 1234678.67)
-    );
-
-    String[] directives = new String[] {
-      "format-as-currency :src :dst 'en_IE'"
-    };
-
-    Pair<List<Row>, List<Row>> result = TestingRig.executeWithErrors(directives, rows);
-    List<Row> results = result.getFirst();
-    List<Row> errors = result.getSecond();
-
-    Assert.assertEquals(8, results.size());
-    Assert.assertEquals(0, errors.size());
-  }
-
-  @Test
-  public void testGetLocale() throws Exception {
-    List<Locale> locales = LocaleUtils.availableLocaleList();
-    Assert.assertTrue(locales.size() > 0);
-  }
 }

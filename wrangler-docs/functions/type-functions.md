@@ -4,16 +4,13 @@ These are functions for detecting the type of data. These functions can be used 
 directives `filter-row-if-false`, `filter-row-if-true`, `filter-row-on`, or
 `send-to-error`.
 
-
 ## Pre-requisite
 
 These can be used only in the `filter-*` or `send-to-error` directives.
 
-
 ## Namespace
 
 All type-related functions are in the namespace `type`.
-
 
 ## Example Data
 
@@ -64,6 +61,7 @@ Upload to the workspace `body` an input record such as:
 
 Once such a record is loaded, apply these directives before applying any of the functions
 listed here:
+
 ```
   parse-as-json body
   columns-replace s/body_//g
@@ -74,7 +72,7 @@ listed here:
 Each function returns `true` if the condition is met, `false` otherwise.
 
 | Function            | Condition                                 | Example                                  |
-| ------------------- | ----------------------------------------- | ---------------------------------------- |
+|---------------------|-------------------------------------------|------------------------------------------|
 | `isDate(string)`    | Tests if string value is a date field     | `filter-row-if-true type:isDate(date)`   |
 | `isTime(string)`    | Tests if string value is a date time      | `filter-row-if-true type:isTime(time)`   |
 | `isBoolean(string)` | Tests if string value is a booelan field  | `send-to-error !type:isBoolean(boolean)` |

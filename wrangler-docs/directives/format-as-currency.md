@@ -2,8 +2,8 @@
 
 The FORMAT-AS-CURRENCY is a directive for formatting a number as a currency as specified by the locale.
 
-
 ## Syntax
+
 ```
 format-as-currency <source> <destination> [<locale>]
 ```
@@ -11,7 +11,6 @@ format-as-currency <source> <destination> [<locale>]
 The `<source>` specifies the name of the column that contains number to be converted to currency as specified by locale.
 The `<destination>` contains the formatted value of currency as `string`. Optional locale specifies the
 locale to be used for formatting the number as string representation of currency in the `<source>` column.
-
 
 ## Usage Notes
 

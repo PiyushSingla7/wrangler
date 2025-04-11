@@ -18,12 +18,7 @@ package io.cdap.wrangler.utils;
 
 import io.cdap.wrangler.api.annotations.PublicEvolving;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 /**
  * This class allows one to serialize the object of T into bytes.
@@ -33,30 +28,30 @@ import java.io.ObjectOutputStream;
 @PublicEvolving
 public final class ObjectSerDe<T> {
 
-  /**
-   * Converts an object of type T into bytes.
-   *
-   * @param object to be serialized into bytes.
-   * @return byte array of serialized object.
-   */
-  public byte[] toByteArray(T object) throws IOException {
-    ByteArrayOutputStream bos = new ByteArrayOutputStream();
-    try (ObjectOutput out = new ObjectOutputStream(bos)) {
-      out.writeObject(object);
+    /**
+     * Converts an object of type T into bytes.
+     *
+     * @param object to be serialized into bytes.
+     * @return byte array of serialized object.
+     */
+    public byte[] toByteArray(T object) throws IOException {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        try (ObjectOutput out = new ObjectOutputStream(bos)) {
+            out.writeObject(object);
+        }
+        return bos.toByteArray();
     }
-    return bos.toByteArray();
-  }
 
-  /**
-   * Converts a serialized object byte array back into object.
-   *
-   * @param bytes to be converted to object of type T.
-   * @return an instance of object deserialized from the byte array.
-   * @see ObjectSerDe#toByteArray(Object)
-   */
-  public T toObject(byte[] bytes) throws IOException, ClassNotFoundException {
-    try (ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(bytes))) {
-      return (T) in.readObject();
+    /**
+     * Converts a serialized object byte array back into object.
+     *
+     * @param bytes to be converted to object of type T.
+     * @return an instance of object deserialized from the byte array.
+     * @see ObjectSerDe#toByteArray(Object)
+     */
+    public T toObject(byte[] bytes) throws IOException, ClassNotFoundException {
+        try (ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(bytes))) {
+            return (T) in.readObject();
+        }
     }
-  }
 }

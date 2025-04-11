@@ -27,22 +27,22 @@ import org.apache.avro.io.DatumReader;
  * All implementations of AVRO decoder should extend from this class.
  */
 public abstract class AbstractAvroDecoder implements Decoder<Row> {
-  // Schema associated with record or data file being read.
-  private final Schema schema;
+    // Schema associated with record or data file being read.
+    private final Schema schema;
 
-  // Reader for reading data based on the schema.
-  private final DatumReader<GenericRecord> reader;
+    // Reader for reading data based on the schema.
+    private final DatumReader<GenericRecord> reader;
 
-  protected AbstractAvroDecoder(Schema schema) {
-    this.schema = schema;
-    this.reader = new GenericDatumReader<>(this.schema);
-  }
+    protected AbstractAvroDecoder(Schema schema) {
+        this.schema = schema;
+        this.reader = new GenericDatumReader<>(this.schema);
+    }
 
-  protected Schema getSchema() {
-    return schema;
-  }
+    protected Schema getSchema() {
+        return schema;
+    }
 
-  protected DatumReader<GenericRecord> getReader() {
-    return reader;
-  }
+    protected DatumReader<GenericRecord> getReader() {
+        return reader;
+    }
 }

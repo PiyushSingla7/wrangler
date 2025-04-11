@@ -22,19 +22,19 @@ import com.google.gson.annotations.SerializedName;
  * This class {@link SchemaDescriptorType} defines types of Schema supported by the Schema registry
  */
 public enum SchemaDescriptorType {
-  @SerializedName("avro")
-  // Represents an AVRO schema.
-  AVRO,
+    @SerializedName("avro")
+    // Represents an AVRO schema.
+    AVRO,
 
-  @SerializedName("protobuf-desc")
-  // Represents a protobuf descriptor schema.
-  PROTOBUF_DESC,
+    @SerializedName("protobuf-desc")
+    // Represents a protobuf descriptor schema.
+    PROTOBUF_DESC,
 
-  @SerializedName("protobuf-binary")
-  // Represents schema is of type protobuf-binary which is compiled classes on protobuf.
-  PROTOBUF_BINARY,
+    @SerializedName("protobuf-binary")
+    // Represents schema is of type protobuf-binary which is compiled classes on protobuf.
+    PROTOBUF_BINARY,
 
-  @SerializedName("copybook")
-  // Defines copybook for COBOL EBCDIC data.
-  COPYBOOK;
+    @SerializedName("copybook")
+    // Defines copybook for COBOL EBCDIC data.
+    COPYBOOK;
 }

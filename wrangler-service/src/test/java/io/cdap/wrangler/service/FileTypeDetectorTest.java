@@ -24,25 +24,25 @@ import org.junit.Test;
  */
 public class FileTypeDetectorTest {
 
-  @Test
-  public void testFileTypeExtensions() throws Exception {
-    FileTypeDetector detector = new FileTypeDetector();
+    @Test
+    public void testFileTypeExtensions() throws Exception {
+        FileTypeDetector detector = new FileTypeDetector();
 
-    String[] filenames = {
-      "syslog.dat",
-      "syslog.dat.1",
-      "syslog.txt",
-      "syslog.txt.1",
-      "titanic.csv",
-      "titanic.csv.1",
-      "titanic.csv.1.2",
-      "noextension"
-    };
+        String[] filenames = {
+                "syslog.dat",
+                "syslog.dat.1",
+                "syslog.txt",
+                "syslog.txt.1",
+                "titanic.csv",
+                "titanic.csv.1",
+                "titanic.csv.1.2",
+                "noextension"
+        };
 
-    for (String filename : filenames) {
-      String mimeType = detector.detectFileType(filename);
-      Assert.assertNotEquals("UNKNOWN", mimeType);
-      Assert.assertEquals("text/plain", mimeType);
+        for (String filename : filenames) {
+            String mimeType = detector.detectFileType(filename);
+            Assert.assertNotEquals("UNKNOWN", mimeType);
+            Assert.assertEquals("text/plain", mimeType);
+        }
     }
-  }
 }

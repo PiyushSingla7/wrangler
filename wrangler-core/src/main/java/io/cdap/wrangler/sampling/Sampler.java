@@ -23,33 +23,33 @@ import java.util.Iterator;
 /**
  * This class is interface for implementing <code>Sampler</code>. It provides
  * a set of data selected from a statistical population by the defined implementation.
- *
+ * <p>
  * It helps create random samples of data easily.
  *
  * @param <T> type of element to sample
  */
 @PublicEvolving
 public abstract class Sampler<T> {
-  protected static final double EPSILON = 1e-5;
+    protected static final double EPSILON = 1e-5;
 
-  protected final Iterator<T> emptyIterable = new SamplingIterator<T>() {
-    @Override
-    public boolean hasNext() {
-      return false;
-    }
+    protected final Iterator<T> emptyIterable = new SamplingIterator<T>() {
+        @Override
+        public boolean hasNext() {
+            return false;
+        }
 
-    @Override
-    public T next() {
-      return null;
-    }
-  };
+        @Override
+        public T next() {
+            return null;
+        }
+    };
 
-  /**
-   * Randomly sample the elements from input in sequence, and return the result iterator.
-   *
-   * @param input Scope data
-   * @return The sample result.
-   */
-  public abstract Iterator<T> sample(Iterator<T> input);
+    /**
+     * Randomly sample the elements from input in sequence, and return the result iterator.
+     *
+     * @param input Scope data
+     * @return The sample result.
+     */
+    public abstract Iterator<T> sample(Iterator<T> input);
 }
 

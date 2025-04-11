@@ -20,12 +20,7 @@ import com.google.gson.Gson;
 import io.cdap.cdap.api.annotation.Description;
 import io.cdap.cdap.api.annotation.Name;
 import io.cdap.cdap.api.annotation.Plugin;
-import io.cdap.wrangler.api.Arguments;
-import io.cdap.wrangler.api.Directive;
-import io.cdap.wrangler.api.DirectiveExecutionException;
-import io.cdap.wrangler.api.DirectiveParseException;
-import io.cdap.wrangler.api.ExecutorContext;
-import io.cdap.wrangler.api.Row;
+import io.cdap.wrangler.api.*;
 import io.cdap.wrangler.api.annotations.Categories;
 import io.cdap.wrangler.api.lineage.Lineage;
 import io.cdap.wrangler.api.lineage.Many;
@@ -50,102 +45,102 @@ import java.util.Map;
  */
 @Plugin(type = Directive.TYPE)
 @Name("parse-as-avro-file")
-@Categories(categories = { "parser", "avro"})
+@Categories(categories = {"parser", "avro"})
 @Description("parse-as-avro-file <column>.")
 public class ParseAvroFile implements Directive, Lineage {
-  public static final String NAME = "parse-as-avro-file";
-  private String column;
-  private Gson gson;
+    public static final String NAME = "parse-as-avro-file";
+    private String column;
+    private Gson gson;
 
-  @Override
-  public UsageDefinition define() {
-    UsageDefinition.Builder builder = UsageDefinition.builder(NAME);
-    builder.define("column", TokenType.COLUMN_NAME);
-    return builder.build();
-  }
+    @Override
+    public UsageDefinition define() {
+        UsageDefinition.Builder builder = UsageDefinition.builder(NAME);
+        builder.define("column", TokenType.COLUMN_NAME);
+        return builder.build();
+    }
 
-  @Override
-  public void initialize(Arguments args) throws DirectiveParseException {
-    this.column = ((ColumnName) args.value("column")).value();
-    gson = new Gson();
-  }
+    @Override
+    public void initialize(Arguments args) throws DirectiveParseException {
+        this.column = ((ColumnName) args.value("column")).value();
+        gson = new Gson();
+    }
 
-  @Override
-  public void destroy() {
-    // no-op
-  }
+    @Override
+    public void destroy() {
+        // no-op
+    }
 
-  @Override
-  public List<Row> execute(List<Row> rows, final ExecutorContext context) throws DirectiveExecutionException {
-    List<Row> results = new ArrayList<>();
-    for (Row row : rows) {
-      int idx = row.find(column);
-      if (idx != -1) {
-        Object object = row.getValue(idx);
-        if (object instanceof byte[]) {
-          DataFileReader<GenericRecord> reader = null;
-          try {
-            reader =
-              new DataFileReader<>(new SeekableByteArrayInput((byte[]) object), new GenericDatumReader<>());
-            while (reader.hasNext()) {
-              Row newRow = new Row();
-              add(reader.next(), newRow, null);
-              results.add(newRow);
+    @Override
+    public List<Row> execute(List<Row> rows, final ExecutorContext context) throws DirectiveExecutionException {
+        List<Row> results = new ArrayList<>();
+        for (Row row : rows) {
+            int idx = row.find(column);
+            if (idx != -1) {
+                Object object = row.getValue(idx);
+                if (object instanceof byte[]) {
+                    DataFileReader<GenericRecord> reader = null;
+                    try {
+                        reader =
+                                new DataFileReader<>(new SeekableByteArrayInput((byte[]) object), new GenericDatumReader<>());
+                        while (reader.hasNext()) {
+                            Row newRow = new Row();
+                            add(reader.next(), newRow, null);
+                            results.add(newRow);
+                        }
+                    } catch (IOException e) {
+                        throw new DirectiveExecutionException(NAME, "Failed to parse Avro data file. " + e.getMessage(), e);
+                    } finally {
+                        if (reader != null) {
+                            try {
+                                reader.close();
+                            } catch (IOException e) {
+                                // Nothing can be done.
+                            }
+                        }
+                    }
+                } else {
+                    throw new DirectiveExecutionException(
+                            NAME, String.format("Column '%s' is of invalid type. It should be of type 'byte array'.", column));
+                }
             }
-          } catch (IOException e) {
-            throw new DirectiveExecutionException(NAME, "Failed to parse Avro data file. " + e.getMessage(), e);
-          } finally {
-            if (reader != null) {
-              try {
-                reader.close();
-              } catch (IOException e) {
-                // Nothing can be done.
-              }
-            }
-          }
-        } else {
-          throw new DirectiveExecutionException(
-            NAME, String.format("Column '%s' is of invalid type. It should be of type 'byte array'.", column));
         }
-      }
+        return results;
     }
-    return results;
-  }
 
-  @Override
-  public Mutation lineage() {
-    return Mutation.builder()
-      .readable("Parsed column '%s' as a Avro file", column)
-      .all(Many.columns(column))
-      .build();
-  }
-
-  /**
-   * Flattens the {@link GenericRecord}.
-   *
-   * @param genericRecord to be flattened.
-   * @param row to be flattened into
-   * @param name of the field to be flattened.
-   */
-  private void add(GenericRecord genericRecord, Row row, String name) {
-    List<Schema.Field> fields = genericRecord.getSchema().getFields();
-    String colname;
-    for (Schema.Field field : fields) {
-      Object v = genericRecord.get(field.name());
-      if (name != null) {
-        colname = String.format("%s_%s", name, field.name());
-      } else {
-        colname = field.name();
-      }
-      if (v instanceof GenericRecord) {
-        add((GenericRecord) v, row, colname);
-      } else if (v instanceof Map || v instanceof List) {
-        row.add(colname, gson.toJson(v));
-      } else if (v instanceof Utf8) {
-        row.add(colname, v.toString());
-      } else {
-        row.add(colname, genericRecord.get(field.name()));
-      }
+    @Override
+    public Mutation lineage() {
+        return Mutation.builder()
+                .readable("Parsed column '%s' as a Avro file", column)
+                .all(Many.columns(column))
+                .build();
     }
-  }
+
+    /**
+     * Flattens the {@link GenericRecord}.
+     *
+     * @param genericRecord to be flattened.
+     * @param row           to be flattened into
+     * @param name          of the field to be flattened.
+     */
+    private void add(GenericRecord genericRecord, Row row, String name) {
+        List<Schema.Field> fields = genericRecord.getSchema().getFields();
+        String colname;
+        for (Schema.Field field : fields) {
+            Object v = genericRecord.get(field.name());
+            if (name != null) {
+                colname = String.format("%s_%s", name, field.name());
+            } else {
+                colname = field.name();
+            }
+            if (v instanceof GenericRecord) {
+                add((GenericRecord) v, row, colname);
+            } else if (v instanceof Map || v instanceof List) {
+                row.add(colname, gson.toJson(v));
+            } else if (v instanceof Utf8) {
+                row.add(colname, v.toString());
+            } else {
+                row.add(colname, genericRecord.get(field.name()));
+            }
+        }
+    }
 }

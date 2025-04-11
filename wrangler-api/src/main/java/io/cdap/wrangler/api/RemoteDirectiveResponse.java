@@ -30,7 +30,7 @@ public class RemoteDirectiveResponse implements Serializable {
 
     /**
      * Only used by {@link io.cdap.wrangler.utils.KryoSerializer}
-    **/
+     **/
     private RemoteDirectiveResponse() {
         this(null, null);
     }

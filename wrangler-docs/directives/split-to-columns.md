@@ -3,22 +3,21 @@
 The SPLIT-TO-COLUMNS directive splits a column based on a regular expression into
 multiple columns.
 
-
 ## Syntax
 
 ```
  split-to-columns <column> <regex>
 ```
 
-The `<column>` is split into one or more columns around matches of the specified regular 
+The `<column>` is split into one or more columns around matches of the specified regular
 expression `<regex>`.
-
 
 ## Usage Notes
 
 The SPLIT-TO-COLUMNS directive takes a column, applies the regular expression separator,
 and then creates multiple columns from the split. The name of the columns are in the
 format:
+
 ```
 {
   "column": "...",
@@ -41,7 +40,6 @@ parts of the split generated from applying this directive.
 
 **Note:** This directive can only operate on columns of type string.
 
-
 ## Examples
 
 If we have a `<separator>` pattern of `,` (a comma) over the string:
@@ -49,6 +47,7 @@ If we have a `<separator>` pattern of `,` (a comma) over the string:
 `This will be split 1,This will be split 2,This will be split 3,Split 4`
 
 This will generate four new columns:
+
 ```
 {
   "1": "This will be split 1",
@@ -59,6 +58,7 @@ This will generate four new columns:
 ```
 
 Using this record as an example:
+
 ```
 {
   "id": 1,
@@ -67,6 +67,7 @@ Using this record as an example:
 ```
 
 Applying this directive:
+
 ```
 split-to-columns codes \|
 ```
@@ -76,6 +77,7 @@ separator in a regex pattern.
 
 This would result in four columns being generated, with each split value being assigned to
 the column `codes`:
+
 ```
 {
   "id": 1,

@@ -23,15 +23,15 @@ import io.cdap.cdap.api.annotation.Beta;
  *
  * <p>Directives have to implement this class to inject their mutations for lineage to be constructed.</p>
  * <p>
- *   The method <code>lineage</code> is invoked separately in the <code>prepareRun</code> phase of the pipeline
- *   execution. Before the method <code>lineage</code> is invoked, the framework ensures that the receipe is
- *   parsed and initialize on each directive that is included is called. All the class variables of the directive
- *   are available to be used within the <code>lineage</code> method.
+ * The method <code>lineage</code> is invoked separately in the <code>prepareRun</code> phase of the pipeline
+ * execution. Before the method <code>lineage</code> is invoked, the framework ensures that the receipe is
+ * parsed and initialize on each directive that is included is called. All the class variables of the directive
+ * are available to be used within the <code>lineage</code> method.
  * </p>
  *
  * <p>
- *   {@link Mutation} captures all the changes the directive is going to be applying of the data. It has
- *   two major methods:
+ * {@link Mutation} captures all the changes the directive is going to be applying of the data. It has
+ * two major methods:
  *
  *   <ul>
  *     <il>
@@ -47,41 +47,39 @@ import io.cdap.cdap.api.annotation.Beta;
  *     as target or source for performing the data transformation. </li>
  *   </ul>
  * </p>
- *
+ * <p>
  * Following are few examples of how the method can be implemented:
  *
  * <code>
- * @Override
- * public Mutation lineage() {
- *   return Mutation.builder()
- *    .readable("Looking up catalog using value in column '%s' and results written into column '%s', src, dest)
- *    .relation(src, Many.of(src, dest))
- *    .build();
+ *
+ * @Override public Mutation lineage() {
+ * return Mutation.builder()
+ * .readable("Looking up catalog using value in column '%s' and results written into column '%s', src, dest)
+ * .relation(src, Many.of(src, dest))
+ * .build();
  * }
  * </code>
- *
+ * <p>
  * Another example:
  *
  * <code>
- * @Override
- * public Mutation lineage() {
- *   return Mutation.builder()
- *    .readable("Dropped columns %s", columns")
- *    .drop(Many.of(columns))
- *    .build();
+ * @Override public Mutation lineage() {
+ * return Mutation.builder()
+ * .readable("Dropped columns %s", columns")
+ * .drop(Many.of(columns))
+ * .build();
  * }
  * </code>
- *
  * @see Mutation
  * @see Relation
  * @see Many
  */
 @Beta
 public interface Lineage {
-  /**
-   * Returns a Mutation that can be used to generate lineage.
-   *
-   * @return a instance of {@link Mutation} object used to generate lineage.
-   */
-  Mutation lineage();
+    /**
+     * Returns a Mutation that can be used to generate lineage.
+     *
+     * @return a instance of {@link Mutation} object used to generate lineage.
+     */
+    Mutation lineage();
 }

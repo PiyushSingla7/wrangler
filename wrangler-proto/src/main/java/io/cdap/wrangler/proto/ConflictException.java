@@ -23,11 +23,11 @@ import java.net.HttpURLConnection;
  */
 public class ConflictException extends StatusCodeException {
 
-  public ConflictException(String message) {
-    super(message, HttpURLConnection.HTTP_CONFLICT);
-  }
+    public ConflictException(String message) {
+        super(message, HttpURLConnection.HTTP_CONFLICT);
+    }
 
-  public ConflictException(String message, Throwable cause) {
-    super(message, cause, HttpURLConnection.HTTP_CONFLICT);
-  }
+    public ConflictException(String message, Throwable cause) {
+        super(message, cause, HttpURLConnection.HTTP_CONFLICT);
+    }
 }

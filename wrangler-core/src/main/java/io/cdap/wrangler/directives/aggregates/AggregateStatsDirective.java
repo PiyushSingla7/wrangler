@@ -16,8 +16,6 @@
 
 package io.cdap.wrangler.directives.aggregates;
 
-import java.util.List;
-
 import io.cdap.wrangler.api.Arguments;
 import io.cdap.wrangler.api.Directive;
 import io.cdap.wrangler.api.ExecutorContext;
@@ -26,9 +24,11 @@ import io.cdap.wrangler.api.parser.ByteSize;
 import io.cdap.wrangler.api.parser.TimeDuration;
 import io.cdap.wrangler.api.parser.UsageDefinition;
 
+import java.util.List;
+
 /**
  * Aggregates byte sizes and time durations from input rows.
- *
+ * <p>
  * Example usage:
  * aggregate-stats sizeColumn timeColumn totalSizeColumn totalTimeColumn
  */

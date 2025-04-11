@@ -2,8 +2,8 @@
 
 The PARSE-AS-LOG directive parses access log files, such as from Apache HTTPD and nginx servers.
 
-
 ## Syntax
+
 ```
 parse-as-log <column> <format>
 ```
@@ -26,6 +26,7 @@ options are recognized:
 * agent
 
 For example: to parse either _combined log format_ or _common log format_, you can use:
+
 ```
 parse-as-log body combined
 parse-as-log body common
@@ -38,15 +39,16 @@ For nginx, the `format` tokens are specified by
 [log_format](http://nginx.org/en/docs/http/ngx_http_log_module.html#log_format) and
 [embedded variables](http://nginx.org/en/docs/http/ngx_http_core_module.html#variables).
 
-
 ## Examples
 
 The format for common log is:
+
 ```
 %h %l %u %t "%r" %>s %b
 ```
 
 and a corresponding log line as a record that needs to be parsed, in that format:
+
 ```
 {
   "body": "127.0.0.1 - frank [10/Oct/2000:13:55:36 -0700] \"GET /apache_pb.gif HTTP/1.0\" 200 2326"
@@ -54,12 +56,14 @@ and a corresponding log line as a record that needs to be parsed, in that format
 ```
 
 Applying either of these directives:
+
 ```
 parse-as-log body %h %l %u %t "%r" %>s %b
 parse-as-log body common
 ```
 
 would result in this record:
+
 ```
 {
   "ip_connection_client_host": "127.0.0.1",
@@ -74,22 +78,26 @@ would result in this record:
 ```
 
 Using the Combined Log Format:
+
 ```
 %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\
 ```
 
 and a corresponding log line:
+
 ```
 127.0.0.1 - frank [10/Oct/2000:13:55:36 -0700] "GET /apache_pb.gif HTTP/1.0" 200 2326 "http://www.example.com/start.
 html" "Mozilla/4.08 [en] (Win98; I ;Nav)"
 ```
 
 Complex formats, such as this, can also be parsed:
+
 ```
 %t %u [%D %h %{True-Client-IP}i %{UNIQUE_ID}e %r] %{Cookie}i %s \"%{User-Agent}i\" \"%{host}i\" %l %b %{Referer}i
 ```
 
 Example log line for such a format (note: reformatted from a single line):
+
 ```
 [03/Dec/2013:10:53:59 +0000] - [32002 10.102.4.254 195.229.241.182 Up24RwpmBAwAAA1LWJsAAAAR GET
 /content/dam/Central_Library/Street_Shots/Youth/2012/09sep/LFW/Gallery_03/LFW_SS13_SEPT_12_777.jpg.

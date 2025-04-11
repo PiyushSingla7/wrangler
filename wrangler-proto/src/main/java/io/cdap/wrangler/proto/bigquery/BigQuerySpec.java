@@ -21,14 +21,14 @@ import io.cdap.wrangler.proto.PluginSpec;
 
 /**
  * Plugin specification for a BigQuery pipeline source.
- *
+ * <p>
  * TODO: (CDAP-14652) clean up this API. There is no reason for this class to exist.
  */
 public class BigQuerySpec {
-  @SerializedName("BigQueryTable")
-  private final PluginSpec spec;
+    @SerializedName("BigQueryTable")
+    private final PluginSpec spec;
 
-  public BigQuerySpec(PluginSpec spec) {
-    this.spec = spec;
-  }
+    public BigQuerySpec(PluginSpec spec) {
+        this.spec = spec;
+    }
 }

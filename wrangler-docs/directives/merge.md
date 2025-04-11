@@ -4,8 +4,8 @@ The MERGE directive merges two columns by inserting a third column into a record
 values in the third column are merged values from the two columns delimited by a specified
 separator.
 
-
 ## Syntax
+
 ```
  merge <first> <second> <new column> '<seperator>'
 ```
@@ -21,15 +21,14 @@ separator.
 
 * The existing columns are not dropped by this directive.
 
-
 ## Usage Notes
 
 The columns to be merged should both be of type string.
 
-
 ## Examples
 
 Using this record as an example:
+
 ```
 {
   "first": "Root",
@@ -38,6 +37,7 @@ Using this record as an example:
 ```
 
 Applying these directives:
+
 ```
 merge first last fullname ' '
 merge first last fullname '''
@@ -48,6 +48,7 @@ merge first last fullname '---'
 would result in these records:
 
 Separator is a single space character (`' '`):
+
 ```
 {
   "first": "Root",
@@ -57,6 +58,7 @@ Separator is a single space character (`' '`):
 ```
 
 Separator is a single quote character (`'''`):
+
 ```
 {
   "fname" : "Joltie",
@@ -66,6 +68,7 @@ Separator is a single quote character (`'''`):
 ```
 
 Separator is the UTF-8 Line Feed character (`'\u000A'`):
+
 ```
 {
   "fname" : "Joltie",
@@ -75,6 +78,7 @@ Separator is the UTF-8 Line Feed character (`'\u000A'`):
 ```
 
 Separator is multiple characters (`'---'`):
+
 ```
 {
   "fname" : "Joltie",

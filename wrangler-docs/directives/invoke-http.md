@@ -3,15 +3,14 @@
 The INVOKE-HTTP directive is an experimental directive to trigger an HTTP POST request
 with a body composed from specified fields.
 
-
 ## Syntax
+
 ```
 invoke-http <url> <column>[,<column>*] <header>[,<header>*]
 ```
 
 The `<column>`s specify the value to be sent to the service `<url>` in the POST request as
 the `body`.
-
 
 ## Usage Notes
 
@@ -34,6 +33,7 @@ data.
 
 When an HTTP service requires more than one header to be passed, they can be specified as
 key-value pairs. For example:
+
 ```
   X-Proxy-Server=0.0.0.0,X-Auth-Type=Basic
 ```
@@ -41,10 +41,10 @@ key-value pairs. For example:
 *Note:* The key and value are separated by an equals sign (`=`) and headers are separated
 by commas (`,`).
 
-
 ## Examples
 
 Using this record as an example:
+
 ```
 {
     "latitude": 24.56,
@@ -58,16 +58,19 @@ Assume that a service to locate a postal code, given a latitude and longitude, i
 an address such as `http://hostname/v3/api/geo-find`.
 
 Applying this directive:
+
 ```
 invoke-http http://hostname/v3/api/geo-find latitude,longitude
 ```
 
 This would be translated into a `POST` call:
+
 ```
 POST v3/api/geo-find
 ```
 
 with a body of:
+
 ```
 {
     "latitude": 24.56,

@@ -27,28 +27,28 @@ import java.util.Map;
  */
 @PublicEvolving
 public class Properties implements Token {
-  private Map<String, Token> values;
+    private Map<String, Token> values;
 
-  public Properties(Map<String, Token> values) {
-    this.values = values;
-  }
-
-  @Override
-  public Map<String, Token> value() {
-    return values;
-  }
-
-  @Override
-  public TokenType type() {
-    return TokenType.PROPERTIES;
-  }
-
-  @Override
-  public JsonElement toJson() {
-    JsonObject object = new JsonObject();
-    for (Map.Entry<String, Token> entry : values.entrySet()) {
-      object.add(entry.getKey(), entry.getValue().toJson());
+    public Properties(Map<String, Token> values) {
+        this.values = values;
     }
-    return object;
-  }
+
+    @Override
+    public Map<String, Token> value() {
+        return values;
+    }
+
+    @Override
+    public TokenType type() {
+        return TokenType.PROPERTIES;
+    }
+
+    @Override
+    public JsonElement toJson() {
+        JsonObject object = new JsonObject();
+        for (Map.Entry<String, Token> entry : values.entrySet()) {
+            object.add(entry.getKey(), entry.getValue().toJson());
+        }
+        return object;
+    }
 }

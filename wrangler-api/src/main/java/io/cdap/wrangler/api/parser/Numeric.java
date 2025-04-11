@@ -26,27 +26,27 @@ import io.cdap.wrangler.api.annotations.PublicEvolving;
  */
 @PublicEvolving
 public class Numeric implements Token {
-  private final LazyNumber value;
+    private final LazyNumber value;
 
-  public Numeric(LazyNumber value) {
-    this.value = value;
-  }
+    public Numeric(LazyNumber value) {
+        this.value = value;
+    }
 
-  @Override
-  public LazyNumber value() {
-    return value;
-  }
+    @Override
+    public LazyNumber value() {
+        return value;
+    }
 
-  @Override
-  public TokenType type() {
-    return TokenType.NUMERIC;
-  }
+    @Override
+    public TokenType type() {
+        return TokenType.NUMERIC;
+    }
 
-  @Override
-  public JsonElement toJson() {
-    JsonObject object = new JsonObject();
-    object.addProperty("type", TokenType.NUMERIC.name());
-    object.addProperty("value", value);
-    return object;
-  }
+    @Override
+    public JsonElement toJson() {
+        JsonObject object = new JsonObject();
+        object.addProperty("type", TokenType.NUMERIC.name());
+        object.addProperty("value", value);
+        return object;
+    }
 }

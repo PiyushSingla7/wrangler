@@ -26,40 +26,40 @@ import java.util.Collections;
  * @param <T> type of value returned by the response
  */
 public class ServiceResponse<T> {
-  private final String message;
-  private final Integer count;
-  private final Collection<T> values;
+    private final String message;
+    private final Integer count;
+    private final Collection<T> values;
 
-  public ServiceResponse(String message) {
-    this.message = message;
-    this.count = null;
-    this.values = Collections.emptyList();
-  }
+    public ServiceResponse(String message) {
+        this.message = message;
+        this.count = null;
+        this.values = Collections.emptyList();
+    }
 
-  public ServiceResponse(T value) {
-    this(Collections.singletonList(value));
-  }
+    public ServiceResponse(T value) {
+        this(Collections.singletonList(value));
+    }
 
-  public ServiceResponse(Collection<T> values) {
-    this(values, "Success");
-  }
+    public ServiceResponse(Collection<T> values) {
+        this(values, "Success");
+    }
 
-  public ServiceResponse(Collection<T> values, String message) {
-    this.message = message;
-    this.count = values.size();
-    this.values = values;
-  }
+    public ServiceResponse(Collection<T> values, String message) {
+        this.message = message;
+        this.count = values.size();
+        this.values = values;
+    }
 
-  public String getMessage() {
-    return message;
-  }
+    public String getMessage() {
+        return message;
+    }
 
-  public Integer getCount() {
-    return count;
-  }
+    public Integer getCount() {
+        return count;
+    }
 
-  public Collection<T> getValues() {
-    return values;
-  }
+    public Collection<T> getValues() {
+        return values;
+    }
 }
 

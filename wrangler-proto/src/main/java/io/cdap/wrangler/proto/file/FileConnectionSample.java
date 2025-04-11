@@ -22,15 +22,15 @@ import io.cdap.wrangler.proto.ConnectionSample;
  * Information about a sample taken from a GCS Object.
  */
 public class FileConnectionSample extends ConnectionSample {
-  private final String uri;
-  private final String path;
-  private final String file;
+    private final String uri;
+    private final String path;
+    private final String file;
 
-  public FileConnectionSample(String id, String name, String connection, String sampler, String connectionid,
-                              String uri, String path, String file) {
-    super(id, name, connection, sampler, connectionid);
-    this.uri = uri;
-    this.path = path;
-    this.file = file;
-  }
+    public FileConnectionSample(String id, String name, String connection, String sampler, String connectionid,
+                                String uri, String path, String file) {
+        super(id, name, connection, sampler, connectionid);
+        this.uri = uri;
+        this.path = path;
+        this.file = file;
+    }
 }

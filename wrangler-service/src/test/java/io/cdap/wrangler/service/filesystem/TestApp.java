@@ -24,20 +24,20 @@ import org.apache.hadoop.mapred.TextInputFormat;
 import org.apache.hadoop.mapred.TextOutputFormat;
 
 public class TestApp extends AbstractApplication {
-  /**
-   * Override this method to declare and configure the application.
-   */
-  @Override
-  public void configure() {
-    setName("dataprep");
-    setDescription("DataPrep Backend Service");
-    // Used by the file service.
-    createDataset("indexds", FileSet.class, FileSetProperties.builder()
-      .setBasePath("dataprep/indexds")
-      .setInputFormat(TextInputFormat.class)
-      .setOutputFormat(TextOutputFormat.class)
-      .setDescription("Store Dataset Index files")
-      .build());
-    addService("service", new FilesystemExplorer());
-  }
+    /**
+     * Override this method to declare and configure the application.
+     */
+    @Override
+    public void configure() {
+        setName("dataprep");
+        setDescription("DataPrep Backend Service");
+        // Used by the file service.
+        createDataset("indexds", FileSet.class, FileSetProperties.builder()
+                .setBasePath("dataprep/indexds")
+                .setInputFormat(TextInputFormat.class)
+                .setOutputFormat(TextOutputFormat.class)
+                .setDescription("Store Dataset Index files")
+                .build());
+        addService("service", new FilesystemExplorer());
+    }
 }

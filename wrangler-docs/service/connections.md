@@ -32,9 +32,9 @@ These are the fields that can be in the request:
 * name (mandatory)
 * description (optional)
 * type (mandatory; one of:)
-  * DATABASE
-  * KAFKA
-  * S3
+    * DATABASE
+    * KAFKA
+    * S3
 * properties (optional)
 
 Here is an example of a JSON Request for creating a connection:
@@ -64,6 +64,7 @@ example response when creation is successful:
     ]
 }
 ```
+
 ## Sample Runs
 
 ### Connection JSON
@@ -82,6 +83,7 @@ cat /Users/nitin/Work/Demo/data/mysql.connection.json
 ```
 
 ### Create REST API call.
+
 ```
 curl -s --data "@/tmp/mysql.connection.json" 'http://localhost:11015/v3/namespaces/default/apps/dataprep/services/service/methods/connections/create' | python -mjson.tool
 {
@@ -95,6 +97,7 @@ curl -s --data "@/tmp/mysql.connection.json" 'http://localhost:11015/v3/namespac
 ```
 
 ### Repeat creation will fail
+
 ```
 curl -s --data "@/Users/nitin/Work/Demo/data/mysql.connection.json" 'http://localhost:11015/v3/namespaces/default/apps/dataprep/services/service/methods/connections/create' | python -mjson.tool
 {
@@ -104,6 +107,7 @@ curl -s --data "@/Users/nitin/Work/Demo/data/mysql.connection.json" 'http://loca
 ```
 
 ### Delete Connection
+
 ```
 curl -X DELETE "http://localhost:11015/v3/namespaces/default/apps/dataprep/services/service/methods/connections/mysql_database" | python -mjson.tool
 {
@@ -112,7 +116,8 @@ curl -X DELETE "http://localhost:11015/v3/namespaces/default/apps/dataprep/servi
 }
 ```
 
-### Repeated delete will also be successful or even when the key is not found. 
+### Repeated delete will also be successful or even when the key is not found.
+
 ```
 curl -s -X DELETE "http://localhost:11015/v3/namespaces/default/apps/dataprep/services/service/methods/connections/mysql_database" | python -mjson.tool
 {
@@ -122,6 +127,7 @@ curl -s -X DELETE "http://localhost:11015/v3/namespaces/default/apps/dataprep/se
 ```
 
 ### Listing All Connections
+
 ```
 curl -s "http://localhost:11015/v3/namespaces/default/apps/dataprep/services/service/methods/connections?type=*" | python -mjson.tool
 {
@@ -142,6 +148,7 @@ curl -s "http://localhost:11015/v3/namespaces/default/apps/dataprep/services/ser
 ```
 
 ### Listing Only connections of type Database
+
 ```
 curl -s "http://localhost:11015/v3/namespaces/default/apps/dataprep/services/service/methods/connections?type=database" | python -mjson.tool
 {
@@ -162,6 +169,7 @@ curl -s "http://localhost:11015/v3/namespaces/default/apps/dataprep/services/ser
 ```
 
 ### Info about connection
+
 ```
 curl -s "http://localhost:11015/v3/namespaces/default/apps/dataprep/services/service/methods/connections/mysql_database" | python -mjson.tool
 {
@@ -186,6 +194,7 @@ curl -s "http://localhost:11015/v3/namespaces/default/apps/dataprep/services/ser
 ```
 
 ### Cloning connection
+
 ```
 curl -s "http://localhost:11015/v3/namespaces/default/apps/dataprep/services/service/methods/connections/mysql_database/clone" | python -mjson.tool
 {
@@ -209,6 +218,7 @@ curl -s "http://localhost:11015/v3/namespaces/default/apps/dataprep/services/ser
 ```
 
 ### Fetch only properties
+
 ```
 curl -s "http://localhost:11015/v3/namespaces/default/apps/dataprep/services/service/methods/connections/mysql_database/properties" | python -mjson.tool
 {
@@ -225,6 +235,7 @@ curl -s "http://localhost:11015/v3/namespaces/default/apps/dataprep/services/ser
 ```
 
 ### Adding new property or updating existing property
+
 ```
 curl -X PUT -s "http://localhost:11015/v3/namespaces/default/apps/dataprep/services/service/methods/connections/mysql_database/properties?key=ssl&value=true" | python -mjson.tool
 {

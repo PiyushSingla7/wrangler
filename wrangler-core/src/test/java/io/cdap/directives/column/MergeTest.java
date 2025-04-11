@@ -30,80 +30,80 @@ import java.util.List;
  */
 public class MergeTest {
 
-  @Test
-  public void testBasicMergeFunctionality() throws Exception {
-    String[] directives = new String[] {
-      "merge A B C ','",
-      "merge B A D ' '"
-    };
+    @Test
+    public void testBasicMergeFunctionality() throws Exception {
+        String[] directives = new String[]{
+                "merge A B C ','",
+                "merge B A D ' '"
+        };
 
-    List<Row> rows = Arrays.asList(
-      new Row("A", "Root").add("B", "Joltie")
-    );
+        List<Row> rows = Arrays.asList(
+                new Row("A", "Root").add("B", "Joltie")
+        );
 
-    rows = TestingRig.execute(directives, rows);
-    Assert.assertEquals(1, rows.size());
-    Assert.assertEquals("Root,Joltie", rows.get(0).getValue("C"));
-    Assert.assertEquals("Joltie Root", rows.get(0).getValue("D"));
-  }
+        rows = TestingRig.execute(directives, rows);
+        Assert.assertEquals(1, rows.size());
+        Assert.assertEquals("Root,Joltie", rows.get(0).getValue("C"));
+        Assert.assertEquals("Joltie Root", rows.get(0).getValue("D"));
+    }
 
-  @Ignore
-  @Test
-  public void testWithQuoteAsSeparator() throws Exception {
-    String[] directives = new String[] {
-      "merge A B C '\''",
-    };
+    @Ignore
+    @Test
+    public void testWithQuoteAsSeparator() throws Exception {
+        String[] directives = new String[]{
+                "merge A B C '\''",
+        };
 
-    List<Row> rows = Arrays.asList(
-      new Row("A", "Root").add("B", "Joltie")
-    );
+        List<Row> rows = Arrays.asList(
+                new Row("A", "Root").add("B", "Joltie")
+        );
 
-    rows = TestingRig.execute(directives, rows);
-    Assert.assertEquals(1, rows.size());
-    Assert.assertEquals("Root'Joltie", rows.get(0).getValue("C"));
-  }
+        rows = TestingRig.execute(directives, rows);
+        Assert.assertEquals(1, rows.size());
+        Assert.assertEquals("Root'Joltie", rows.get(0).getValue("C"));
+    }
 
-  @Test
-  public void testWithUTF8Separator() throws Exception {
-    String[] directives = new String[] {
-      "merge A B C '\\u000A'", // in actuality you need only one back slash.
-    };
+    @Test
+    public void testWithUTF8Separator() throws Exception {
+        String[] directives = new String[]{
+                "merge A B C '\\u000A'", // in actuality you need only one back slash.
+        };
 
-    List<Row> rows = Arrays.asList(
-      new Row("A", "Root").add("B", "Joltie")
-    );
+        List<Row> rows = Arrays.asList(
+                new Row("A", "Root").add("B", "Joltie")
+        );
 
-    rows = TestingRig.execute(directives, rows);
-    Assert.assertEquals(1, rows.size());
-    Assert.assertEquals("Root\nJoltie", rows.get(0).getValue("C"));
-  }
+        rows = TestingRig.execute(directives, rows);
+        Assert.assertEquals(1, rows.size());
+        Assert.assertEquals("Root\nJoltie", rows.get(0).getValue("C"));
+    }
 
-  @Ignore
-  @Test
-  public void testSingleQuoteAtEndOnly() throws Exception {
-    String[] directives = new String[] {
-      "merge A B C '\\u000A", // in actuality you need only one back slash.
-    };
+    @Ignore
+    @Test
+    public void testSingleQuoteAtEndOnly() throws Exception {
+        String[] directives = new String[]{
+                "merge A B C '\\u000A", // in actuality you need only one back slash.
+        };
 
-    List<Row> rows = Arrays.asList(
-      new Row("A", "Root").add("B", "Joltie")
-    );
+        List<Row> rows = Arrays.asList(
+                new Row("A", "Root").add("B", "Joltie")
+        );
 
-    TestingRig.execute(directives, rows);
-  }
+        TestingRig.execute(directives, rows);
+    }
 
-  @Test
-  public void testWithMultipleCharactersAsSeparator() throws Exception {
-    String[] directives = new String[] {
-      "merge A B C '---'", // in actuality you need only one back slash.
-    };
+    @Test
+    public void testWithMultipleCharactersAsSeparator() throws Exception {
+        String[] directives = new String[]{
+                "merge A B C '---'", // in actuality you need only one back slash.
+        };
 
-    List<Row> rows = Arrays.asList(
-      new Row("A", "Root").add("B", "Joltie")
-    );
+        List<Row> rows = Arrays.asList(
+                new Row("A", "Root").add("B", "Joltie")
+        );
 
-    rows = TestingRig.execute(directives, rows);
-    Assert.assertEquals(1, rows.size());
-    Assert.assertEquals("Root---Joltie", rows.get(0).getValue("C"));
-  }
+        rows = TestingRig.execute(directives, rows);
+        Assert.assertEquals(1, rows.size());
+        Assert.assertEquals("Root---Joltie", rows.get(0).getValue("C"));
+    }
 }

@@ -22,13 +22,8 @@ import io.cdap.wrangler.api.Directive;
 import io.cdap.wrangler.api.DirectiveLoadException;
 import org.reflections.Reflections;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import javax.annotation.Nullable;
+import java.util.*;
 
 /**
  * This class is implementation of {@link DirectiveRegistry} for maintaining a registry
@@ -50,99 +45,99 @@ import javax.annotation.Nullable;
  */
 public final class SystemDirectiveRegistry implements DirectiveRegistry {
 
-  public static final SystemDirectiveRegistry INSTANCE;
+    public static final SystemDirectiveRegistry INSTANCE;
 
-  static {
-    try {
-      INSTANCE = new SystemDirectiveRegistry();
-    } catch (DirectiveLoadException e) {
-      // This shouldn't happen
-      throw new RuntimeException("Failed to load system directives", e);
-    }
-  }
-
-  // This is the default package in which the directives are searched for.
-  private static final String PACKAGE = "io.cdap.directives";
-  private final Map<String, DirectiveInfo> registry;
-
-  @VisibleForTesting
-  SystemDirectiveRegistry() throws DirectiveLoadException {
-    this(new ArrayList<>());
-  }
-
-  /**
-   * This constructor uses the user provided <tt>namespace</tt> as starting pointing
-   * for scanning classes that implement the interface {@link Directive}.
-   *
-   * @param namespaces that is used as starting point for scanning classes.
-   * @throws DirectiveLoadException thrown if there are any issue loading the directive.
-   */
-  public SystemDirectiveRegistry(List<String> namespaces) throws DirectiveLoadException {
-    Map<String, DirectiveInfo> registry = new HashMap<>();
-    namespaces.add(PACKAGE);
-    for (String namespace : namespaces) {
-      try {
-        Reflections reflections = new Reflections(namespace);
-        Set<Class<? extends Directive>> system = reflections.getSubTypesOf(Directive.class);
-        for (Class<? extends Directive> directive : system) {
-          DirectiveInfo info = DirectiveInfo.fromSystem(directive);
-          registry.put(info.name(), info);
+    static {
+        try {
+            INSTANCE = new SystemDirectiveRegistry();
+        } catch (DirectiveLoadException e) {
+            // This shouldn't happen
+            throw new RuntimeException("Failed to load system directives", e);
         }
-      } catch (InstantiationException | IllegalAccessException e) {
-        throw new DirectiveLoadException(e.getMessage(), e);
-      }
     }
-    this.registry = Collections.unmodifiableMap(registry);
-  }
 
-  /**
-   * Given the name of the directive, returns the information related to the directive.
-   *
-   * @param name of the directive to be retrieved from the registry.
-   * @return an instance of {@link DirectiveInfo} if found, else null.
-   */
-  @Override
-  public DirectiveInfo get(String namespace, String name) {
-    return get(name);
-  }
+    // This is the default package in which the directives are searched for.
+    private static final String PACKAGE = "io.cdap.directives";
+    private final Map<String, DirectiveInfo> registry;
 
-  /**
-   * Given the name of the directive, returns the information related to the directive.
-   * This method is specific to system registry as system registry does not need namespace
-   * parameter.
-   *
-   * @param name of the directive to be retrieved from the registry.
-   * @return an instance of {@link DirectiveInfo} if found, else null.
-   */
-  public DirectiveInfo get(String name) {
-    return registry.get(name);
-  }
+    @VisibleForTesting
+    SystemDirectiveRegistry() throws DirectiveLoadException {
+        this(new ArrayList<>());
+    }
 
-  @Override
-  public void reload(String namespace) {
-    // No-op.
-  }
+    /**
+     * This constructor uses the user provided <tt>namespace</tt> as starting pointing
+     * for scanning classes that implement the interface {@link Directive}.
+     *
+     * @param namespaces that is used as starting point for scanning classes.
+     * @throws DirectiveLoadException thrown if there are any issue loading the directive.
+     */
+    public SystemDirectiveRegistry(List<String> namespaces) throws DirectiveLoadException {
+        Map<String, DirectiveInfo> registry = new HashMap<>();
+        namespaces.add(PACKAGE);
+        for (String namespace : namespaces) {
+            try {
+                Reflections reflections = new Reflections(namespace);
+                Set<Class<? extends Directive>> system = reflections.getSubTypesOf(Directive.class);
+                for (Class<? extends Directive> directive : system) {
+                    DirectiveInfo info = DirectiveInfo.fromSystem(directive);
+                    registry.put(info.name(), info);
+                }
+            } catch (InstantiationException | IllegalAccessException e) {
+                throw new DirectiveLoadException(e.getMessage(), e);
+            }
+        }
+        this.registry = Collections.unmodifiableMap(registry);
+    }
 
-  @Nullable
-  @Override
-  public ArtifactSummary getLatestWranglerArtifact() {
-    return null;
-  }
+    /**
+     * Given the name of the directive, returns the information related to the directive.
+     *
+     * @param name of the directive to be retrieved from the registry.
+     * @return an instance of {@link DirectiveInfo} if found, else null.
+     */
+    @Override
+    public DirectiveInfo get(String namespace, String name) {
+        return get(name);
+    }
 
-  /**
-   * @return Returns an iterator to iterate through all the <code>DirectiveInfo</code> objects
-   * maintained within the registry.
-   */
-  @Override
-  public Iterable<DirectiveInfo> list(String namespace) {
-    return Collections.unmodifiableCollection(registry.values());
-  }
+    /**
+     * Given the name of the directive, returns the information related to the directive.
+     * This method is specific to system registry as system registry does not need namespace
+     * parameter.
+     *
+     * @param name of the directive to be retrieved from the registry.
+     * @return an instance of {@link DirectiveInfo} if found, else null.
+     */
+    public DirectiveInfo get(String name) {
+        return registry.get(name);
+    }
 
-  /**
-   * Closes any resources acquired during initialization or otherwise.
-   */
-  @Override
-  public void close() {
-    // no-op
-  }
+    @Override
+    public void reload(String namespace) {
+        // No-op.
+    }
+
+    @Nullable
+    @Override
+    public ArtifactSummary getLatestWranglerArtifact() {
+        return null;
+    }
+
+    /**
+     * @return Returns an iterator to iterate through all the <code>DirectiveInfo</code> objects
+     * maintained within the registry.
+     */
+    @Override
+    public Iterable<DirectiveInfo> list(String namespace) {
+        return Collections.unmodifiableCollection(registry.values());
+    }
+
+    /**
+     * Closes any resources acquired during initialization or otherwise.
+     */
+    @Override
+    public void close() {
+        // no-op
+    }
 }

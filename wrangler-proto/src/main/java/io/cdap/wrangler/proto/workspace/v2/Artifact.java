@@ -17,54 +17,54 @@
 
 package io.cdap.wrangler.proto.workspace.v2;
 
-import java.util.Objects;
 import javax.annotation.Nullable;
+import java.util.Objects;
 
 /**
  * An artifact.
  */
 public class Artifact {
-  private final String name;
-  private final String version;
-  private final String scope;
+    private final String name;
+    private final String version;
+    private final String scope;
 
-  public Artifact(String name, String version, String scope) {
-    this.name = name;
-    this.version = version;
-    this.scope = scope;
-  }
-
-  @Nullable
-  public String getName() {
-    return name;
-  }
-
-  @Nullable
-  public String getVersion() {
-    return version;
-  }
-
-  @Nullable
-  public String getScope() {
-    return scope;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
+    public Artifact(String name, String version, String scope) {
+        this.name = name;
+        this.version = version;
+        this.scope = scope;
     }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Artifact artifact = (Artifact) o;
-    return Objects.equals(name, artifact.name) &&
-             Objects.equals(version, artifact.version) &&
-             Objects.equals(scope, artifact.scope);
-  }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(name, version, scope);
-  }
+    @Nullable
+    public String getName() {
+        return name;
+    }
+
+    @Nullable
+    public String getVersion() {
+        return version;
+    }
+
+    @Nullable
+    public String getScope() {
+        return scope;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Artifact artifact = (Artifact) o;
+        return Objects.equals(name, artifact.name) &&
+                Objects.equals(version, artifact.version) &&
+                Objects.equals(scope, artifact.scope);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, version, scope);
+    }
 }

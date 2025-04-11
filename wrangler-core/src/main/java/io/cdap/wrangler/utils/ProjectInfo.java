@@ -30,38 +30,38 @@ import java.util.Properties;
  */
 public class ProjectInfo {
 
-  private static final Logger LOG = LoggerFactory.getLogger(ProjectInfo.class);
-  private static final String RESOURCE_NAME = "/.properties";
-  private static final String PLUGIN_VERSION = "plugin.version";
-  private static final Map<String, String> PROPERTIES;
+    private static final Logger LOG = LoggerFactory.getLogger(ProjectInfo.class);
+    private static final String RESOURCE_NAME = "/.properties";
+    private static final String PLUGIN_VERSION = "plugin.version";
+    private static final Map<String, String> PROPERTIES;
 
-  // Initialize project properties from .properties file.
-  static {
-    Properties props = new Properties();
-    try (InputStream resourceStream = ProjectInfo.class.getResourceAsStream(RESOURCE_NAME)) {
-      props.load(resourceStream);
-    } catch (Exception e) {
-      LOG.warn("Unable to load the project properties {} ", e.getMessage(), e);
+    // Initialize project properties from .properties file.
+    static {
+        Properties props = new Properties();
+        try (InputStream resourceStream = ProjectInfo.class.getResourceAsStream(RESOURCE_NAME)) {
+            props.load(resourceStream);
+        } catch (Exception e) {
+            LOG.warn("Unable to load the project properties {} ", e.getMessage(), e);
+        }
+
+        Map<String, String> properties = new HashMap<>();
+        for (String key : props.stringPropertyNames()) {
+            properties.put(key, props.getProperty(key));
+        }
+        PROPERTIES = properties;
     }
 
-    Map<String, String> properties = new HashMap<>();
-    for (String key : props.stringPropertyNames()) {
-      properties.put(key, props.getProperty(key));
+    /**
+     * @return the project properties.
+     */
+    public static Map<String, String> getProperties() {
+        return PROPERTIES;
     }
-    PROPERTIES = properties;
-  }
 
-  /**
-   * @return the project properties.
-   */
-  public static Map<String, String> getProperties() {
-    return PROPERTIES;
-  }
-
-  /**
-   * @return the project version.
-   */
-  public static String getVersion() {
-    return PROPERTIES.get(PLUGIN_VERSION);
-  }
+    /**
+     * @return the project version.
+     */
+    public static String getVersion() {
+        return PROPERTIES.get(PLUGIN_VERSION);
+    }
 }

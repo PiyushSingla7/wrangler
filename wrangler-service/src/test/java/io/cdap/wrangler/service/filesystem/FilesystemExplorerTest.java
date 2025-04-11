@@ -34,23 +34,23 @@ import java.util.Map;
  */
 @Ignore
 public class FilesystemExplorerTest extends TestBase {
-  @Test
-  public void testExplorer() throws Exception {
-    ApplicationManager app = deployApplication(TestApp.class);
-    ServiceManager service = app.getServiceManager("service");
-    service.start();
-    Explorer explorer = new Explorer(new DatasetProvider() {
-      @Override
-      public Dataset acquire() throws Exception {
-        return (FileSet) getDataset("indexds").get();
-      }
+    @Test
+    public void testExplorer() throws Exception {
+        ApplicationManager app = deployApplication(TestApp.class);
+        ServiceManager service = app.getServiceManager("service");
+        service.start();
+        Explorer explorer = new Explorer(new DatasetProvider() {
+            @Override
+            public Dataset acquire() throws Exception {
+                return (FileSet) getDataset("indexds").get();
+            }
 
-      @Override
-      public void release(Dataset dataset) {
-      }
-    });
-    Map<String, Object> listing = explorer.browse("/", false);
-    Assert.assertTrue(listing.size() > 0);
-    service.stop();
-  }
+            @Override
+            public void release(Dataset dataset) {
+            }
+        });
+        Map<String, Object> listing = explorer.browse("/", false);
+        Assert.assertTrue(listing.size() > 0);
+        service.stop();
+    }
 }

@@ -22,46 +22,46 @@ import java.util.Objects;
  * Specification about workspace for the {@link Request}
  */
 public final class Workspace {
-  // Name of the workspace.
-  private final String name;
+    // Name of the workspace.
+    private final String name;
 
-  // Number of results to be returned for the workspace.
-  private final Integer results;
+    // Number of results to be returned for the workspace.
+    private final Integer results;
 
-  public Workspace(String name, Integer results) {
-    this.name = name;
-    this.results = results;
-  }
-
-  /**
-   * @return Name of the workspace.
-   */
-  public String getName() {
-    return name;
-  }
-
-  /**
-   * @return Number of results to return in the API.
-   */
-  public Integer getResults() {
-    return results;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
+    public Workspace(String name, Integer results) {
+        this.name = name;
+        this.results = results;
     }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Workspace workspace = (Workspace) o;
-    return Objects.equals(name, workspace.name) &&
-      Objects.equals(results, workspace.results);
-  }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(name, results);
-  }
+    /**
+     * @return Name of the workspace.
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @return Number of results to return in the API.
+     */
+    public Integer getResults() {
+        return results;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Workspace workspace = (Workspace) o;
+        return Objects.equals(name, workspace.name) &&
+                Objects.equals(results, workspace.results);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, results);
+    }
 }

@@ -20,7 +20,7 @@ package io.cdap.wrangler.validator;
  * Expection thrown when there are issues with validation.
  */
 public class ValidatorException extends Exception {
-  public ValidatorException(String s) {
-    super(s);
-  }
+    public ValidatorException(String s) {
+        super(s);
+    }
 }

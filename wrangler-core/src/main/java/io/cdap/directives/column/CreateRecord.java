@@ -19,12 +19,7 @@ package io.cdap.directives.column;
 import io.cdap.cdap.api.annotation.Description;
 import io.cdap.cdap.api.annotation.Name;
 import io.cdap.cdap.api.annotation.Plugin;
-import io.cdap.wrangler.api.Arguments;
-import io.cdap.wrangler.api.Directive;
-import io.cdap.wrangler.api.DirectiveExecutionException;
-import io.cdap.wrangler.api.DirectiveParseException;
-import io.cdap.wrangler.api.ExecutorContext;
-import io.cdap.wrangler.api.Row;
+import io.cdap.wrangler.api.*;
 import io.cdap.wrangler.api.annotations.Categories;
 import io.cdap.wrangler.api.lineage.Lineage;
 import io.cdap.wrangler.api.lineage.Many;
@@ -45,60 +40,60 @@ import java.util.List;
 @Categories(categories = {"column"})
 @Description("Creates Column of type Record .")
 public class CreateRecord implements Directive, Lineage {
-  public static final String NAME = "create-record";
-  private String targetColumn;
-  private String[] columns;
+    public static final String NAME = "create-record";
+    private String targetColumn;
+    private String[] columns;
 
-  @Override
-  public UsageDefinition define() {
-    UsageDefinition.Builder builder = UsageDefinition.builder(NAME);
-    builder.define("target_column", TokenType.COLUMN_NAME);
-    builder.define("columns", TokenType.COLUMN_NAME_LIST);
-    return builder.build();
-  }
-
-  @Override
-  public void initialize(Arguments args) throws DirectiveParseException {
-    List<String> cols = ((ColumnNameList) args.value("columns")).value();
-    targetColumn = args.value("target_column").value().toString();
-    columns = cols.toArray(new String[0]);
-  }
-
-  @Override
-  public void destroy() {
-    // no-op
-  }
-
-  @Override
-  public List<Row> execute(List<Row> rows, ExecutorContext context) throws DirectiveExecutionException {
-    List<Row> results = new ArrayList<>();
-
-    // Iterate through the rows.
-    for (Row row : rows) {
-
-      // We create a new Row with values from the columns specified.
-      Row newRecord = new Row();
-      for (String columnName : columns) {
-        Object columnValue = row.getValue(columnName);
-        // Only set value if column is set.
-        if (columnValue != null) {
-          newRecord.addOrSet(columnName, columnValue);
-        }
-      }
-      // Add column to existing row
-      Row newRow = new Row(row);
-      newRow.addOrSet(targetColumn, newRecord);
-      results.add(newRow);
-
+    @Override
+    public UsageDefinition define() {
+        UsageDefinition.Builder builder = UsageDefinition.builder(NAME);
+        builder.define("target_column", TokenType.COLUMN_NAME);
+        builder.define("columns", TokenType.COLUMN_NAME_LIST);
+        return builder.build();
     }
-    return results;
-  }
 
-  @Override
-  public Mutation lineage() {
-    return Mutation.builder()
-      .readable("Created column based on values in columns '%s''", Arrays.asList(columns))
-      .relation(Many.columns(columns), targetColumn)
-      .build();
-  }
+    @Override
+    public void initialize(Arguments args) throws DirectiveParseException {
+        List<String> cols = ((ColumnNameList) args.value("columns")).value();
+        targetColumn = args.value("target_column").value().toString();
+        columns = cols.toArray(new String[0]);
+    }
+
+    @Override
+    public void destroy() {
+        // no-op
+    }
+
+    @Override
+    public List<Row> execute(List<Row> rows, ExecutorContext context) throws DirectiveExecutionException {
+        List<Row> results = new ArrayList<>();
+
+        // Iterate through the rows.
+        for (Row row : rows) {
+
+            // We create a new Row with values from the columns specified.
+            Row newRecord = new Row();
+            for (String columnName : columns) {
+                Object columnValue = row.getValue(columnName);
+                // Only set value if column is set.
+                if (columnValue != null) {
+                    newRecord.addOrSet(columnName, columnValue);
+                }
+            }
+            // Add column to existing row
+            Row newRow = new Row(row);
+            newRow.addOrSet(targetColumn, newRecord);
+            results.add(newRow);
+
+        }
+        return results;
+    }
+
+    @Override
+    public Mutation lineage() {
+        return Mutation.builder()
+                .readable("Created column based on values in columns '%s''", Arrays.asList(columns))
+                .relation(Many.columns(columns), targetColumn)
+                .build();
+    }
 }

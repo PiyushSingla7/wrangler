@@ -2,8 +2,8 @@
 
 The COLUMNS-REPLACE directive alters column names in bulk.
 
-
 ## Syntax
+
 ```
 columns-replace <sed-expression>
 ```
@@ -12,11 +12,11 @@ The `<sed-expression>` specifies the [sed
 expression](https://www.gnu.org/software/sed/manual/html_node/Regular-Expressions.html)
 syntax, such as `s/data_//g`.
 
-
 ## Example
 
 Using this record as an example, these columns all have `data_` as a prefix in their
 column names:
+
 ```
 {
   "data_name": "root",
@@ -29,12 +29,14 @@ column names:
 ```
 
 Applying this directive:
+
 ```
 columns-replace s/^data_//g
 ```
 
 would result in the record having any column names that were prefixed with `data_`
 replaced with an empty string:
+
 ```
 {
   "name": "root",

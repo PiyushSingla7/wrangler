@@ -25,17 +25,18 @@ import io.cdap.wrangler.api.annotations.PublicEvolving;
  */
 @PublicEvolving
 public interface Validator<T> {
-  /**
-   * Initializes the validator.
-   * @throws Exception thrown when there are initialization error.
-   */
-  void initialize() throws Exception;
+    /**
+     * Initializes the validator.
+     *
+     * @throws Exception thrown when there are initialization error.
+     */
+    void initialize() throws Exception;
 
-  /**
-   * Validates the T properties.
-   *
-   * @param value to be validated.
-   * @throws ValidatorException thrown when there are issues with validation.
-   */
-  void validate(T value) throws ValidatorException;
+    /**
+     * Validates the T properties.
+     *
+     * @param value to be validated.
+     * @throws ValidatorException thrown when there are issues with validation.
+     */
+    void validate(T value) throws ValidatorException;
 }

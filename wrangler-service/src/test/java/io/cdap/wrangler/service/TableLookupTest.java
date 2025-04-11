@@ -36,41 +36,41 @@ import java.util.List;
 @Ignore
 public class TableLookupTest extends WranglerServiceTestBase {
 
-  @Test
-  public void test() throws Exception {
-    // setup lookup data
-    addDatasetInstance("table", "lookupTable");
-    DataSetManager<Table> lookupTable = getDataset("lookupTable");
-    lookupTable.get().put(Bytes.toBytes("bob"), Bytes.toBytes("age"), Bytes.toBytes("21"));
-    lookupTable.get().put(Bytes.toBytes("bob"), Bytes.toBytes("city"), Bytes.toBytes("Los Angeles, CA"));
-    lookupTable.get().put(Bytes.toBytes("joe"), Bytes.toBytes("age"), Bytes.toBytes("34"));
-    lookupTable.get().put(Bytes.toBytes("joe"), Bytes.toBytes("city"), Bytes.toBytes("Palo Alto, CA"));
-    lookupTable.flush();
+    @Test
+    public void test() throws Exception {
+        // setup lookup data
+        addDatasetInstance("table", "lookupTable");
+        DataSetManager<Table> lookupTable = getDataset("lookupTable");
+        lookupTable.get().put(Bytes.toBytes("bob"), Bytes.toBytes("age"), Bytes.toBytes("21"));
+        lookupTable.get().put(Bytes.toBytes("bob"), Bytes.toBytes("city"), Bytes.toBytes("Los Angeles, CA"));
+        lookupTable.get().put(Bytes.toBytes("joe"), Bytes.toBytes("age"), Bytes.toBytes("34"));
+        lookupTable.get().put(Bytes.toBytes("joe"), Bytes.toBytes("city"), Bytes.toBytes("Palo Alto, CA"));
+        lookupTable.flush();
 
 
-    ApplicationManager wrangerApp = deployApplication(DataPrep.class);
-    ServiceManager serviceManager = wrangerApp.getServiceManager("service").start();
-    // should throw exception, instead of returning null
-    URL baseURL = serviceManager.getServiceURL();
+        ApplicationManager wrangerApp = deployApplication(DataPrep.class);
+        ServiceManager serviceManager = wrangerApp.getServiceManager("service").start();
+        // should throw exception, instead of returning null
+        URL baseURL = serviceManager.getServiceURL();
 
-    List<String> uploadContents = ImmutableList.of("bob,anderson", "joe,mchall");
-    createAndUploadWorkspace(baseURL, "test_ws", uploadContents);
+        List<String> uploadContents = ImmutableList.of("bob,anderson", "joe,mchall");
+        createAndUploadWorkspace(baseURL, "test_ws", uploadContents);
 
-    String[] directives = new String[]{
-      "split-to-columns test_ws ,",
-      "drop test_ws",
-      "rename test_ws_1 fname",
-      "rename test_ws_2 lname",
-      "table-lookup fname lookupTable"
-    };
+        String[] directives = new String[]{
+                "split-to-columns test_ws ,",
+                "drop test_ws",
+                "rename test_ws_1 fname",
+                "rename test_ws_2 lname",
+                "table-lookup fname lookupTable"
+        };
 
-    ExecuteResponse executeResponse = execute(baseURL, "test_ws", directives);
-    Assert.assertEquals(uploadContents.size(), executeResponse.value.size());
-    Assert.assertEquals("bob", executeResponse.value.get(0).get("fname"));
-    Assert.assertEquals("21", executeResponse.value.get(0).get("fname_age"));
-    Assert.assertEquals("Los Angeles, CA", executeResponse.value.get(0).get("fname_city"));
-    Assert.assertEquals("joe", executeResponse.value.get(1).get("fname"));
-    Assert.assertEquals("34", executeResponse.value.get(1).get("fname_age"));
-    Assert.assertEquals("Palo Alto, CA", executeResponse.value.get(1).get("fname_city"));
-  }
+        ExecuteResponse executeResponse = execute(baseURL, "test_ws", directives);
+        Assert.assertEquals(uploadContents.size(), executeResponse.value.size());
+        Assert.assertEquals("bob", executeResponse.value.get(0).get("fname"));
+        Assert.assertEquals("21", executeResponse.value.get(0).get("fname_age"));
+        Assert.assertEquals("Los Angeles, CA", executeResponse.value.get(0).get("fname_city"));
+        Assert.assertEquals("joe", executeResponse.value.get(1).get("fname"));
+        Assert.assertEquals("34", executeResponse.value.get(1).get("fname_age"));
+        Assert.assertEquals("Palo Alto, CA", executeResponse.value.get(1).get("fname_city"));
+    }
 }

@@ -20,55 +20,55 @@ package io.cdap.wrangler.api;
  * Exception throw when the record needs to emitted to error collector.
  */
 public class ErrorRowException extends Exception {
-  // Message as to why the record errored.
-  private String message;
+    // Message as to why the record errored.
+    private String message;
 
-  // Code associated with the error message.
-  private int code;
+    // Code associated with the error message.
+    private int code;
 
-  private boolean showInWrangler;
+    private boolean showInWrangler;
 
-  public ErrorRowException(String message, int code, boolean showInWrangler) {
-    this(message, code, showInWrangler, null);
-  }
+    public ErrorRowException(String message, int code, boolean showInWrangler) {
+        this(message, code, showInWrangler, null);
+    }
 
-  public ErrorRowException(String message, int code, boolean showInWrangler, Throwable cause) {
-    super(message, cause);
-    this.message = message;
-    this.code = code;
-    this.showInWrangler = showInWrangler;
-  }
+    public ErrorRowException(String message, int code, boolean showInWrangler, Throwable cause) {
+        super(message, cause);
+        this.message = message;
+        this.code = code;
+        this.showInWrangler = showInWrangler;
+    }
 
-  public ErrorRowException(String message, int code) {
-    this(message, code, false);
-  }
+    public ErrorRowException(String message, int code) {
+        this(message, code, false);
+    }
 
-  public ErrorRowException(String directiveName, String errorMessage, int code) {
-    this(directiveName, errorMessage, code, null);
-  }
+    public ErrorRowException(String directiveName, String errorMessage, int code) {
+        this(directiveName, errorMessage, code, null);
+    }
 
-  public ErrorRowException(String directiveName, String errorMessage, int code, Throwable cause) {
-    this(String.format("%s (ecode: %d, directive: %s)", errorMessage, code, directiveName), code, false, cause);
-  }
+    public ErrorRowException(String directiveName, String errorMessage, int code, Throwable cause) {
+        this(String.format("%s (ecode: %d, directive: %s)", errorMessage, code, directiveName), code, false, cause);
+    }
 
-  /**
-   * @return Message as why the record errored.
-   */
-  public String getMessage() {
-    return message;
-  }
+    /**
+     * @return Message as why the record errored.
+     */
+    public String getMessage() {
+        return message;
+    }
 
-  /**
-   * @return code related to the message.
-   */
-  public int getCode() {
-    return code;
-  }
+    /**
+     * @return code related to the message.
+     */
+    public int getCode() {
+        return code;
+    }
 
-  /**
-   * @return Flag indicating whether this record should prevent further wrangling.
-   */
-  public boolean isShownInWrangler() {
-    return showInWrangler;
-  }
+    /**
+     * @return Flag indicating whether this record should prevent further wrangling.
+     */
+    public boolean isShownInWrangler() {
+        return showInWrangler;
+    }
 }

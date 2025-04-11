@@ -3,24 +3,23 @@
 The KEEP directive is used to keep specified columns from the record. This is the
 opposite behavior of the [DROP](drop.md) directive.
 
-
 ## Syntax
+
 ```
 keep <column>[,<column>]
 ```
 
 `column` is the name of a column in the record to be kept.
 
-
 ## Usage Notes
 
 After the KEEP directive is applied, the column(s) specified in the directive are
 preserved, and all other columns are removed from the record.
 
-
 ## Example
 
 Using this record as an example:
+
 ```
 {
   "id": 1,
@@ -31,11 +30,13 @@ Using this record as an example:
 ```
 
 Applying this directive:
+
 ```
 keep id,measurement
 ```
 
 would result in this record:
+
 ```
 {
   "id": 1,

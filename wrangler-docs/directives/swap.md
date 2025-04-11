@@ -2,8 +2,8 @@
 
 The SWAP directive swaps column names of two columns.
 
-
 ## Syntax
+
 ```
 swap <column1> <colum2>
 ```
@@ -14,10 +14,10 @@ The SWAP directive renames `<column1>` to the name of `<column2>` and `<column2>
 the name of `<column1>`. If the either of the two columns are not present, execution of
 the directive fails.
 
-
 ## Example
 
 Using this record as an example:
+
 ```
 {
   "a": 1,
@@ -26,12 +26,14 @@ Using this record as an example:
 ```
 
 Applying either of these directives:
+
 ```
 swap a b
 swap b a
 ```
 
 would result in this record:
+
 ```
 {
   "b": 1,

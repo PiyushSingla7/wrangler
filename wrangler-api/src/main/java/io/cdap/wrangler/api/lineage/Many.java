@@ -33,15 +33,15 @@ import java.util.stream.Collectors;
  * </p>
  *
  * <code>
- *   Mutation.builder("Mapping expression")
- *    .readable("string")
- *    .relation(Many.of("col1", "col2")).build();
- *
- *   ...
- *
- *   Mutation.builder("Mapping expression")
- *    .readable("string")
- *    .relation("source", Many.columns("col3", "col4", "col5").build();
+ * Mutation.builder("Mapping expression")
+ * .readable("string")
+ * .relation(Many.of("col1", "col2")).build();
+ * <p>
+ * ...
+ * <p>
+ * Mutation.builder("Mapping expression")
+ * .readable("string")
+ * .relation("source", Many.columns("col3", "col4", "col5").build();
  * </code>
  *
  * @see Lineage
@@ -50,76 +50,76 @@ import java.util.stream.Collectors;
  */
 @Beta
 public final class Many implements Serializable {
-  private static final long serialVersionUID = 4387496062863547599L;
-  private List<String> columns = new ArrayList<>();
+    private static final long serialVersionUID = 4387496062863547599L;
+    private List<String> columns = new ArrayList<>();
 
-  /**
-   * @return a instance of <pre>List<String></pre> that returns columns associated with source or target.
-   */
-  public List<String> columns() {
-    return columns;
-  }
+    /**
+     * @return a instance of <pre>List<String></pre> that returns columns associated with source or target.
+     */
+    public List<String> columns() {
+        return columns;
+    }
 
-  /**
-   * Method provides an easy way to translate ellipses parameters into a array of columns.
-   *
-   * @param columns list source or target columns of type {@link String}.
-   * @return a instance of {@link Many}.
-   */
-  public static Many of(String ... columns) {
-    return new Many(columns);
-  }
+    /**
+     * Method provides an easy way to translate ellipses parameters into a array of columns.
+     *
+     * @param columns list source or target columns of type {@link String}.
+     * @return a instance of {@link Many}.
+     */
+    public static Many of(String... columns) {
+        return new Many(columns);
+    }
 
-  /**
-   * List of columns of type string as source or target.
-   *
-   * @param columns list source or target columns of type {@link List} of {@link String}.
-   * @return a instance of {@link Many}.
-   */
-  public static Many of(Collection<String> columns) {
-    return new Many(columns);
-  }
+    /**
+     * List of columns of type string as source or target.
+     *
+     * @param columns list source or target columns of type {@link List} of {@link String}.
+     * @return a instance of {@link Many}.
+     */
+    public static Many of(Collection<String> columns) {
+        return new Many(columns);
+    }
 
-  /**
-   * List of {@link ColumnName} specified as source or target. The method will convert the {@link ColumnName} to
-   * string.
-   *
-   * @param columns list source or target columns of type {@link List} of {@link ColumnName}.
-   * @return a instance of {@link Many}.
-   */
-  public static Many columns(Collection<ColumnName> columns) {
-    return new Many(columns.stream().map(ColumnName::value).collect(Collectors.toList()));
-  }
+    /**
+     * List of {@link ColumnName} specified as source or target. The method will convert the {@link ColumnName} to
+     * string.
+     *
+     * @param columns list source or target columns of type {@link List} of {@link ColumnName}.
+     * @return a instance of {@link Many}.
+     */
+    public static Many columns(Collection<ColumnName> columns) {
+        return new Many(columns.stream().map(ColumnName::value).collect(Collectors.toList()));
+    }
 
-  /**
-   * List of {@link ColumnName} specifying source or target.
-   *
-   * @param columns list source or target columns of type {@link ColumnName}.
-   * @return a instance of {@link Many}.
-   */
-  public static Many columns(ColumnName ... columns) {
-    return new Many(Arrays.stream(columns).map(ColumnName::value).collect(Collectors.toList()));
-  }
+    /**
+     * List of {@link ColumnName} specifying source or target.
+     *
+     * @param columns list source or target columns of type {@link ColumnName}.
+     * @return a instance of {@link Many}.
+     */
+    public static Many columns(ColumnName... columns) {
+        return new Many(Arrays.stream(columns).map(ColumnName::value).collect(Collectors.toList()));
+    }
 
-  /**
-   * List of columns of type {@link String} specifying either source or target.
-   *
-   * @param columns list source or target columns of type {@link String}.
-   * @return a instance of {@link Many}.
-   */
-  public static Many columns(String ... columns) {
-    return new Many(columns);
-  }
+    /**
+     * List of columns of type {@link String} specifying either source or target.
+     *
+     * @param columns list source or target columns of type {@link String}.
+     * @return a instance of {@link Many}.
+     */
+    public static Many columns(String... columns) {
+        return new Many(columns);
+    }
 
-  private Many() {
-    // prevent anyone from creating this object.
-  }
+    private Many() {
+        // prevent anyone from creating this object.
+    }
 
-  private Many(Collection<String> columns) {
-    this.columns.addAll(columns);
-  }
+    private Many(Collection<String> columns) {
+        this.columns.addAll(columns);
+    }
 
-  private Many(String ... columns) {
-    this.columns.addAll(Arrays.asList(columns));
-  }
+    private Many(String... columns) {
+        this.columns.addAll(Arrays.asList(columns));
+    }
 }

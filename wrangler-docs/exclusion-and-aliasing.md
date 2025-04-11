@@ -9,8 +9,8 @@ list. So, in short, the capability to restrict and un-restrict some directives h
 easily configurable.
 
 A second common use-case we have seen is that an organization is accustomed
-to a organizational jargon and it is hard to adapt by the user. In order to support 
-continuation of usage of their jargon, Data Prep has added the capability to alias a 
+to a organizational jargon and it is hard to adapt by the user. In order to support
+continuation of usage of their jargon, Data Prep has added the capability to alias a
 directive through a simple configuration.
 
 ## Feature

@@ -5,17 +5,17 @@ directive operates on an input column of type string. Application of this direct
 transforms the XML into a JSON document, simplifying further parsing using the
 [PARSE-AS-JSON](parse-as-json.md) directive.
 
-
 ## Syntax
+
 ```
 parse-xml-to-json <column-name> [<depth>] [<keep-strings>]
 ```
 
 * `<column-name>` is the name of the column in the record that is an XML document.
 * `<depth>` indicates the depth at which the XML document parsing should terminate processing.
-* `<keep-strings>` An OPTIONAL boolean value that if true, then values will not be coerced into boolean or numeric values and will instead be left as strings. (as per `org.json.XML` rules)
- The default value is `false`
-
+* `<keep-strings>` An OPTIONAL boolean value that if true, then values will not be coerced into boolean or numeric
+  values and will instead be left as strings. (as per `org.json.XML` rules)
+  The default value is `false`
 
 ## Usage Notes
 

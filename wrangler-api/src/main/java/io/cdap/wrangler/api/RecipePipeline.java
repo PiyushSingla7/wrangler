@@ -32,35 +32,35 @@ import java.util.List;
 @PublicEvolving
 public interface RecipePipeline<I, O, E> extends Serializable, AutoCloseable {
 
-  /**
-   * Executes the pipeline on the input.
-   *
-   * @param input List of Input record of type I.
-   * @param schema Schema to which the output should be mapped.
-   * @return Parsed output list of record of type O
-   */
-  List<O> execute(List<I> input, Schema schema) throws RecipeException;
+    /**
+     * Executes the pipeline on the input.
+     *
+     * @param input  List of Input record of type I.
+     * @param schema Schema to which the output should be mapped.
+     * @return Parsed output list of record of type O
+     */
+    List<O> execute(List<I> input, Schema schema) throws RecipeException;
 
-  /**
-   * Executes the pipeline on the input.
-   *
-   * @param input List of input record of type I.
-   * @return Parsed output list of record of type I
-   */
-  List<I> execute(List<I> input) throws RecipeException;
+    /**
+     * Executes the pipeline on the input.
+     *
+     * @param input List of input record of type I.
+     * @return Parsed output list of record of type I
+     */
+    List<I> execute(List<I> input) throws RecipeException;
 
-  /**
-   * Returns records that are errored out.
-   *
-   * @return records that have errored out.
-   */
-  List<E> errors();
+    /**
+     * Returns records that are errored out.
+     *
+     * @return records that have errored out.
+     */
+    List<E> errors();
 
-  /**
-   * Destroys the pipeline.
-   */
-  @Override
-  void close();
+    /**
+     * Destroys the pipeline.
+     */
+    @Override
+    void close();
 }
 
 

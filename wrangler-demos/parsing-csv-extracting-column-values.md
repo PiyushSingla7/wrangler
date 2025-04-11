@@ -3,18 +3,15 @@
 This recipe shows using data prep directives to parse a CSV file and then manipulate
 individual fields.
 
-
 ## Version
 
 To paste this receipe as-is requires:
 
 * Wrangler Service Artifact >= 1.1.0
 
-
 ## Sample Data
 
 [Movies CSV File](sample/movies.csv) can be used with this recipe.
-
 
 ## Recipe
 

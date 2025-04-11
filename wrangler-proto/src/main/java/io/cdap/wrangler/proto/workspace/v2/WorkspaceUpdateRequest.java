@@ -26,19 +26,19 @@ import java.util.List;
  * Workspace update request, can only update directives and insights now
  */
 public class WorkspaceUpdateRequest {
-  private final List<String> directives;
-  private final JsonObject insights;
+    private final List<String> directives;
+    private final JsonObject insights;
 
-  public WorkspaceUpdateRequest(List<String> directives, JsonObject insights) {
-    this.directives = directives;
-    this.insights = insights;
-  }
+    public WorkspaceUpdateRequest(List<String> directives, JsonObject insights) {
+        this.directives = directives;
+        this.insights = insights;
+    }
 
-  public JsonObject getInsights() {
-    return insights == null ? new JsonObject() : insights;
-  }
+    public JsonObject getInsights() {
+        return insights == null ? new JsonObject() : insights;
+    }
 
-  public List<String> getDirectives() {
-    return directives == null ? Collections.emptyList() : directives;
-  }
+    public List<String> getDirectives() {
+        return directives == null ? Collections.emptyList() : directives;
+    }
 }

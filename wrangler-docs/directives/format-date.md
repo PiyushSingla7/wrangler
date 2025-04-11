@@ -2,8 +2,8 @@
 
 The FORMAT-DATE directive allows custom patterns for date-time formatting.
 
-
 ## Syntax
+
 ```
 format-date <column> <format>
 ```
@@ -20,7 +20,7 @@ string during formatting or matched against the input string during parsing.
 These pattern letters are defined (all other characters from 'A' to 'Z' and from 'a' to 'z' are reserved):
 
 | Letter | Date or Time Component                      | Presentation       | Examples                              |
-| ------ | ------------------------------------------- | ------------------ | ------------------------------------- |
+|--------|---------------------------------------------|--------------------|---------------------------------------|
 | G      | Era designator                              | Text               | AD                                    |
 | y      | Year                                        | Year               | 1996; 96                              |
 | Y      | Week year                                   | Year               | 2009; 09                              |
@@ -44,7 +44,6 @@ These pattern letters are defined (all other characters from 'A' to 'Z' and from
 | Z      | Time zone                                   | RFC 822 Time Zone  | -0800                                 |
 | X      | Time zone                                   | ISO 8601 Time Zone | -08; -0800; -08:00                    |
 
-
 ## Examples
 
 Prior to using these patterns, the directive [PARSE-AS-DATE](parse-as-date.md) should be applied
@@ -55,7 +54,7 @@ given date and time is `2001-07-04 12:08:56`, and is a local time in the U.S. Pa
 Zone, then applying different patterns results in these strings:
 
 | Date and Time Pattern          | Date String                          |
-| ------------------------------ | ------------------------------------ |
+|--------------------------------|--------------------------------------|
 | `yyyy.MM.dd G 'at' HH:mm:ss z` | 2001.07.04 AD at 12:08:56 PDT        |
 | `EEE, MMM d, ''yy`             | Wed, Jul 4, '01                      |
 | `h:mm a`                       | 12:08 PM                             |

@@ -36,51 +36,51 @@ import java.util.Map;
  * This class {@link JsonAvroDecoder} decodes a byte array of AVRO Json Records into the {@link Row} structure.
  */
 public class JsonAvroDecoder extends AbstractAvroDecoder {
-  private final Gson gson;
+    private final Gson gson;
 
-  public JsonAvroDecoder(Schema schema) {
-    super(schema);
-    this.gson = new Gson();
-  }
-
-  @Override
-  public List<Row> decode(byte[] bytes) throws DecoderException {
-    List<Row> rows = new ArrayList<>();
-    JsonDecoder decoder = null;
-    ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-    try {
-      decoder = DecoderFactory.get().jsonDecoder(getSchema(), in);
-      while (true) {
-        try {
-          GenericRecord gRecord = getReader().read(null, decoder);
-          List<Schema.Field> fields = getSchema().getFields();
-          Row r = new Row();
-          for (Schema.Field field : fields) {
-            Object object = gRecord.get(field.name());
-            if (object instanceof Utf8) {
-              Utf8 o = (Utf8) object;
-              object = o.toString();
-            } else if (object instanceof Map || object instanceof List) {
-              object = gson.toJson(object);
-            }
-            r.add(field.name(), object);
-          }
-          rows.add(r);
-        } catch (EOFException e) {
-          break; // Reached end of buffer.
-        }
-      }
-    } catch (AvroTypeException e) {
-      throw new DecoderException(e.getMessage());
-    } catch (IOException e) {
-      throw new DecoderException("Issue create json decoder, verify the schema");
-    } finally {
-      try {
-        in.close();
-      } catch (IOException e) {
-        // Can't do anything.
-      }
+    public JsonAvroDecoder(Schema schema) {
+        super(schema);
+        this.gson = new Gson();
     }
-    return rows;
-  }
+
+    @Override
+    public List<Row> decode(byte[] bytes) throws DecoderException {
+        List<Row> rows = new ArrayList<>();
+        JsonDecoder decoder = null;
+        ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+        try {
+            decoder = DecoderFactory.get().jsonDecoder(getSchema(), in);
+            while (true) {
+                try {
+                    GenericRecord gRecord = getReader().read(null, decoder);
+                    List<Schema.Field> fields = getSchema().getFields();
+                    Row r = new Row();
+                    for (Schema.Field field : fields) {
+                        Object object = gRecord.get(field.name());
+                        if (object instanceof Utf8) {
+                            Utf8 o = (Utf8) object;
+                            object = o.toString();
+                        } else if (object instanceof Map || object instanceof List) {
+                            object = gson.toJson(object);
+                        }
+                        r.add(field.name(), object);
+                    }
+                    rows.add(r);
+                } catch (EOFException e) {
+                    break; // Reached end of buffer.
+                }
+            }
+        } catch (AvroTypeException e) {
+            throw new DecoderException(e.getMessage());
+        } catch (IOException e) {
+            throw new DecoderException("Issue create json decoder, verify the schema");
+        } finally {
+            try {
+                in.close();
+            } catch (IOException e) {
+                // Can't do anything.
+            }
+        }
+        return rows;
+    }
 }

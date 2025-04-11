@@ -3,14 +3,13 @@
 The URL-ENCODE directive encodes a string to the `application/x-www-form-urlencoded`
 MIME format.
 
-
 ## Syntax
+
 ```
 url-encode <column>
 ```
 
 The `<column>` contains a URL to be encoded.
-
 
 ## Usage Notes
 

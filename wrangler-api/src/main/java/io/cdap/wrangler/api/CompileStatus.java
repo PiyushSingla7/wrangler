@@ -28,31 +28,31 @@ import java.util.Iterator;
  * it contains the <code>ExecutableObject</code>.
  */
 public final class CompileStatus {
-  private RecipeSymbol symbols = null;
-  private boolean hasError = false;
-  private Iterator<SyntaxError> errors = null;
+    private RecipeSymbol symbols = null;
+    private boolean hasError = false;
+    private Iterator<SyntaxError> errors = null;
 
-  public CompileStatus(RecipeSymbol symbols) {
-    this.symbols = symbols;
-  }
-
-  public CompileStatus(boolean hasError, Iterator<SyntaxError> errors) {
-    this.hasError = hasError;
-    this.errors = errors;
-  }
-
-  public boolean isSuccess() {
-    return !hasError;
-  }
-
-  public Iterator<SyntaxError> getErrors() {
-    if (!hasError) {
-      return Collections.emptyIterator();
+    public CompileStatus(RecipeSymbol symbols) {
+        this.symbols = symbols;
     }
-    return errors;
-  }
 
-  public RecipeSymbol getSymbols() {
-    return symbols;
-  }
+    public CompileStatus(boolean hasError, Iterator<SyntaxError> errors) {
+        this.hasError = hasError;
+        this.errors = errors;
+    }
+
+    public boolean isSuccess() {
+        return !hasError;
+    }
+
+    public Iterator<SyntaxError> getErrors() {
+        if (!hasError) {
+            return Collections.emptyIterator();
+        }
+        return errors;
+    }
+
+    public RecipeSymbol getSymbols() {
+        return symbols;
+    }
 }

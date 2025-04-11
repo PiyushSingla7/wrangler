@@ -29,20 +29,20 @@ import java.util.List;
  */
 public class KeepTest {
 
-  @Test
-  public void testKeep() throws Exception {
-    String[] directives = new String[] {
-      "parse-as-csv body ,",
-      "keep body_1,body_2"
-    };
+    @Test
+    public void testKeep() throws Exception {
+        String[] directives = new String[]{
+                "parse-as-csv body ,",
+                "keep body_1,body_2"
+        };
 
-    List<Row> rows = Arrays.asList(
-      new Row("body", "1,2,3,4,5,6,7,8,9,10")
-    );
+        List<Row> rows = Arrays.asList(
+                new Row("body", "1,2,3,4,5,6,7,8,9,10")
+        );
 
-    rows = TestingRig.execute(directives, rows);
+        rows = TestingRig.execute(directives, rows);
 
-    Assert.assertTrue(rows.size() == 1);
-    Assert.assertEquals(2, rows.get(0).width());
-  }
+        Assert.assertTrue(rows.size() == 1);
+        Assert.assertEquals(2, rows.get(0).width());
+    }
 }

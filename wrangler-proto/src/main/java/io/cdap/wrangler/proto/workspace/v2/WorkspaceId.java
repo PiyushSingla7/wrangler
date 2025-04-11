@@ -26,43 +26,43 @@ import java.util.UUID;
  * Workspace id
  */
 public class WorkspaceId {
-  private final NamespaceSummary namespace;
-  private final String workspaceId;
+    private final NamespaceSummary namespace;
+    private final String workspaceId;
 
-  public WorkspaceId(NamespaceSummary namespace) {
-    this(namespace, UUID.randomUUID().toString());
-  }
-
-  public WorkspaceId(NamespaceSummary namespace, String workspaceId) {
-    this.namespace = namespace;
-    this.workspaceId = workspaceId;
-  }
-
-  public NamespaceSummary getNamespace() {
-    return namespace;
-  }
-
-  public String getWorkspaceId() {
-    return workspaceId;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
+    public WorkspaceId(NamespaceSummary namespace) {
+        this(namespace, UUID.randomUUID().toString());
     }
 
-    if (o == null || getClass() != o.getClass()) {
-      return false;
+    public WorkspaceId(NamespaceSummary namespace, String workspaceId) {
+        this.namespace = namespace;
+        this.workspaceId = workspaceId;
     }
 
-    WorkspaceId that = (WorkspaceId) o;
-    return Objects.equals(namespace, that.namespace) &&
-             Objects.equals(workspaceId, that.workspaceId);
-  }
+    public NamespaceSummary getNamespace() {
+        return namespace;
+    }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(namespace, workspaceId);
-  }
+    public String getWorkspaceId() {
+        return workspaceId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        WorkspaceId that = (WorkspaceId) o;
+        return Objects.equals(namespace, that.namespace) &&
+                Objects.equals(workspaceId, that.workspaceId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(namespace, workspaceId);
+    }
 }

@@ -22,13 +22,13 @@ import java.util.Map;
  * Specification for a plugin to use in a pipeline.
  */
 public class PluginSpec {
-  private final String name;
-  private final String type;
-  private final Map<String, String> properties;
+    private final String name;
+    private final String type;
+    private final Map<String, String> properties;
 
-  public PluginSpec(String name, String type, Map<String, String> properties) {
-    this.name = name;
-    this.type = type;
-    this.properties = properties;
-  }
+    public PluginSpec(String name, String type, Map<String, String> properties) {
+        this.name = name;
+        this.type = type;
+        this.properties = properties;
+    }
 }

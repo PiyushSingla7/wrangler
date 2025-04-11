@@ -19,12 +19,7 @@ package io.cdap.directives.row;
 import io.cdap.cdap.api.annotation.Description;
 import io.cdap.cdap.api.annotation.Name;
 import io.cdap.cdap.api.annotation.Plugin;
-import io.cdap.wrangler.api.Arguments;
-import io.cdap.wrangler.api.Directive;
-import io.cdap.wrangler.api.DirectiveExecutionException;
-import io.cdap.wrangler.api.DirectiveParseException;
-import io.cdap.wrangler.api.ExecutorContext;
-import io.cdap.wrangler.api.Row;
+import io.cdap.wrangler.api.*;
 import io.cdap.wrangler.api.annotations.Categories;
 import io.cdap.wrangler.api.lineage.Lineage;
 import io.cdap.wrangler.api.lineage.Many;
@@ -42,72 +37,72 @@ import java.util.List;
  */
 @Plugin(type = Directive.TYPE)
 @Name(SplitToRows.NAME)
-@Categories(categories = { "row"})
+@Categories(categories = {"row"})
 @Description("Splits a column into multiple rows, copies the rest of the columns.")
 public class SplitToRows implements Directive, Lineage {
-  public static final String NAME = "split-to-rows";
-  // Column on which to apply mask.
-  private String column;
+    public static final String NAME = "split-to-rows";
+    // Column on which to apply mask.
+    private String column;
 
-  // Regex to split on.
-  private String regex;
+    // Regex to split on.
+    private String regex;
 
-  @Override
-  public UsageDefinition define() {
-    UsageDefinition.Builder builder = UsageDefinition.builder(NAME);
-    builder.define("column", TokenType.COLUMN_NAME);
-    builder.define("regex", TokenType.TEXT);
-    return builder.build();
-  }
-
-  @Override
-  public void initialize(Arguments args) throws DirectiveParseException {
-    column = ((ColumnName) args.value("column")).value();
-    regex = ((Text) args.value("regex")).value();
-  }
-
-  @Override
-  public void destroy() {
-    // no-op
-  }
-
-  @Override
-  public List<Row> execute(List<Row> rows, ExecutorContext context) throws DirectiveExecutionException {
-    List<Row> results = new ArrayList<>();
-
-    for (Row row : rows) {
-      int idx = row.find(column);
-      if (idx != -1) {
-        Object object = row.getValue(idx);
-
-        if (object == null) {
-          throw new DirectiveExecutionException(
-            NAME, String.format("Column '%s' has null value. It should be a non-null 'String'.", column));
-        }
-
-        if (object instanceof String) {
-          String[] lines = ((String) object).split(regex);
-          for (String line : lines) {
-            Row r = new Row(row);
-            r.setValue(idx, line);
-            results.add(r);
-          }
-        } else {
-          throw new DirectiveExecutionException(
-            NAME, String.format("Column '%s' has invalid type '%s'. It should be of type 'String'.",
-                                column, object.getClass().getSimpleName()));
-        }
-      }
+    @Override
+    public UsageDefinition define() {
+        UsageDefinition.Builder builder = UsageDefinition.builder(NAME);
+        builder.define("column", TokenType.COLUMN_NAME);
+        builder.define("regex", TokenType.TEXT);
+        return builder.build();
     }
-    return results;
-  }
 
-  @Override
-  public Mutation lineage() {
-    return Mutation.builder()
-      .readable("Split column '%s' into multiple rows using expressions '%s'", column, regex)
-      .relation(Many.columns(column), Many.columns(column))
-      .build();
-  }
+    @Override
+    public void initialize(Arguments args) throws DirectiveParseException {
+        column = ((ColumnName) args.value("column")).value();
+        regex = ((Text) args.value("regex")).value();
+    }
+
+    @Override
+    public void destroy() {
+        // no-op
+    }
+
+    @Override
+    public List<Row> execute(List<Row> rows, ExecutorContext context) throws DirectiveExecutionException {
+        List<Row> results = new ArrayList<>();
+
+        for (Row row : rows) {
+            int idx = row.find(column);
+            if (idx != -1) {
+                Object object = row.getValue(idx);
+
+                if (object == null) {
+                    throw new DirectiveExecutionException(
+                            NAME, String.format("Column '%s' has null value. It should be a non-null 'String'.", column));
+                }
+
+                if (object instanceof String) {
+                    String[] lines = ((String) object).split(regex);
+                    for (String line : lines) {
+                        Row r = new Row(row);
+                        r.setValue(idx, line);
+                        results.add(r);
+                    }
+                } else {
+                    throw new DirectiveExecutionException(
+                            NAME, String.format("Column '%s' has invalid type '%s'. It should be of type 'String'.",
+                            column, object.getClass().getSimpleName()));
+                }
+            }
+        }
+        return results;
+    }
+
+    @Override
+    public Mutation lineage() {
+        return Mutation.builder()
+                .readable("Split column '%s' into multiple rows using expressions '%s'", column, regex)
+                .relation(Many.columns(column), Many.columns(column))
+                .build();
+    }
 }
 

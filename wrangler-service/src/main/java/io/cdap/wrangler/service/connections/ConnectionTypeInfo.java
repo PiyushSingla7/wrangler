@@ -22,9 +22,9 @@ import io.cdap.wrangler.proto.connection.ConnectionType;
  * ConnectionTypeInfo - sent as response in listing connection types
  */
 public class ConnectionTypeInfo {
-  private final ConnectionType type;
+    private final ConnectionType type;
 
-  public ConnectionTypeInfo(ConnectionType connectionType) {
-    this.type = connectionType;
-  }
+    public ConnectionTypeInfo(ConnectionType connectionType) {
+        this.type = connectionType;
+    }
 }

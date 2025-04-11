@@ -20,15 +20,15 @@ package io.cdap.wrangler.metrics;
  * Constants for emitting CDAP metrics from Wrangler
  */
 public class Constants {
-  /**
-   * Metric tags (same as those defined in CDAP)
-   */
-  public static final class Tags {
-    public static final String APP_ENTITY_TYPE = "aet";
-    public static final String APP_ENTITY_TYPE_NAME = "tpe";
-  }
+    /**
+     * Metric tags (same as those defined in CDAP)
+     */
+    public static final class Tags {
+        public static final String APP_ENTITY_TYPE = "aet";
+        public static final String APP_ENTITY_TYPE_NAME = "tpe";
+    }
 
-  private Constants() {
-    throw new AssertionError("Cannot instantiate a static utility class.");
-  }
+    private Constants() {
+        throw new AssertionError("Cannot instantiate a static utility class.");
+    }
 }

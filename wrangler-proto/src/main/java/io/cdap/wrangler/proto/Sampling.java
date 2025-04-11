@@ -22,66 +22,66 @@ import java.util.Objects;
  * Defines the sampling specification of the {@link Request}
  */
 public final class Sampling {
-  // Sampling method.
-  private final String method;
+    // Sampling method.
+    private final String method;
 
-  // Seeding capability for sampling.
-  private final Integer seed;
+    // Seeding capability for sampling.
+    private final Integer seed;
 
-  // Number of records to be read.
-  private final Integer limit;
+    // Number of records to be read.
+    private final Integer limit;
 
-  public Sampling(String method, Integer seed, Integer limit) {
-    this.method = method;
-    this.seed = seed;
-    this.limit = limit;
-  }
-
-  /**
-   * @return Method for sampling data.
-   */
-  public String getMethod() {
-    return method;
-  }
-
-  /**
-   * @return Sampling seed.
-   */
-  public Integer getSeed() {
-    if (seed != null) {
-      return seed;
-    } else {
-      return 1;
+    public Sampling(String method, Integer seed, Integer limit) {
+        this.method = method;
+        this.seed = seed;
+        this.limit = limit;
     }
-  }
 
-  /**
-   * @return Number of records to be read before applying directives.
-   */
-  public Integer getLimit() {
-    if (limit != null) {
-      return limit;
-    } else {
-      return 100;
+    /**
+     * @return Method for sampling data.
+     */
+    public String getMethod() {
+        return method;
     }
-  }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
+    /**
+     * @return Sampling seed.
+     */
+    public Integer getSeed() {
+        if (seed != null) {
+            return seed;
+        } else {
+            return 1;
+        }
     }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Sampling sampling = (Sampling) o;
-    return Objects.equals(method, sampling.method) &&
-      Objects.equals(seed, sampling.seed) &&
-      Objects.equals(limit, sampling.limit);
-  }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(method, seed, limit);
-  }
+    /**
+     * @return Number of records to be read before applying directives.
+     */
+    public Integer getLimit() {
+        if (limit != null) {
+            return limit;
+        } else {
+            return 100;
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Sampling sampling = (Sampling) o;
+        return Objects.equals(method, sampling.method) &&
+                Objects.equals(seed, sampling.seed) &&
+                Objects.equals(limit, sampling.limit);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(method, seed, limit);
+    }
 }

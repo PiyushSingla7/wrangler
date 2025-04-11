@@ -2,8 +2,8 @@
 
 The FILTER-ROWS-ON directive filters records based on a condition.
 
-
 ## Syntax
+
 ```
 filter-rows-on <filter-type> <options>
 ```
@@ -20,7 +20,6 @@ regex-match <regular-expression>
 regex-not-match <regular-expression>
 ```
 
-
 ## Usage Notes
 
 The FILTER-ROWS-ON directive applies the filter type and a boolean or regular expression
@@ -32,10 +31,10 @@ Note that it is a combination of the `<filter-type>` and the options. For instan
 `condition-true` is used and its `<boolean-expression>` evaluates to `true`, then the row
 will be omitted and not passed on.
 
-
 ## Examples
 
 Using this record as an example:
+
 ```
 {
   "id": 1,
@@ -48,15 +47,19 @@ Using this record as an example:
 ```
 
 Applying this directive:
+
 ```
 filter-rows-on condition-true country !~ 'US'
 ```
+
 would result in filtering out records for individuals that are not in the US (where
 `country` does not match "US").
 
 Applying this directive:
+
 ```
 filter-rows-on condition-true (country !~ 'US' && hrlywage > 12)
 ```
+
 would result in filtering out records for individuals that are not in the US (where
 `country` does not match "US") and whose hourly wage (`hrlywage`) is greater than 12.

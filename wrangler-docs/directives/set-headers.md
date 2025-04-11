@@ -2,14 +2,13 @@
 
 The SET-HEADERS directive sets the names of columns, in the order they are specified.
 
-
 ## Syntax
+
 ```
 set-headers <columm>[,<column>*]
 ```
 
 The `<column>` specifies the new name of an existing column or columns.
-
 
 ## Usage Notes
 
@@ -17,10 +16,10 @@ The most common use of the SET-HEADERS directive is to set the name of columns w
 CSV file is parsed. The column names will be applied to the record starting from the first
 field, in the order that they are specified.
 
-
 ## Examples
 
 Using this record as an example:
+
 ```
 {
   "body": "1,2,3,4,5"
@@ -29,11 +28,13 @@ Using this record as an example:
 
 If you have parsed this `body` using the [PARSE-AS-CSV](parse-as-csv.md)
 directive:
+
 ```
 parse-as-csv body , false
 ```
 
 the resulting record would be:
+
 ```
 {
   "body": "1,2,3,4,5",
@@ -46,11 +47,13 @@ the resulting record would be:
 ```
 
 If you then apply the SET COLUMNS directive:
+
 ```
 set-headers a,b,c,d,e
 ```
 
 This would generate a record that has these column names:
+
 ```
 {
   "a": "1,2,3,4,5",
@@ -65,11 +68,14 @@ This would generate a record that has these column names:
 Note that the last field (`body_5`) was not assigned the expected name.
 
 In order to correct this, either rename all the columns using:
+
 ```
 parse-as-csv body , false
 set-headers body,a,b,c,d,e
 ```
+
 resulting in this record:
+
 ```
 {
   "body": "1,2,3,4,5",
@@ -82,6 +88,7 @@ resulting in this record:
 ```
 
 or use a [DROP](drop.md) directive:
+
 ```
 parse-as-csv body , false
 drop body
@@ -89,6 +96,7 @@ set-headers a,b,c,d,e
 ```
 
 The result would then be this record:
+
 ```
 {
   "a": "1",
@@ -98,7 +106,6 @@ The result would then be this record:
   "e": "5"
 }
 ```
-
 
 ## Common Mistakes
 

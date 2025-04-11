@@ -19,12 +19,7 @@ package io.cdap.directives.transformation;
 import io.cdap.cdap.api.annotation.Description;
 import io.cdap.cdap.api.annotation.Name;
 import io.cdap.cdap.api.annotation.Plugin;
-import io.cdap.wrangler.api.Arguments;
-import io.cdap.wrangler.api.Directive;
-import io.cdap.wrangler.api.DirectiveExecutionException;
-import io.cdap.wrangler.api.DirectiveParseException;
-import io.cdap.wrangler.api.ExecutorContext;
-import io.cdap.wrangler.api.Row;
+import io.cdap.wrangler.api.*;
 import io.cdap.wrangler.api.annotations.Categories;
 import io.cdap.wrangler.api.lineage.Lineage;
 import io.cdap.wrangler.api.lineage.Mutation;
@@ -43,66 +38,66 @@ import java.util.List;
  */
 @Plugin(type = Directive.TYPE)
 @Name(FindAndReplace.NAME)
-@Categories(categories = { "transform"})
+@Categories(categories = {"transform"})
 @Description("Finds and replaces text in column values using a sed-format expression.")
 public class FindAndReplace implements Directive, Lineage {
-  public static final String NAME = "find-and-replace";
-  private String pattern;
-  private List<String> columns;
+    public static final String NAME = "find-and-replace";
+    private String pattern;
+    private List<String> columns;
 
 
-  @Override
-  public UsageDefinition define() {
-    UsageDefinition.Builder builder = UsageDefinition.builder(NAME);
-    builder.define("column", TokenType.COLUMN_NAME_LIST);
-    builder.define("pattern", TokenType.TEXT);
-    return builder.build();
-  }
-
-  @Override
-  public void initialize(Arguments args) throws DirectiveParseException {
-    this.columns = ((ColumnNameList) args.value("column")).value();
-    this.pattern = ((Text) args.value("pattern")).value();
-  }
-
-  @Override
-  public void destroy() {
-    // no-op
-  }
-
-  @Override
-  public List<Row> execute(List<Row> rows, ExecutorContext context) throws DirectiveExecutionException {
-    List<Row> results = new ArrayList<>();
-    for (Row row : rows) {
-      for (String column : columns) {
-        int idx = row.find(column);
-        if (idx != -1) {
-          Object v = row.getValue(idx);
-          // Operates only on String types.
-          try {
-            if (v instanceof String) {
-              String value = (String) v; // Safely converts to String.
-              Unix4jCommandBuilder builder = Unix4j.echo(value).sed(pattern);
-              if (builder.toExitValue() == 0) {
-                row.setValue(idx, builder.toStringResult());
-              }
-            }
-          } catch (Exception e) {
-            // If there is any issue, we pass it on without any transformation.
-          }
-        }
-        results.add(row);
-      }
+    @Override
+    public UsageDefinition define() {
+        UsageDefinition.Builder builder = UsageDefinition.builder(NAME);
+        builder.define("column", TokenType.COLUMN_NAME_LIST);
+        builder.define("pattern", TokenType.TEXT);
+        return builder.build();
     }
-    return results;
-  }
 
-  @Override
-  public Mutation lineage() {
-    Mutation.Builder builder = Mutation.builder()
-      .readable("Found and replaced '%s' using expression '%s'", columns, pattern);
-    columns.forEach(column -> builder.relation(column, column));
-    return builder.build();
-  }
+    @Override
+    public void initialize(Arguments args) throws DirectiveParseException {
+        this.columns = ((ColumnNameList) args.value("column")).value();
+        this.pattern = ((Text) args.value("pattern")).value();
+    }
+
+    @Override
+    public void destroy() {
+        // no-op
+    }
+
+    @Override
+    public List<Row> execute(List<Row> rows, ExecutorContext context) throws DirectiveExecutionException {
+        List<Row> results = new ArrayList<>();
+        for (Row row : rows) {
+            for (String column : columns) {
+                int idx = row.find(column);
+                if (idx != -1) {
+                    Object v = row.getValue(idx);
+                    // Operates only on String types.
+                    try {
+                        if (v instanceof String) {
+                            String value = (String) v; // Safely converts to String.
+                            Unix4jCommandBuilder builder = Unix4j.echo(value).sed(pattern);
+                            if (builder.toExitValue() == 0) {
+                                row.setValue(idx, builder.toStringResult());
+                            }
+                        }
+                    } catch (Exception e) {
+                        // If there is any issue, we pass it on without any transformation.
+                    }
+                }
+                results.add(row);
+            }
+        }
+        return results;
+    }
+
+    @Override
+    public Mutation lineage() {
+        Mutation.Builder builder = Mutation.builder()
+                .readable("Found and replaced '%s' using expression '%s'", columns, pattern);
+        columns.forEach(column -> builder.relation(column, column));
+        return builder.build();
+    }
 }
 

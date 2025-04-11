@@ -19,12 +19,7 @@ package io.cdap.directives.column;
 import io.cdap.cdap.api.annotation.Description;
 import io.cdap.cdap.api.annotation.Name;
 import io.cdap.cdap.api.annotation.Plugin;
-import io.cdap.wrangler.api.Arguments;
-import io.cdap.wrangler.api.Directive;
-import io.cdap.wrangler.api.DirectiveExecutionException;
-import io.cdap.wrangler.api.DirectiveParseException;
-import io.cdap.wrangler.api.ExecutorContext;
-import io.cdap.wrangler.api.Row;
+import io.cdap.wrangler.api.*;
 import io.cdap.wrangler.api.annotations.Categories;
 import io.cdap.wrangler.api.lineage.Lineage;
 import io.cdap.wrangler.api.lineage.Many;
@@ -42,86 +37,86 @@ import java.util.List;
  */
 @Plugin(type = Directive.TYPE)
 @Name(SplitToColumns.NAME)
-@Categories(categories = { "column"})
+@Categories(categories = {"column"})
 @Description("Splits a column into one or more columns around matches of the specified regular expression.")
 public class SplitToColumns implements Directive, Lineage {
-  public static final String NAME = "split-to-columns";
-  // Column on which to apply mask.
-  private String column;
+    public static final String NAME = "split-to-columns";
+    // Column on which to apply mask.
+    private String column;
 
-  // Type of mask.
-  private String regex;
+    // Type of mask.
+    private String regex;
 
-  @Override
-  public UsageDefinition define() {
-    UsageDefinition.Builder builder = UsageDefinition.builder(NAME);
-    builder.define("column", TokenType.COLUMN_NAME);
-    builder.define("regex", TokenType.TEXT);
-    return builder.build();
-  }
-
-  @Override
-  public void initialize(Arguments args) throws DirectiveParseException {
-    column = ((ColumnName) args.value("column")).value();
-    regex = ((Text) args.value("regex")).value();
-  }
-
-  @Override
-  public void destroy() {
-    // no-op
-  }
-
-  @Override
-  public List<Row> execute(List<Row> rows, ExecutorContext context) throws DirectiveExecutionException {
-    List<Row> results = new ArrayList<>();
-
-    for (Row row : rows) {
-      int idx = row.find(column);
-      if (idx != -1) {
-        Object object = row.getValue(idx);
-
-        if (object == null) {
-          throw new DirectiveExecutionException(
-            NAME, String.format("Column '%s' has null value. It should be a non-null 'String'.", column));
-        }
-
-        if (!(object instanceof String)) {
-          throw new DirectiveExecutionException(
-            NAME, String.format("Column '%s' has invalid type '%s'. It should be of type 'String'.",
-                                column, object.getClass().getSimpleName()));
-        }
-
-        String[] lines = ((String) object).split(regex);
-        int i = 1;
-        for (String line : lines) {
-          row.add(String.format("%s_%d", column, i), line);
-          ++i;
-        }
-        results.add(row);
-      }
+    @Override
+    public UsageDefinition define() {
+        UsageDefinition.Builder builder = UsageDefinition.builder(NAME);
+        builder.define("column", TokenType.COLUMN_NAME);
+        builder.define("regex", TokenType.TEXT);
+        return builder.build();
     }
-    return results;
-  }
 
-  @Override
-  public Mutation lineage() {
-    return Mutation.builder()
-      .readable("Split the column '%s' with regex '%s'", column, regex)
-      .relation(
-        column,
-        Many.columns(
-          column,
-          String.format("%s_%d", column, 1),
-          String.format("%s_%d", column, 2),
-          String.format("%s_%d", column, 3),
-          String.format("%s_%d", column, 4),
-          String.format("%s_%d", column, 5),
-          String.format("%s_%d", column, 6),
-          String.format("%s_%d", column, 7),
-          String.format("%s_%d", column, 8),
-          String.format("%s_%d", column, 9),
-          String.format("%s_%d", column, 10)))
-    .build();
-  }
+    @Override
+    public void initialize(Arguments args) throws DirectiveParseException {
+        column = ((ColumnName) args.value("column")).value();
+        regex = ((Text) args.value("regex")).value();
+    }
+
+    @Override
+    public void destroy() {
+        // no-op
+    }
+
+    @Override
+    public List<Row> execute(List<Row> rows, ExecutorContext context) throws DirectiveExecutionException {
+        List<Row> results = new ArrayList<>();
+
+        for (Row row : rows) {
+            int idx = row.find(column);
+            if (idx != -1) {
+                Object object = row.getValue(idx);
+
+                if (object == null) {
+                    throw new DirectiveExecutionException(
+                            NAME, String.format("Column '%s' has null value. It should be a non-null 'String'.", column));
+                }
+
+                if (!(object instanceof String)) {
+                    throw new DirectiveExecutionException(
+                            NAME, String.format("Column '%s' has invalid type '%s'. It should be of type 'String'.",
+                            column, object.getClass().getSimpleName()));
+                }
+
+                String[] lines = ((String) object).split(regex);
+                int i = 1;
+                for (String line : lines) {
+                    row.add(String.format("%s_%d", column, i), line);
+                    ++i;
+                }
+                results.add(row);
+            }
+        }
+        return results;
+    }
+
+    @Override
+    public Mutation lineage() {
+        return Mutation.builder()
+                .readable("Split the column '%s' with regex '%s'", column, regex)
+                .relation(
+                        column,
+                        Many.columns(
+                                column,
+                                String.format("%s_%d", column, 1),
+                                String.format("%s_%d", column, 2),
+                                String.format("%s_%d", column, 3),
+                                String.format("%s_%d", column, 4),
+                                String.format("%s_%d", column, 5),
+                                String.format("%s_%d", column, 6),
+                                String.format("%s_%d", column, 7),
+                                String.format("%s_%d", column, 8),
+                                String.format("%s_%d", column, 9),
+                                String.format("%s_%d", column, 10)))
+                .build();
+    }
 }
 

@@ -44,49 +44,49 @@ import java.util.Map;
  */
 @Ignore
 public class WranglerServiceTest extends WranglerServiceTestBase {
-  private static final Gson GSON =
-    new GsonBuilder().registerTypeAdapter(Schema.class, new SchemaTypeAdapter()).create();
+    private static final Gson GSON =
+            new GsonBuilder().registerTypeAdapter(Schema.class, new SchemaTypeAdapter()).create();
 
-  @Test
-  public void test() throws Exception {
-    ApplicationManager wrangerApp = deployApplication(DataPrep.class);
-    ServiceManager serviceManager = wrangerApp.getServiceManager("service").start();
-    // should throw exception, instead of returning null
-    URL baseURL = serviceManager.getServiceURL();
+    @Test
+    public void test() throws Exception {
+        ApplicationManager wrangerApp = deployApplication(DataPrep.class);
+        ServiceManager serviceManager = wrangerApp.getServiceManager("service").start();
+        // should throw exception, instead of returning null
+        URL baseURL = serviceManager.getServiceURL();
 
 
-    List<String> uploadContents = ImmutableList.of("bob,anderson", "joe,mchall");
-    createAndUploadWorkspace(baseURL, "test_ws", uploadContents);
+        List<String> uploadContents = ImmutableList.of("bob,anderson", "joe,mchall");
+        createAndUploadWorkspace(baseURL, "test_ws", uploadContents);
 
-    List<String> directives =
-      ImmutableList.of("split-to-columns test_ws ,",
-                       "drop test_ws",
-                       "rename test_ws_1 fname",
-                       "rename test_ws_2 lname");
+        List<String> directives =
+                ImmutableList.of("split-to-columns test_ws ,",
+                        "drop test_ws",
+                        "rename test_ws_1 fname",
+                        "rename test_ws_2 lname");
 
-    Schema schema = schema(baseURL, "test_ws", directives);
+        Schema schema = schema(baseURL, "test_ws", directives);
 
-    Schema expectedSchema =
-      Schema.recordOf("avroSchema",
-                      Schema.Field.of("fname", Schema.nullableOf(Schema.of(Schema.Type.STRING))),
-                      Schema.Field.of("lname", Schema.nullableOf(Schema.of(Schema.Type.STRING))));
+        Schema expectedSchema =
+                Schema.recordOf("avroSchema",
+                        Schema.Field.of("fname", Schema.nullableOf(Schema.of(Schema.Type.STRING))),
+                        Schema.Field.of("lname", Schema.nullableOf(Schema.of(Schema.Type.STRING))));
 
-    Assert.assertEquals(expectedSchema, schema);
-    serviceManager.stop();
-  }
-
-  public Schema schema(URL baseURL, String workspace, List<String> directives) throws Exception {
-    List<Map.Entry<String, String>> queryParams = new ArrayList<>();
-    for (String directive : directives) {
-      queryParams.add(new AbstractMap.SimpleEntry<>("directive", URLEncoder.encode(directive, "UTF-8")));
+        Assert.assertEquals(expectedSchema, schema);
+        serviceManager.stop();
     }
 
-    URL url = new URL(baseURL, "workspaces/" + workspace + "/schema" + createQueryParams(queryParams));
-    HttpResponse response = HttpRequests.execute(HttpRequest.get(url).build());
-    Assert.assertEquals(200, response.getResponseCode());
+    public Schema schema(URL baseURL, String workspace, List<String> directives) throws Exception {
+        List<Map.Entry<String, String>> queryParams = new ArrayList<>();
+        for (String directive : directives) {
+            queryParams.add(new AbstractMap.SimpleEntry<>("directive", URLEncoder.encode(directive, "UTF-8")));
+        }
 
-    // we have to do this, simply because of how the service REST API returns only the Fields of the Schema
-    return GSON.fromJson("{ \"name\": \"avroSchema\", \"type\": \"record\", \"fields\":"
-                           + response.getResponseBodyAsString() + " }", Schema.class);
-  }
+        URL url = new URL(baseURL, "workspaces/" + workspace + "/schema" + createQueryParams(queryParams));
+        HttpResponse response = HttpRequests.execute(HttpRequest.get(url).build());
+        Assert.assertEquals(200, response.getResponseCode());
+
+        // we have to do this, simply because of how the service REST API returns only the Fields of the Schema
+        return GSON.fromJson("{ \"name\": \"avroSchema\", \"type\": \"record\", \"fields\":"
+                + response.getResponseBodyAsString() + " }", Schema.class);
+    }
 }

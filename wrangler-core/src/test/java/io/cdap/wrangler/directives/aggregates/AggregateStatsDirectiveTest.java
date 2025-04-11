@@ -16,26 +16,25 @@
 
 package io.cdap.wrangler.directives.aggregates;
 
-import java.util.Arrays;
-import java.util.List;
-
+import io.cdap.wrangler.TestingRig;
+import io.cdap.wrangler.api.Row;
 import org.junit.Assert;
 import org.junit.Test;
 
-import io.cdap.wrangler.TestingRig;
-import io.cdap.wrangler.api.Row;
+import java.util.Arrays;
+import java.util.List;
 
 public class AggregateStatsDirectiveTest {
 
     @Test
     public void testAggregateStatsDirective() throws Exception {
         String[] recipe = {
-            "aggregate-stats :data_transfer_size :response_time total_size_mb total_time_sec"
+                "aggregate-stats :data_transfer_size :response_time total_size_mb total_time_sec"
         };
 
         List<Row> rows = Arrays.asList(
-            new Row().add("data_transfer_size", new ByteSize("10MB")).add("response_time", new TimeDuration("5s")),
-            new Row().add("data_transfer_size", new ByteSize("5MB")).add("response_time", new TimeDuration("3s"))
+                new Row().add("data_transfer_size", new ByteSize("10MB")).add("response_time", new TimeDuration("5s")),
+                new Row().add("data_transfer_size", new ByteSize("5MB")).add("response_time", new TimeDuration("3s"))
         );
 
         List<Row> results = TestingRig.execute(recipe, rows);

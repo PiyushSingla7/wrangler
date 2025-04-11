@@ -23,31 +23,31 @@ import io.cdap.wrangler.proto.schema.SchemaDescriptorType;
  * Describes a schema.
  */
 public class SchemaDescriptor {
-  private final NamespacedId id;
-  private final String name;
-  private final String description;
-  private final SchemaDescriptorType type;
+    private final NamespacedId id;
+    private final String name;
+    private final String description;
+    private final SchemaDescriptorType type;
 
-  public SchemaDescriptor(NamespacedId id, String name, String description, SchemaDescriptorType type) {
-    this.id = id;
-    this.name = name;
-    this.description = description;
-    this.type = type;
-  }
+    public SchemaDescriptor(NamespacedId id, String name, String description, SchemaDescriptorType type) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.type = type;
+    }
 
-  public NamespacedId getId() {
-    return id;
-  }
+    public NamespacedId getId() {
+        return id;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public String getDescription() {
-    return description;
-  }
+    public String getDescription() {
+        return description;
+    }
 
-  public SchemaDescriptorType getType() {
-    return type;
-  }
+    public SchemaDescriptorType getType() {
+        return type;
+    }
 }

@@ -27,63 +27,63 @@ import java.util.ResourceBundle;
  * Messages is a i18n error or descriptive messages.
  *
  * <code>
- *   private static final Messages MSG = MessageFactory.getMessages();
- *   private static final Messages MSG = MessageFactory.getMessages(name, Locale.FRANCE);
+ * private static final Messages MSG = MessageFactory.getMessages();
+ * private static final Messages MSG = MessageFactory.getMessages(name, Locale.FRANCE);
  * </code>
  */
 @Public
 public final class Messages {
-  // Resource bundle.
-  private static ResourceBundle bundle;
+    // Resource bundle.
+    private static ResourceBundle bundle;
 
-  // Name of the resource.
-  private final String name;
+    // Name of the resource.
+    private final String name;
 
-  // Locale of the resource.
-  private final Locale locale;
+    // Locale of the resource.
+    private final Locale locale;
 
-  public Messages() {
-    this("user/messages", Locale.getDefault());
-  }
-
-  public Messages(String name) {
-    this(name, Locale.getDefault());
-  }
-
-  public Messages(String name, Locale locale) {
-    this.name = name;
-    this.locale = locale;
-    bundle = ResourceBundle.getBundle(name, locale, Messages.class.getClassLoader());
-  }
-
-  /**
-   * Return the message based on the key.
-   *
-   * @param key of the message.
-   * @return resolved string message.
-   */
-  public String get(String key) {
-    if (bundle == null) {
-      return String.format("Key '%s' not found in bundle '%s' and locale '%s'",
-                           key, name, locale.toString());
+    public Messages() {
+        this("user/messages", Locale.getDefault());
     }
 
-    try {
-      return bundle.getString(key);
-    } catch (MissingResourceException e) {
-      return String.format("Key '%s' not found in bundle '%s' and locale '%s'",
-                           key, name, locale.toString());
+    public Messages(String name) {
+        this(name, Locale.getDefault());
     }
-  }
 
-  /**
-   * Returns a string message with resolved arguments.
-   *
-   * @param key name of the key.
-   * @param args list of arguments.
-   * @return resolved string representation.
-   */
-  public String get(String key, Object ... args) {
-    return MessageFormat.format(get(key), args);
-  }
+    public Messages(String name, Locale locale) {
+        this.name = name;
+        this.locale = locale;
+        bundle = ResourceBundle.getBundle(name, locale, Messages.class.getClassLoader());
+    }
+
+    /**
+     * Return the message based on the key.
+     *
+     * @param key of the message.
+     * @return resolved string message.
+     */
+    public String get(String key) {
+        if (bundle == null) {
+            return String.format("Key '%s' not found in bundle '%s' and locale '%s'",
+                    key, name, locale.toString());
+        }
+
+        try {
+            return bundle.getString(key);
+        } catch (MissingResourceException e) {
+            return String.format("Key '%s' not found in bundle '%s' and locale '%s'",
+                    key, name, locale.toString());
+        }
+    }
+
+    /**
+     * Returns a string message with resolved arguments.
+     *
+     * @param key  name of the key.
+     * @param args list of arguments.
+     * @return resolved string representation.
+     */
+    public String get(String key, Object... args) {
+        return MessageFormat.format(get(key), args);
+    }
 }

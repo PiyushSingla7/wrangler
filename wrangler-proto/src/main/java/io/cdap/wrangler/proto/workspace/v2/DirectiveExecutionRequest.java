@@ -24,19 +24,19 @@ import java.util.List;
  * Directive execution request for v2 endpoint
  */
 public class DirectiveExecutionRequest {
-  private final List<String> directives;
-  private final int limit;
+    private final List<String> directives;
+    private final int limit;
 
-  public DirectiveExecutionRequest(List<String> directives, int limit) {
-    this.directives = directives;
-    this.limit = limit;
-  }
+    public DirectiveExecutionRequest(List<String> directives, int limit) {
+        this.directives = directives;
+        this.limit = limit;
+    }
 
-  public int getLimit() {
-    return limit;
-  }
+    public int getLimit() {
+        return limit;
+    }
 
-  public List<String> getDirectives() {
-    return directives == null ? Collections.emptyList() : directives;
-  }
+    public List<String> getDirectives() {
+        return directives == null ? Collections.emptyList() : directives;
+    }
 }

@@ -19,7 +19,7 @@ on:
     branches: [ develop, release/** ]
   pull_request:
     branches: [ develop, release/** ]
-    types: [opened, synchronize, reopened, labeled]
+    types: [ opened, synchronize, reopened, labeled ]
 
 jobs:
   build:

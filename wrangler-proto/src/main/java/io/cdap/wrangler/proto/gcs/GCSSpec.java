@@ -21,14 +21,14 @@ import io.cdap.wrangler.proto.PluginSpec;
 
 /**
  * Plugin specification for a GCS pipeline source.
- *
+ * <p>
  * TODO: (CDAP-14652) clean up this API. There is no reason for this class to exist.
  */
 public class GCSSpec {
-  @SerializedName("GCSFile")
-  private final PluginSpec spec;
+    @SerializedName("GCSFile")
+    private final PluginSpec spec;
 
-  public GCSSpec(PluginSpec spec) {
-    this.spec = spec;
-  }
+    public GCSSpec(PluginSpec spec) {
+        this.spec = spec;
+    }
 }

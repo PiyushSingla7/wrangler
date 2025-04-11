@@ -29,19 +29,19 @@ import java.util.List;
  */
 public class UrlEncodeTest {
 
-  @Test
-  public void testUrlEncoding() throws Exception {
-    String[] directives = new String[] {
-      "url-encode url",
-    };
+    @Test
+    public void testUrlEncoding() throws Exception {
+        String[] directives = new String[]{
+                "url-encode url",
+        };
 
-    List<Row> rows = Arrays.asList(
-      new Row("url", "http://www.yahoo.com?a=b c&b=ab&xyz=1")
-    );
+        List<Row> rows = Arrays.asList(
+                new Row("url", "http://www.yahoo.com?a=b c&b=ab&xyz=1")
+        );
 
-    rows = TestingRig.execute(directives, rows);
+        rows = TestingRig.execute(directives, rows);
 
-    Assert.assertTrue(rows.size() == 1);
-    Assert.assertEquals("http%3A%2F%2Fwww.yahoo.com%3Fa%3Db+c%26b%3Dab%26xyz%3D1", rows.get(0).getValue("url"));
-  }
+        Assert.assertTrue(rows.size() == 1);
+        Assert.assertEquals("http%3A%2F%2Fwww.yahoo.com%3Fa%3Db+c%26b%3Dab%26xyz%3D1", rows.get(0).getValue("url"));
+    }
 }

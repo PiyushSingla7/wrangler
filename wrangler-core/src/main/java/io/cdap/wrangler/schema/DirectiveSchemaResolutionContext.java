@@ -24,13 +24,14 @@ import io.cdap.wrangler.api.SchemaResolutionContext;
  * Context to pass information related to getting or generating the output schema of a {@link Directive}
  */
 public class DirectiveSchemaResolutionContext implements SchemaResolutionContext {
-  private final Schema inputSchema;
-  public DirectiveSchemaResolutionContext(Schema inputSchema) {
-    this.inputSchema = inputSchema;
-  }
+    private final Schema inputSchema;
 
-  @Override
-  public Schema getInputSchema() {
-    return inputSchema;
-  }
+    public DirectiveSchemaResolutionContext(Schema inputSchema) {
+        this.inputSchema = inputSchema;
+    }
+
+    @Override
+    public Schema getInputSchema() {
+        return inputSchema;
+    }
 }

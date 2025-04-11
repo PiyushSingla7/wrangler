@@ -28,37 +28,37 @@ import java.util.List;
  * Tests {@link WriteAsJsonObject}.
  */
 public class WriteAsJsonObjectTest {
-  private static final String EVENT = "  {\n" +
-    "  \t\"fname\" : \"root\",\n" +
-    "  \t\"lname\" : \"joltie\",\n" +
-    "  \t\"age\" : 28,\n" +
-    "  \t\"height\" : 5.9,\n" +
-    "  \t\"weight\" : 178,\n" +
-    "  \t\"address\" : \"Super Mars, Mars Ave, Mars, 8999\",\n" +
-    "  \t\"latitude\" : -122.43345423,\n" +
-    "  \t\"longitude\" : 37.234424223\n" +
-    "  }";
+    private static final String EVENT = "  {\n" +
+            "  \t\"fname\" : \"root\",\n" +
+            "  \t\"lname\" : \"joltie\",\n" +
+            "  \t\"age\" : 28,\n" +
+            "  \t\"height\" : 5.9,\n" +
+            "  \t\"weight\" : 178,\n" +
+            "  \t\"address\" : \"Super Mars, Mars Ave, Mars, 8999\",\n" +
+            "  \t\"latitude\" : -122.43345423,\n" +
+            "  \t\"longitude\" : 37.234424223\n" +
+            "  }";
 
-  @Test
-  public void testCreatingJSONObject() throws Exception {
-    String[] recipe = new String[] {
-      "parse-as-json event",
-      "columns-replace s/event_//",
-      "write-as-json-object coordinates latitude,longitude",
-      "keep coordinates",
-      "write-as-json-map location",
-      "keep location"
-    };
+    @Test
+    public void testCreatingJSONObject() throws Exception {
+        String[] recipe = new String[]{
+                "parse-as-json event",
+                "columns-replace s/event_//",
+                "write-as-json-object coordinates latitude,longitude",
+                "keep coordinates",
+                "write-as-json-map location",
+                "keep location"
+        };
 
-    List<Row> rows = Arrays.asList(
-      new Row("event", EVENT)
-    );
+        List<Row> rows = Arrays.asList(
+                new Row("event", EVENT)
+        );
 
-    rows = TestingRig.execute(recipe, rows);
+        rows = TestingRig.execute(recipe, rows);
 
-    Assert.assertEquals(1, rows.size());
-    Assert.assertEquals("{\"coordinates\":{\"latitude\":-122.43345423,\"longitude\":37.234424223}}",
-                        rows.get(0).getValue("location"));
-  }
+        Assert.assertEquals(1, rows.size());
+        Assert.assertEquals("{\"coordinates\":{\"latitude\":-122.43345423,\"longitude\":37.234424223}}",
+                rows.get(0).getValue("location"));
+    }
 
 }

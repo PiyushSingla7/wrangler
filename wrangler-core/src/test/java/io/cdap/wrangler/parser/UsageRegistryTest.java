@@ -25,10 +25,10 @@ import java.util.List;
  * Tests {@link UsageRegistry}
  */
 public class UsageRegistryTest {
-  @Test
-  public void testUsageRegistry() throws Exception {
-    UsageRegistry registry = new UsageRegistry();
-    List<UsageRegistry.UsageEntry> usages = registry.getAll();
-    Assert.assertTrue(usages.size() > 1);
-  }
+    @Test
+    public void testUsageRegistry() throws Exception {
+        UsageRegistry registry = new UsageRegistry();
+        List<UsageRegistry.UsageEntry> usages = registry.getAll();
+        Assert.assertTrue(usages.size() > 1);
+    }
 }

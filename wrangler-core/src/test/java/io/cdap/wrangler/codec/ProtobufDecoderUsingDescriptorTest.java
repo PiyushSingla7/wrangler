@@ -30,40 +30,40 @@ import java.util.List;
  */
 public class ProtobufDecoderUsingDescriptorTest {
 
-  @Test
-  public void testBasicConversion() throws Exception {
-    AddressBookProtos.Person john = AddressBookProtos.Person.newBuilder()
-      .setId(1234)
-      .setName("Joltie Root")
-      .setEmail("joltie.root@example.com")
-      .addPhones(
-        AddressBookProtos.Person.PhoneNumber.newBuilder()
-          .setNumber("555-4321")
-          .setType(AddressBookProtos.Person.PhoneType.HOME)
-      ).build();
+    @Test
+    public void testBasicConversion() throws Exception {
+        AddressBookProtos.Person john = AddressBookProtos.Person.newBuilder()
+                .setId(1234)
+                .setName("Joltie Root")
+                .setEmail("joltie.root@example.com")
+                .addPhones(
+                        AddressBookProtos.Person.PhoneNumber.newBuilder()
+                                .setNumber("555-4321")
+                                .setType(AddressBookProtos.Person.PhoneType.HOME)
+                ).build();
 
-    AddressBookProtos.AddressBook book = AddressBookProtos.AddressBook.newBuilder()
-      .addPeople(john).build();
+        AddressBookProtos.AddressBook book = AddressBookProtos.AddressBook.newBuilder()
+                .addPeople(john).build();
 
-    byte[] addressBook = book.toByteArray();
+        byte[] addressBook = book.toByteArray();
 
-    InputStream is = null;
-    try {
-      is = this.getClass().getClassLoader().getResourceAsStream("addressbook.desc");
-      byte[] bytes = IOUtils.toByteArray(is);
-      Decoder<Row> decoder = new ProtobufDecoderUsingDescriptor(bytes, "AddressBook");
-      Assert.assertNotNull(decoder);
-      List<Row> rows = decoder.decode(addressBook);
-      Assert.assertNotNull(rows);
-      Assert.assertEquals("Joltie Root", rows.get(0).getValue("people_name"));
-      Assert.assertEquals(1234, rows.get(0).getValue("people_id"));
-      Assert.assertEquals("joltie.root@example.com", rows.get(0).getValue("people_email"));
-      Assert.assertEquals("555-4321", rows.get(0).getValue("people_phones_number"));
-      Assert.assertEquals("HOME", rows.get(0).getValue("people_phones_type"));
-    } finally {
-      if (is != null) {
-        is.close();
-      }
+        InputStream is = null;
+        try {
+            is = this.getClass().getClassLoader().getResourceAsStream("addressbook.desc");
+            byte[] bytes = IOUtils.toByteArray(is);
+            Decoder<Row> decoder = new ProtobufDecoderUsingDescriptor(bytes, "AddressBook");
+            Assert.assertNotNull(decoder);
+            List<Row> rows = decoder.decode(addressBook);
+            Assert.assertNotNull(rows);
+            Assert.assertEquals("Joltie Root", rows.get(0).getValue("people_name"));
+            Assert.assertEquals(1234, rows.get(0).getValue("people_id"));
+            Assert.assertEquals("joltie.root@example.com", rows.get(0).getValue("people_email"));
+            Assert.assertEquals("555-4321", rows.get(0).getValue("people_phones_number"));
+            Assert.assertEquals("HOME", rows.get(0).getValue("people_phones_type"));
+        } finally {
+            if (is != null) {
+                is.close();
+            }
+        }
     }
-  }
 }

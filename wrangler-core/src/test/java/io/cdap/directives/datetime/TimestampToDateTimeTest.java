@@ -27,27 +27,27 @@ import java.util.List;
 
 public class TimestampToDateTimeTest {
 
-  @Test
-  public void testConversion() throws Exception {
-    String colName = "col1";
-    ZonedDateTime zonedDateTime = ZonedDateTime.now();
-    Row row = new Row();
-    String[] directives = new String[]{String.format("%s :%s", TimestampToDateTime.NAME, colName)};
-    row.add(colName, zonedDateTime);
-    List<Row> rows = TestingRig.execute(directives, Collections.singletonList(row));
+    @Test
+    public void testConversion() throws Exception {
+        String colName = "col1";
+        ZonedDateTime zonedDateTime = ZonedDateTime.now();
+        Row row = new Row();
+        String[] directives = new String[]{String.format("%s :%s", TimestampToDateTime.NAME, colName)};
+        row.add(colName, zonedDateTime);
+        List<Row> rows = TestingRig.execute(directives, Collections.singletonList(row));
 
-    Assert.assertEquals(1, rows.size());
-    Assert.assertEquals(zonedDateTime.toLocalDateTime(), rows.get(0).getValue(colName));
-  }
+        Assert.assertEquals(1, rows.size());
+        Assert.assertEquals(zonedDateTime.toLocalDateTime(), rows.get(0).getValue(colName));
+    }
 
-  @Test
-  public void testInvalidObject() throws Exception {
-    String colName = "col1";
-    String[] directives = new String[]{String.format("%s :%s", TimestampToDateTime.NAME, colName)};
-    Row row1 = new Row();
-    row1.add(colName, LocalDateTime.now().toString());
-    final List<Row> results = TestingRig.execute(directives, Collections.singletonList(row1));
-    //should be error collected
-    Assert.assertTrue(results.isEmpty());
-  }
+    @Test
+    public void testInvalidObject() throws Exception {
+        String colName = "col1";
+        String[] directives = new String[]{String.format("%s :%s", TimestampToDateTime.NAME, colName)};
+        Row row1 = new Row();
+        row1.add(colName, LocalDateTime.now().toString());
+        final List<Row> results = TestingRig.execute(directives, Collections.singletonList(row1));
+        //should be error collected
+        Assert.assertTrue(results.isEmpty());
+    }
 }

@@ -23,36 +23,36 @@ import io.cdap.cdap.api.common.Bytes;
  */
 public final class TypeConvertor {
 
-  /**
-   * Converts a java type to String.
-   *
-   * @param object of any type.
-   * @return object converted to type string.
-   */
-  public static String toString(Object object) throws IllegalArgumentException {
-    if (object == null) {
-      return null;
-    }
-    if (object instanceof String) {
-      return (String) object;
-    } else if (object instanceof Integer) {
-      return Integer.toString((Integer) object);
-    } else if (object instanceof Short) {
-      return Short.toString((Short) object);
-    } else if (object instanceof Long) {
-      return Long.toString((Long) object);
-    } else if (object instanceof Float) {
-      return Float.toString((Float) object);
-    } else if (object instanceof Double) {
-      return Double.toString((Double) object);
-    } else if (object instanceof byte[]) {
-      return Bytes.toString((byte[]) object);
-    } else if (object instanceof Character) {
-      return Character.toString((Character) object);
-    }
+    /**
+     * Converts a java type to String.
+     *
+     * @param object of any type.
+     * @return object converted to type string.
+     */
+    public static String toString(Object object) throws IllegalArgumentException {
+        if (object == null) {
+            return null;
+        }
+        if (object instanceof String) {
+            return (String) object;
+        } else if (object instanceof Integer) {
+            return Integer.toString((Integer) object);
+        } else if (object instanceof Short) {
+            return Short.toString((Short) object);
+        } else if (object instanceof Long) {
+            return Long.toString((Long) object);
+        } else if (object instanceof Float) {
+            return Float.toString((Float) object);
+        } else if (object instanceof Double) {
+            return Double.toString((Double) object);
+        } else if (object instanceof byte[]) {
+            return Bytes.toString((byte[]) object);
+        } else if (object instanceof Character) {
+            return Character.toString((Character) object);
+        }
 
-    throw new IllegalArgumentException(
-      String.format("Cannot convert type '%s' to string", object.getClass().getSimpleName())
-    );
-  }
+        throw new IllegalArgumentException(
+                String.format("Cannot convert type '%s' to string", object.getClass().getSimpleName())
+        );
+    }
 }

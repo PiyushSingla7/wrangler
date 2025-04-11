@@ -24,13 +24,13 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Cucumber.class)
 @CucumberOptions(
-  features = {"src/e2e-test/features"},
-  glue = {"stepsdesign", "io.cdap.plugin.common.stepsdesign", "io.cdap.plugin.wrangler.stepsdesign",
-          "io.cdap.plugin.wrangler.actions"},
-  tags = {"@Wrangler"},
+        features = {"src/e2e-test/features"},
+        glue = {"stepsdesign", "io.cdap.plugin.common.stepsdesign", "io.cdap.plugin.wrangler.stepsdesign",
+                "io.cdap.plugin.wrangler.actions"},
+        tags = {"@Wrangler"},
         plugin = {"pretty", "html:target/cucumber-html-report/wrangler-required",
                 "json:target/cucumber-reports/cucumber-wrangler-required.json",
                 "junit:target/cucumber-reports/cucumber-wrangler-required.xml"}
 )
-        public class TestRunner {
+public class TestRunner {
 }

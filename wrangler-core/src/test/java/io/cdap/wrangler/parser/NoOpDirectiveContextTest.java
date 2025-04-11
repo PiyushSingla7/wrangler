@@ -29,20 +29,20 @@ import java.util.List;
  */
 public class NoOpDirectiveContextTest {
 
-  @Test
-  public void testNoFilteringHappening() throws Exception {
-    String[] recipe = new String[] {
-      "parse-as-csv body , true",
-      "drop body",
-      "drop Cabin",
-      "drop Embarked",
-      "fill-null-or-empty Age 0",
-      "filter-row-if-true Fare < 8.06"
-    };
+    @Test
+    public void testNoFilteringHappening() throws Exception {
+        String[] recipe = new String[]{
+                "parse-as-csv body , true",
+                "drop body",
+                "drop Cabin",
+                "drop Embarked",
+                "fill-null-or-empty Age 0",
+                "filter-row-if-true Fare < 8.06"
+        };
 
-    RecipeParser parse = TestingRig.parse(recipe);
-    List<Directive> directives = parse.parse();
-    Assert.assertEquals(6, directives.size());
-  }
+        RecipeParser parse = TestingRig.parse(recipe);
+        List<Directive> directives = parse.parse();
+        Assert.assertEquals(6, directives.size());
+    }
 
 }

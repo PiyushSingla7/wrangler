@@ -3,14 +3,13 @@
 The DECODE directive decodes a column value as one of `base32`, `base64`, or `hex`
 following [RFC-4648](https://tools.ietf.org/html/rfc4648).
 
-
 ## Syntax
+
 ```
 decode <base32|base64|hex> <column>
 ```
 
 The `<column>` is the name of the column to which the decoding is applied.
-
 
 ## Usage Notes
 
@@ -30,10 +29,10 @@ Different column values are handled following these rules:
 
 See also the [ENCODE](encode.md) directive.
 
-
 ## Example
 
 Using this record as an example:
+
 ```
 {
   "col1": "IJQXGZJTGIQEK3TDN5SGS3TH",
@@ -43,6 +42,7 @@ Using this record as an example:
 ```
 
 Applying these directives:
+
 ```
 decode base32 col1
 decode base64 col2
@@ -50,6 +50,7 @@ decode hex col3
 ```
 
 would result in this record:
+
 ```
 {
   "col1": "IJQXGZJTGIQEK3TDN5SGS3TH",

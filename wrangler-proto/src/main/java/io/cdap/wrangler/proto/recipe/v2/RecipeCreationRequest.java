@@ -22,25 +22,25 @@ import java.util.List;
  * Creation request for a Recipe
  */
 public class RecipeCreationRequest {
-  private final String recipeName;
-  private final String description;
-  private final List<String> directives;
+    private final String recipeName;
+    private final String description;
+    private final List<String> directives;
 
-  public RecipeCreationRequest(String recipeName, String description, List<String> directives) {
-    this.recipeName = recipeName;
-    this.description = description;
-    this.directives = directives;
-  }
+    public RecipeCreationRequest(String recipeName, String description, List<String> directives) {
+        this.recipeName = recipeName;
+        this.description = description;
+        this.directives = directives;
+    }
 
-  public String getRecipeName() {
-    return recipeName;
-  }
+    public String getRecipeName() {
+        return recipeName;
+    }
 
-  public List<String> getDirectives() {
-    return directives;
-  }
+    public List<String> getDirectives() {
+        return directives;
+    }
 
-  public String getDescription() {
-    return description;
-  }
+    public String getDescription() {
+        return description;
+    }
 }

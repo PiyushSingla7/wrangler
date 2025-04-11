@@ -14,74 +14,74 @@
  * the License.
  */
 
- package io.cdap.wrangler.api;
+package io.cdap.wrangler.api;
 
- import io.cdap.wrangler.api.annotations.Public;
- 
- /**
-  * A triplet consisting of three elements - first, second, and third.
-  *
-  * <p>This class provides immutable access to elements of the triplet.</p>
-  *
-  * @param <F> The type of the first element.
-  * @param <S> The type of the second element.
-  * @param <T> The type of the third element.
-  */
- @Public
- public final class Triplet<F, S, T> {
-     /**
-      * The first element of the triplet.
-      */
-     private final F first;
- 
-     /**
-      * The second element of the triplet.
-      */
-     private final S second;
- 
-     /**
-      * The third element of the triplet.
-      */
-     private final T third;
- 
-     /**
-      * Constructs a new {@code Triplet} with the specified elements.
-      *
-      * @param first The first element of the triplet.
-      * @param second The second element of the triplet.
-      * @param third The third element of the triplet.
-      */
-     public Triplet(F first, S second, T third) {
-         this.first = first;
-         this.second = second;
-         this.third = third;
-     }
- 
-     /**
-      * Returns the first element of the triplet.
-      *
-      * @return The first element of the triplet.
-      */
-     public F getFirst() {
-         return first;
-     }
- 
-     /**
-      * Returns the second element of the triplet.
-      *
-      * @return The second element of the triplet.
-      */
-     public S getSecond() {
-         return second;
-     }
- 
-     /**
-      * Returns the third element of the triplet.
-      *
-      * @return The third element of the triplet.
-      */
-     public T getThird() {
-         return third;
-     }
+import io.cdap.wrangler.api.annotations.Public;
+
+/**
+ * A triplet consisting of three elements - first, second, and third.
+ *
+ * <p>This class provides immutable access to elements of the triplet.</p>
+ *
+ * @param <F> The type of the first element.
+ * @param <S> The type of the second element.
+ * @param <T> The type of the third element.
+ */
+@Public
+public final class Triplet<F, S, T> {
+    /**
+     * The first element of the triplet.
+     */
+    private final F first;
+
+    /**
+     * The second element of the triplet.
+     */
+    private final S second;
+
+    /**
+     * The third element of the triplet.
+     */
+    private final T third;
+
+    /**
+     * Constructs a new {@code Triplet} with the specified elements.
+     *
+     * @param first  The first element of the triplet.
+     * @param second The second element of the triplet.
+     * @param third  The third element of the triplet.
+     */
+    public Triplet(F first, S second, T third) {
+        this.first = first;
+        this.second = second;
+        this.third = third;
+    }
+
+    /**
+     * Returns the first element of the triplet.
+     *
+     * @return The first element of the triplet.
+     */
+    public F getFirst() {
+        return first;
+    }
+
+    /**
+     * Returns the second element of the triplet.
+     *
+     * @return The second element of the triplet.
+     */
+    public S getSecond() {
+        return second;
+    }
+
+    /**
+     * Returns the third element of the triplet.
+     *
+     * @return The third element of the triplet.
+     */
+    public T getThird() {
+        return third;
+    }
 }
-// Add this newline at the end of file
+

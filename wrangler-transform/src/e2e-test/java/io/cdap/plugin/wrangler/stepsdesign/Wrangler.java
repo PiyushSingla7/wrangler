@@ -32,7 +32,7 @@ public class Wrangler implements CdfHelper {
 
     @Then("Validate The Data From BQ To BQ With Actual And Expected File for: {string}")
     public void validateTheDataFromBQToBQWithActualAndExpectedFileFor(String expectedFile) throws IOException,
-      InterruptedException, URISyntaxException {
+            InterruptedException, URISyntaxException {
         boolean recordsMatched = ValidationHelper.validateActualDataToExpectedData(
                 PluginPropertyUtils.pluginProp("bqTargetTable"),
                 PluginPropertyUtils.pluginProp(expectedFile));

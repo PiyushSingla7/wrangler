@@ -18,7 +18,6 @@ package io.cdap.wrangler.service.s3;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.google.common.collect.ImmutableList;
-import io.cdap.wrangler.proto.connection.ConnectionMeta;
 
 import java.util.List;
 import java.util.Map;
@@ -27,37 +26,37 @@ import java.util.Map;
  * Credentials of the authorized user connecting to AWS and AWS region connecting to
  */
 public class S3Configuration implements AWSCredentials {
-  private static final List<String> CONFIG_FIELDS = ImmutableList.of("accessKeyId", "accessSecretKey", "region");
-  private final String accessKeyId;
-  private final String accessSecretKey;
-  private final String region;
+    private static final List<String> CONFIG_FIELDS = ImmutableList.of("accessKeyId", "accessSecretKey", "region");
+    private final String accessKeyId;
+    private final String accessSecretKey;
+    private final String region;
 
-  S3Configuration(Map<String, String> properties) {
-    if (properties == null || properties.size() == 0) {
-      throw new IllegalArgumentException("S3 properties are not defined. Check connection setting.");
+    S3Configuration(Map<String, String> properties) {
+        if (properties == null || properties.size() == 0) {
+            throw new IllegalArgumentException("S3 properties are not defined. Check connection setting.");
+        }
+
+        for (String property : CONFIG_FIELDS) {
+            if (!properties.containsKey(property)) {
+                throw new IllegalArgumentException("Missing configuration in connection for property " + property);
+            }
+        }
+        accessKeyId = properties.get("accessKeyId");
+        accessSecretKey = properties.get("accessSecretKey");
+        region = properties.get("region");
     }
 
-    for (String property : CONFIG_FIELDS) {
-      if (!properties.containsKey(property)) {
-        throw new IllegalArgumentException("Missing configuration in connection for property " + property);
-      }
+    @Override
+    public String getAWSAccessKeyId() {
+        return accessKeyId;
     }
-    accessKeyId = properties.get("accessKeyId");
-    accessSecretKey = properties.get("accessSecretKey");
-    region = properties.get("region");
-  }
 
-  @Override
-  public String getAWSAccessKeyId() {
-    return accessKeyId;
-  }
+    @Override
+    public String getAWSSecretKey() {
+        return accessSecretKey;
+    }
 
-  @Override
-  public String getAWSSecretKey() {
-    return accessSecretKey;
-  }
-
-  public String getRegion() {
-    return region;
-  }
+    public String getRegion() {
+        return region;
+    }
 }

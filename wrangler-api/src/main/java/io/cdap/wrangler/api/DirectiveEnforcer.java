@@ -22,11 +22,11 @@ package io.cdap.wrangler.api;
  */
 public interface DirectiveEnforcer {
 
-  /**
-   * Checks if the directive is being excluded from being used.
-   *
-   * @param directive to be checked for exclusion.
-   * @return true if excluded, false otherwise.
-   */
-  boolean isExcluded(String directive);
+    /**
+     * Checks if the directive is being excluded from being used.
+     *
+     * @param directive to be checked for exclusion.
+     * @return true if excluded, false otherwise.
+     */
+    boolean isExcluded(String directive);
 }

@@ -21,43 +21,43 @@ package io.cdap.wrangler.api;
  * will be automatically mapped to corresponding metric tags.
  */
 public class EntityCountMetric {
-  /**
-   * Metric name
-   */
-  private final String name;
-  /**
-   * Value by which to increment the count
-   */
-  private final long count;
-  /**
-   * System app entity type
-   */
-  private final String appEntityType;
-  /**
-   * System app entity type name
-   */
-  private final String appEntityTypeName;
+    /**
+     * Metric name
+     */
+    private final String name;
+    /**
+     * Value by which to increment the count
+     */
+    private final long count;
+    /**
+     * System app entity type
+     */
+    private final String appEntityType;
+    /**
+     * System app entity type name
+     */
+    private final String appEntityTypeName;
 
-  public EntityCountMetric(String name, String appEntityType, String appEntityTypeName, long count) {
-    this.name = name;
-    this.appEntityType = appEntityType;
-    this.appEntityTypeName = appEntityTypeName;
-    this.count = count;
-  }
+    public EntityCountMetric(String name, String appEntityType, String appEntityTypeName, long count) {
+        this.name = name;
+        this.appEntityType = appEntityType;
+        this.appEntityTypeName = appEntityTypeName;
+        this.count = count;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public String getAppEntityType() {
-    return appEntityType;
-  }
+    public String getAppEntityType() {
+        return appEntityType;
+    }
 
-  public String getAppEntityTypeName() {
-    return appEntityTypeName;
-  }
+    public String getAppEntityTypeName() {
+        return appEntityTypeName;
+    }
 
-  public long getCount() {
-    return count;
-  }
+    public long getCount() {
+        return count;
+    }
 }

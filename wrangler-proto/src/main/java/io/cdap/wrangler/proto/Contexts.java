@@ -20,6 +20,6 @@ package io.cdap.wrangler.proto;
  * Constants related to an endpoint context.
  */
 public class Contexts {
-  public static final String SYSTEM = "system";
-  public static final String DEFAULT = "default";
+    public static final String SYSTEM = "system";
+    public static final String DEFAULT = "default";
 }

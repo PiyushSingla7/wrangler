@@ -30,172 +30,172 @@ import java.util.List;
  */
 public class GlobalTest {
 
-  @Test
-  public void testFirstNonNullFound() throws Exception {
-    String[] directives = new String[] {
-      "set-column d coalesce(a,b,c)"
-    };
+    @Test
+    public void testFirstNonNullFound() throws Exception {
+        String[] directives = new String[]{
+                "set-column d coalesce(a,b,c)"
+        };
 
-    // Run through the wrangling steps.
-    List<Row> rows = Arrays.asList(new Row("a", null).add("b", null).add("c", "c"));
+        // Run through the wrangling steps.
+        List<Row> rows = Arrays.asList(new Row("a", null).add("b", null).add("c", "c"));
 
-    // Iterate through steps.
-    rows = TestingRig.execute(directives, rows);
-    Assert.assertEquals("c", rows.get(0).getValue("d"));
-  }
+        // Iterate through steps.
+        rows = TestingRig.execute(directives, rows);
+        Assert.assertEquals("c", rows.get(0).getValue("d"));
+    }
 
-  @Test
-  public void testFirstNonNullNotFound() throws Exception {
-    String[] directives = new String[] {
-      "set-column d coalesce(a,b,c)"
-    };
+    @Test
+    public void testFirstNonNullNotFound() throws Exception {
+        String[] directives = new String[]{
+                "set-column d coalesce(a,b,c)"
+        };
 
-    // Run through the wrangling steps.
-    List<Row> rows = Arrays.asList(new Row("a", null).add("b", null).add("c", null));
+        // Run through the wrangling steps.
+        List<Row> rows = Arrays.asList(new Row("a", null).add("b", null).add("c", null));
 
-    // Iterate through steps.
-    rows = TestingRig.execute(directives, rows);
-    Assert.assertEquals(null, rows.get(0).getValue("d"));
-  }
+        // Iterate through steps.
+        rows = TestingRig.execute(directives, rows);
+        Assert.assertEquals(null, rows.get(0).getValue("d"));
+    }
 
-  @Test
-  public void testFirstNonNullFoundInBetween() throws Exception {
-    String[] directives = new String[] {
-      "set-column d coalesce(a,b,c)"
-    };
+    @Test
+    public void testFirstNonNullFoundInBetween() throws Exception {
+        String[] directives = new String[]{
+                "set-column d coalesce(a,b,c)"
+        };
 
-    // Run through the wrangling steps.
-    List<Row> rows = Arrays.asList(new Row("a", "a").add("b", null).add("c", "c"));
+        // Run through the wrangling steps.
+        List<Row> rows = Arrays.asList(new Row("a", "a").add("b", null).add("c", "c"));
 
-    // Iterate through steps.
-    rows = TestingRig.execute(directives, rows);
-    Assert.assertEquals("a", rows.get(0).getValue("d"));
-  }
+        // Iterate through steps.
+        rows = TestingRig.execute(directives, rows);
+        Assert.assertEquals("a", rows.get(0).getValue("d"));
+    }
 
-  @Test
-  public void testFirstNonNullFoundAtStart() throws Exception {
-    String[] directives = new String[] {
-      "set-column d coalesce(a,b,c)"
-    };
+    @Test
+    public void testFirstNonNullFoundAtStart() throws Exception {
+        String[] directives = new String[]{
+                "set-column d coalesce(a,b,c)"
+        };
 
-    // Run through the wrangling steps.
-    List<Row> rows = Arrays.asList(new Row("a", "a").add("b", null).add("c", null));
+        // Run through the wrangling steps.
+        List<Row> rows = Arrays.asList(new Row("a", "a").add("b", null).add("c", null));
 
-    // Iterate through steps.
-    rows = TestingRig.execute(directives, rows);
-    Assert.assertEquals("a", rows.get(0).getValue("d"));
-  }
+        // Iterate through steps.
+        rows = TestingRig.execute(directives, rows);
+        Assert.assertEquals("a", rows.get(0).getValue("d"));
+    }
 
-  @Test
-  public void testPrint() throws Exception {
-    String[] directives = new String[] {
-      "set-column d format(\"%s-%s-%s\", a,b,c)"
-    };
+    @Test
+    public void testPrint() throws Exception {
+        String[] directives = new String[]{
+                "set-column d format(\"%s-%s-%s\", a,b,c)"
+        };
 
-    // Run through the wrangling steps.
-    List<Row> rows = Arrays.asList(new Row("a", "a").add("b", "b").add("c", "c"));
+        // Run through the wrangling steps.
+        List<Row> rows = Arrays.asList(new Row("a", "a").add("b", "b").add("c", "c"));
 
-    // Iterate through steps.
-    rows = TestingRig.execute(directives, rows);
-    Assert.assertEquals("a-b-c", rows.get(0).getValue("d"));
-  }
+        // Iterate through steps.
+        rows = TestingRig.execute(directives, rows);
+        Assert.assertEquals("a-b-c", rows.get(0).getValue("d"));
+    }
 
-  @Test
-  public void testIsNotNull() throws Exception {
-    String[] directives = new String[]{
-      "set-column test1 IsNotNull(a) ? a : null",
-      "set-column test2 IsNotNull(b) ? b : null",
-      "set-column test3 IsNotNull(c) ? c : null",
-      "set-column test4 if(IsNotNull(c)){ a } else {b}"
-    };
-    List<Row> rows = Collections.singletonList(new Row("a", null)
-                                                 .add("b", "value")
-                                                 .add("c", 999L)
-    );
+    @Test
+    public void testIsNotNull() throws Exception {
+        String[] directives = new String[]{
+                "set-column test1 IsNotNull(a) ? a : null",
+                "set-column test2 IsNotNull(b) ? b : null",
+                "set-column test3 IsNotNull(c) ? c : null",
+                "set-column test4 if(IsNotNull(c)){ a } else {b}"
+        };
+        List<Row> rows = Collections.singletonList(new Row("a", null)
+                .add("b", "value")
+                .add("c", 999L)
+        );
 
-    rows = TestingRig.execute(directives, rows);
-    Assert.assertEquals(1, rows.size());
-    Assert.assertNull(rows.get(0).getValue("test1"));
-    Assert.assertEquals("value", rows.get(0).getValue("test2"));
-    Assert.assertEquals(999L, rows.get(0).getValue("test3"));
-    Assert.assertNull(rows.get(0).getValue("test4"));
-  }
+        rows = TestingRig.execute(directives, rows);
+        Assert.assertEquals(1, rows.size());
+        Assert.assertNull(rows.get(0).getValue("test1"));
+        Assert.assertEquals("value", rows.get(0).getValue("test2"));
+        Assert.assertEquals(999L, rows.get(0).getValue("test3"));
+        Assert.assertNull(rows.get(0).getValue("test4"));
+    }
 
-  @Test
-  public void testIsNull() throws Exception {
-    String[] directives = new String[]{
-      "set-column test1 IsNull(a) ? a : null",
-      "set-column test2 IsNull(b) ? b : null",
-      "set-column test3 IsNull(c) ? c : null",
-      "set-column test4 if(IsNull(c)){ a } else {b}"
-    };
-    List<Row> rows = Collections.singletonList(new Row("a", null)
-                                                 .add("b", "value")
-                                                 .add("c", 999L)
-    );
+    @Test
+    public void testIsNull() throws Exception {
+        String[] directives = new String[]{
+                "set-column test1 IsNull(a) ? a : null",
+                "set-column test2 IsNull(b) ? b : null",
+                "set-column test3 IsNull(c) ? c : null",
+                "set-column test4 if(IsNull(c)){ a } else {b}"
+        };
+        List<Row> rows = Collections.singletonList(new Row("a", null)
+                .add("b", "value")
+                .add("c", 999L)
+        );
 
-    rows = TestingRig.execute(directives, rows);
-    Assert.assertEquals(1, rows.size());
-    Assert.assertNull(rows.get(0).getValue("test1"));
-    Assert.assertNull(rows.get(0).getValue("test2"));
-    Assert.assertNull(rows.get(0).getValue("test3"));
-    Assert.assertEquals("value", rows.get(0).getValue("test4"));
-  }
+        rows = TestingRig.execute(directives, rows);
+        Assert.assertEquals(1, rows.size());
+        Assert.assertNull(rows.get(0).getValue("test1"));
+        Assert.assertNull(rows.get(0).getValue("test2"));
+        Assert.assertNull(rows.get(0).getValue("test3"));
+        Assert.assertEquals("value", rows.get(0).getValue("test4"));
+    }
 
-  @Test
-  public void testNullToEmpty() throws Exception {
-    String[] directives = new String[]{
-      "set-column test1 NullToEmpty(a)",
-      "set-column test2 NullToEmpty(b)",
-      "set-column test3 NullToEmpty(c)"
-    };
-    List<Row> rows = Collections.singletonList(new Row("a", null)
-                                                 .add("b", "value")
-                                                 .add("c", 999L)
-    );
+    @Test
+    public void testNullToEmpty() throws Exception {
+        String[] directives = new String[]{
+                "set-column test1 NullToEmpty(a)",
+                "set-column test2 NullToEmpty(b)",
+                "set-column test3 NullToEmpty(c)"
+        };
+        List<Row> rows = Collections.singletonList(new Row("a", null)
+                .add("b", "value")
+                .add("c", 999L)
+        );
 
-    rows = TestingRig.execute(directives, rows);
-    Assert.assertEquals(1, rows.size());
-    Assert.assertEquals("", rows.get(0).getValue("test1"));
-    Assert.assertEquals("value", rows.get(0).getValue("test2"));
-    Assert.assertEquals(999L, rows.get(0).getValue("test3"));
-  }
+        rows = TestingRig.execute(directives, rows);
+        Assert.assertEquals(1, rows.size());
+        Assert.assertEquals("", rows.get(0).getValue("test1"));
+        Assert.assertEquals("value", rows.get(0).getValue("test2"));
+        Assert.assertEquals(999L, rows.get(0).getValue("test3"));
+    }
 
-  @Test
-  public void testNullToZero() throws Exception {
-    String[] directives = new String[]{
-      "set-column test1 NullToZero(a)",
-      "set-column test2 NullToZero(b == 'value' ? a : b)",
-      "set-column test3 NullToZero(c)"
-    };
-    List<Row> rows = Collections.singletonList(new Row("a", null)
-                                                 .add("b", "value")
-                                                 .add("c", 999L)
-    );
+    @Test
+    public void testNullToZero() throws Exception {
+        String[] directives = new String[]{
+                "set-column test1 NullToZero(a)",
+                "set-column test2 NullToZero(b == 'value' ? a : b)",
+                "set-column test3 NullToZero(c)"
+        };
+        List<Row> rows = Collections.singletonList(new Row("a", null)
+                .add("b", "value")
+                .add("c", 999L)
+        );
 
-    rows = TestingRig.execute(directives, rows);
-    Assert.assertEquals(1, rows.size());
-    Assert.assertEquals(0, rows.get(0).getValue("test1"));
-    Assert.assertEquals(0, rows.get(0).getValue("test2"));
-    Assert.assertEquals(999L, rows.get(0).getValue("test3"));
-  }
+        rows = TestingRig.execute(directives, rows);
+        Assert.assertEquals(1, rows.size());
+        Assert.assertEquals(0, rows.get(0).getValue("test1"));
+        Assert.assertEquals(0, rows.get(0).getValue("test2"));
+        Assert.assertEquals(999L, rows.get(0).getValue("test3"));
+    }
 
-  @Test
-  public void testNullToValue() throws Exception {
-    String[] directives = new String[]{
-      "set-column test1 NullToValue(a, 42)",
-      "set-column test2 NullToValue(b == 'value' ? a : b, 42)",
-      "set-column test3 NullToValue(c, 42)"
-    };
-    List<Row> rows = Collections.singletonList(new Row("a", null)
-                                                 .add("b", "value")
-                                                 .add("c", 999L)
-    );
+    @Test
+    public void testNullToValue() throws Exception {
+        String[] directives = new String[]{
+                "set-column test1 NullToValue(a, 42)",
+                "set-column test2 NullToValue(b == 'value' ? a : b, 42)",
+                "set-column test3 NullToValue(c, 42)"
+        };
+        List<Row> rows = Collections.singletonList(new Row("a", null)
+                .add("b", "value")
+                .add("c", 999L)
+        );
 
-    rows = TestingRig.execute(directives, rows);
-    Assert.assertEquals(1, rows.size());
-    Assert.assertEquals(42, rows.get(0).getValue("test1"));
-    Assert.assertEquals(42, rows.get(0).getValue("test2"));
-    Assert.assertEquals(999L, rows.get(0).getValue("test3"));
-  }
+        rows = TestingRig.execute(directives, rows);
+        Assert.assertEquals(1, rows.size());
+        Assert.assertEquals(42, rows.get(0).getValue("test1"));
+        Assert.assertEquals(42, rows.get(0).getValue("test2"));
+        Assert.assertEquals(999L, rows.get(0).getValue("test3"));
+    }
 }

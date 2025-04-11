@@ -27,8 +27,8 @@ import java.util.Iterator;
  */
 @PublicEvolving
 public abstract class SamplingIterator<T> implements Iterator<T> {
-  @Override
-  public void remove() {
-    throw new UnsupportedOperationException("This operation is not supported.");
-  }
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException("This operation is not supported.");
+    }
 }

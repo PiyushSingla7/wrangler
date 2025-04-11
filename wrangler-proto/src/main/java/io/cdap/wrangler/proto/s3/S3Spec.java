@@ -21,14 +21,14 @@ import io.cdap.wrangler.proto.PluginSpec;
 
 /**
  * Specification for an S3 plugin.
- *
+ * <p>
  * TODO: (CDAP-14652) clean up this API. There is no reason for this class to exist.
  */
 public class S3Spec {
-  @SerializedName("S3")
-  private final PluginSpec s3;
+    @SerializedName("S3")
+    private final PluginSpec s3;
 
-  public S3Spec(PluginSpec s3) {
-    this.s3 = s3;
-  }
+    public S3Spec(PluginSpec s3) {
+        this.s3 = s3;
+    }
 }

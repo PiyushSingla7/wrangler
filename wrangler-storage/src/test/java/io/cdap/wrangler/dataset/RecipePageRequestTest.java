@@ -32,36 +32,36 @@ import static io.cdap.wrangler.store.recipe.RecipeStore.NAMESPACE_FIELD;
 import static io.cdap.wrangler.store.utils.Stores.getNamespaceKeys;
 
 public class RecipePageRequestTest {
-  @Test(expected = IllegalArgumentException.class)
-  public void testInvalidSortBy() {
-    NamespaceSummary namespace = new NamespaceSummary("n1", "", 10L);
-    RecipePageRequest.builder(namespace).setSortBy("invalid-sortBy").build();
-  }
+    @Test(expected = IllegalArgumentException.class)
+    public void testInvalidSortBy() {
+        NamespaceSummary namespace = new NamespaceSummary("n1", "", 10L);
+        RecipePageRequest.builder(namespace).setSortBy("invalid-sortBy").build();
+    }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testInvalidSortOrder() {
-    NamespaceSummary namespace = new NamespaceSummary("n1", "", 10L);
-    RecipePageRequest.builder(namespace).setSortOrder("invalid-sortOrder").build();
-  }
+    @Test(expected = IllegalArgumentException.class)
+    public void testInvalidSortOrder() {
+        NamespaceSummary namespace = new NamespaceSummary("n1", "", 10L);
+        RecipePageRequest.builder(namespace).setSortOrder("invalid-sortOrder").build();
+    }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testInvalidPageSize() {
-    NamespaceSummary namespace = new NamespaceSummary("n1", "", 10L);
-    RecipePageRequest.builder(namespace).setPageSize(0).build();
-  }
+    @Test(expected = IllegalArgumentException.class)
+    public void testInvalidPageSize() {
+        NamespaceSummary namespace = new NamespaceSummary("n1", "", 10L);
+        RecipePageRequest.builder(namespace).setPageSize(0).build();
+    }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testPageRequestWithInvalidPageToken() {
-    NamespaceSummary namespace = new NamespaceSummary("n1", "", 10L);
-    RecipePageRequest.builder(namespace).setSortBy(SORT_BY_UPDATE_TIME).setPageToken("abc123").build();
-  }
+    @Test(expected = IllegalArgumentException.class)
+    public void testPageRequestWithInvalidPageToken() {
+        NamespaceSummary namespace = new NamespaceSummary("n1", "", 10L);
+        RecipePageRequest.builder(namespace).setSortBy(SORT_BY_UPDATE_TIME).setPageToken("abc123").build();
+    }
 
-  @Test
-  public void testGetRangeForFirstPage() {
-    NamespaceSummary namespace = new NamespaceSummary("n1", "", 10L);
-    RecipePageRequest pageRequest = RecipePageRequest.builder(namespace).build();
-    Range range = pageRequest.getScanRange();
-    Collection<Field<?>> fields = getNamespaceKeys(NAMESPACE_FIELD, GENERATION_COL, namespace);
-    Assert.assertEquals(range, Range.create(fields, INCLUSIVE, fields, INCLUSIVE));
-  }
+    @Test
+    public void testGetRangeForFirstPage() {
+        NamespaceSummary namespace = new NamespaceSummary("n1", "", 10L);
+        RecipePageRequest pageRequest = RecipePageRequest.builder(namespace).build();
+        Range range = pageRequest.getScanRange();
+        Collection<Field<?>> fields = getNamespaceKeys(NAMESPACE_FIELD, GENERATION_COL, namespace);
+        Assert.assertEquals(range, Range.create(fields, INCLUSIVE, fields, INCLUSIVE));
+    }
 }

@@ -25,40 +25,40 @@ import java.util.Set;
  * a single record.
  */
 public interface TransientStore extends Serializable {
-  /**
-   * Resets the state of this store.
-   */
-  void reset(TransientVariableScope scope);
+    /**
+     * Resets the state of this store.
+     */
+    void reset(TransientVariableScope scope);
 
-  /**
-   * A value associated with the variable in the transient store.
-   *
-   * @param name of the variable to be retrieved.
-   * @param <T> type of the value to be returned.
-   * @return instance of object of type T.
-   */
-  <T> T get(String name);
+    /**
+     * A value associated with the variable in the transient store.
+     *
+     * @param name of the variable to be retrieved.
+     * @param <T>  type of the value to be returned.
+     * @return instance of object of type T.
+     */
+    <T> T get(String name);
 
-  /**
-   * Sets the value of the object for variable named 'name'.
-   *
-   * @param name of the variable for which the value needs to be set.
-   * @param value of the variable.
-   */
-  void set(TransientVariableScope scope, String name, Object value);
+    /**
+     * Sets the value of the object for variable named 'name'.
+     *
+     * @param name  of the variable for which the value needs to be set.
+     * @param value of the variable.
+     */
+    void set(TransientVariableScope scope, String name, Object value);
 
-  /**
-   * Increments a value of the variable.
-   *
-   * @param name of the variable.
-   * @param value associated with the variable.
-   */
-  void increment(TransientVariableScope scope, String name, long value);
+    /**
+     * Increments a value of the variable.
+     *
+     * @param name  of the variable.
+     * @param value associated with the variable.
+     */
+    void increment(TransientVariableScope scope, String name, long value);
 
-  /**
-   * Set of all the variables.
-   *
-   * @return list of all the variables.
-   */
-  Set<String> getVariables();
+    /**
+     * Set of all the variables.
+     *
+     * @return list of all the variables.
+     */
+    Set<String> getVariables();
 }

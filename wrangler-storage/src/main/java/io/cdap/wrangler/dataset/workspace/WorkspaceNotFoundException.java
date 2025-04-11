@@ -24,7 +24,7 @@ import io.cdap.wrangler.proto.NotFoundException;
  */
 public class WorkspaceNotFoundException extends NotFoundException {
 
-  public WorkspaceNotFoundException(String message) {
-    super(message);
-  }
+    public WorkspaceNotFoundException(String message) {
+        super(message);
+    }
 }

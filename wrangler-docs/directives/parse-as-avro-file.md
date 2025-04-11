@@ -7,6 +7,7 @@ information stored in an AVRO file. The AVRO schema is in JSON format,
 the data is in a binary format making it compact and efficient.
 
 ## Syntax
+
 ```
 parse-as-avro-file <column>
 ```
@@ -19,6 +20,7 @@ the binary octet stream.
 Parsing the AVRO data file will using this directive will flatten
 the structure using the following rules:
 
-* If data type is simple like INT, FLOAT, DOUBLE, STRING, SHORT, the column name will be the name of the column in AVRO schema.
+* If data type is simple like INT, FLOAT, DOUBLE, STRING, SHORT, the column name will be the name of the column in AVRO
+  schema.
 * If data type is record, then the field name is used as prefix to name the fields within the record.
 

@@ -27,79 +27,80 @@ import java.util.TreeMap;
  * This class manages different measurements.
  */
 public final class Measurements {
-  // Measurement name to it's value mapping.
-  private final Map<String, MutableDouble> metrics = new TreeMap<>();
-
-  /**
-   * Mutable Double for faster updates and checks.
-   */
-  private class MutableDouble {
-    private double value = 0.0f;
+    // Measurement name to it's value mapping.
+    private final Map<String, MutableDouble> metrics = new TreeMap<>();
 
     /**
-     * Constructor to initialize with starting value.
-     * @param value to be set.
+     * Mutable Double for faster updates and checks.
      */
-    MutableDouble(double value) {
-      this.value = value;
+    private class MutableDouble {
+        private double value = 0.0f;
+
+        /**
+         * Constructor to initialize with starting value.
+         *
+         * @param value to be set.
+         */
+        MutableDouble(double value) {
+            this.value = value;
+        }
+
+        /**
+         * Increments the value associated with {@link MutableDouble}
+         */
+        public void increment() {
+            ++value;
+        }
+
+        /**
+         * @return value stored.
+         */
+        public double get() {
+            return value;
+        }
     }
 
     /**
-     * Increments the value associated with {@link MutableDouble}
+     * Increment the {@link MutableDouble} value.
+     *
+     * @param name name of the measure who's value need to be incremented.
      */
-    public void increment() {
-      ++value;
+    public void increment(String name) {
+        MutableDouble value = metrics.get(name);
+        if (value != null) {
+            value.increment();
+        } else {
+            metrics.put(name, new MutableDouble(1));
+        }
     }
 
     /**
-     * @return value stored.
+     * Sets the measure value.
+     *
+     * @param name  of the measure.
+     * @param value to set for the measure.
      */
-    public double get() {
-      return value;
+    public void set(String name, Double value) {
+        metrics.put(name, new MutableDouble(value));
     }
-  }
 
-  /**
-   * Increment the {@link MutableDouble} value.
-   *
-   * @param name name of the measure who's value need to be incremented.
-   */
-  public void increment(String name) {
-    MutableDouble value = metrics.get(name);
-    if (value != null) {
-      value.increment();
-    } else {
-      metrics.put(name, new MutableDouble(1));
+    /**
+     * Computes percentages for each of the measures managed by this instance.
+     *
+     * @param sum denominator for computing the percentages.
+     * @return List of measures and associated percentages.
+     */
+    public List<Pair<String, Double>> percentage(Double sum) {
+        List<Pair<String, Double>> percentages = new ArrayList<>();
+        for (Map.Entry<String, MutableDouble> entry : metrics.entrySet()) {
+            double percentage = entry.getValue().get() / sum;
+            if (percentage > 100.0) {
+                percentage = 100;
+            }
+            percentages.add(new Pair<>(entry.getKey(), percentage));
+        }
+        return percentages;
     }
-  }
-
-  /**
-   * Sets the measure value.
-   *
-   * @param name of the measure.
-   * @param value to set for the measure.
-   */
-  public void set(String name, Double value) {
-    metrics.put(name, new MutableDouble(value));
-  }
-
-  /**
-   * Computes percentages for each of the measures managed by this instance.
-   *
-   * @param sum denominator for computing the percentages.
-   * @return List of measures and associated percentages.
-   */
-  public List<Pair<String, Double>> percentage(Double sum) {
-    List<Pair<String, Double>> percentages = new ArrayList<>();
-    for (Map.Entry<String, MutableDouble> entry : metrics.entrySet()) {
-      double percentage = entry.getValue().get() / sum;
-      if (percentage > 100.0) {
-        percentage = 100;
-      }
-      percentages.add(new Pair<>(entry.getKey(), percentage));
-    }
-    return percentages;
-  }
 }
 
 

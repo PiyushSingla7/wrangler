@@ -22,28 +22,28 @@ import com.google.gson.JsonObject;
  * Dataprep request body and it's structure.
  */
 public interface Request {
-  /**
-   * @return Version of specification of request.
-   */
-  int getVersion();
+    /**
+     * @return Version of specification of request.
+     */
+    int getVersion();
 
-  /**
-   * @return Workspace specification associated with the request.
-   */
-  Workspace getWorkspace();
+    /**
+     * @return Workspace specification associated with the request.
+     */
+    Workspace getWorkspace();
 
-  /**
-   * @return Sampling specification associated with the request.
-   */
-  Sampling getSampling();
+    /**
+     * @return Sampling specification associated with the request.
+     */
+    Sampling getSampling();
 
-  /**
-   * @return Recipe specification associated with the request.
-   */
-  Recipe getRecipe();
+    /**
+     * @return Recipe specification associated with the request.
+     */
+    Recipe getRecipe();
 
-  /**
-   * @return Properties associated with the request.
-   */
-  JsonObject getProperties();
+    /**
+     * @return Properties associated with the request.
+     */
+    JsonObject getProperties();
 }

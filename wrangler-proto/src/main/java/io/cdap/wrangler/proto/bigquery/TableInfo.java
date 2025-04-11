@@ -22,24 +22,24 @@ import com.google.gson.annotations.SerializedName;
  * Information about a BigQuery table.
  */
 public class TableInfo {
-  private final String id;
-  private final String name;
-  private final String description;
-  private final String etag;
-  private final Long created;
-  @SerializedName("last-modified")
-  private final Long lastModified;
-  @SerializedName("expiration-time")
-  private final Long expirationTime;
+    private final String id;
+    private final String name;
+    private final String description;
+    private final String etag;
+    private final Long created;
+    @SerializedName("last-modified")
+    private final Long lastModified;
+    @SerializedName("expiration-time")
+    private final Long expirationTime;
 
-  public TableInfo(String id, String name, String description, String etag, Long created, Long lastModified,
-                   Long expirationTime) {
-    this.id = id;
-    this.name = name;
-    this.description = description;
-    this.etag = etag;
-    this.created = created;
-    this.lastModified = lastModified;
-    this.expirationTime = expirationTime;
-  }
+    public TableInfo(String id, String name, String description, String etag, Long created, Long lastModified,
+                     Long expirationTime) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.etag = etag;
+        this.created = created;
+        this.lastModified = lastModified;
+        this.expirationTime = expirationTime;
+    }
 }

@@ -26,29 +26,31 @@ import java.util.Locale;
 @Public
 public final class MessagesFactory {
 
-  /**
-   * @return Default {@link Messages} with resource bundle 'user' and default {@link Locale}
-   */
-  public static Messages getMessages() {
-    return new Messages();
-  }
+    /**
+     * @return Default {@link Messages} with resource bundle 'user' and default {@link Locale}
+     */
+    public static Messages getMessages() {
+        return new Messages();
+    }
 
-  /**
-   * Creates a {@link Messages} with specified {@link java.util.ResourceBundle} name and default {@link Locale}
-   * @param name of the base bundle for creating {@link Messages}
-   * @return an instance of {@link Messages}
-   */
-  public static Messages getMessages(String name) {
-    return new Messages(name);
-  }
+    /**
+     * Creates a {@link Messages} with specified {@link java.util.ResourceBundle} name and default {@link Locale}
+     *
+     * @param name of the base bundle for creating {@link Messages}
+     * @return an instance of {@link Messages}
+     */
+    public static Messages getMessages(String name) {
+        return new Messages(name);
+    }
 
-  /**
-   * Creates a {@link Messages} with specified {@link java.util.ResourceBundle} name and {@link Locale}
-   * @param name of the base bundle for creating {@link Messages}
-   * @param locale to be used for creating the {@link Messages}
-   * @return an instance of {@link Messages}
-   */
-  public static Messages getMessages(String name, Locale locale) {
-    return new Messages(name, locale);
-  }
+    /**
+     * Creates a {@link Messages} with specified {@link java.util.ResourceBundle} name and {@link Locale}
+     *
+     * @param name   of the base bundle for creating {@link Messages}
+     * @param locale to be used for creating the {@link Messages}
+     * @return an instance of {@link Messages}
+     */
+    public static Messages getMessages(String name, Locale locale) {
+        return new Messages(name, locale);
+    }
 }

@@ -2,18 +2,15 @@
 
 This recipe shows using data prep directives to parse Apache or NGINX logs.
 
-
 ## Version
 
 To paste this receipe as-is requires:
 
 * Wrangler Service Artifact >= 1.1.0
 
-
 ## Sample Data
 
 [Sample Apache Log Data](sample/apache-combined-logs.log) can be used with this recipe.
-
 
 ## Recipe
 

@@ -22,14 +22,14 @@
 
 <suppressions>
 
-  <suppress checks="Javadoc.*" files=".*[/\\]src[/\\]test[/\\]java[/\\].*" />
+    <suppress checks="Javadoc.*" files=".*[/\\]src[/\\]test[/\\]java[/\\].*"/>
 
-  <suppress checks="JavadocPackage" files=".*[/\\]src[/\\](main|integration)[/\\]java[/\\].*" />
-  <suppress checks="JavadocPackage" files=".*[/\\]src[/\\].*[/\\]internal[/\\].*" />
+    <suppress checks="JavadocPackage" files=".*[/\\]src[/\\](main|integration)[/\\]java[/\\].*"/>
+    <suppress checks="JavadocPackage" files=".*[/\\]src[/\\].*[/\\]internal[/\\].*"/>
 
-  <suppress checks="JavadocStyle" files=".*[/\\]src[/\\](main|integration)[/\\]java[/\\].*" />
-  <suppress checks="JavadocStyle" files=".*[/\\]src[/\\].*[/\\]internal[/\\].*" />
+    <suppress checks="JavadocStyle" files=".*[/\\]src[/\\](main|integration)[/\\]java[/\\].*"/>
+    <suppress checks="JavadocStyle" files=".*[/\\]src[/\\].*[/\\]internal[/\\].*"/>
 
-  <suppress checks="RedundantModifier" files=".*[/\\]src[/\\]test[/\\]java[/\\].*" />
+    <suppress checks="RedundantModifier" files=".*[/\\]src[/\\]test[/\\]java[/\\].*"/>
 
 </suppressions>

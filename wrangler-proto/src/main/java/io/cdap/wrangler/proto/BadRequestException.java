@@ -23,12 +23,12 @@ import java.net.HttpURLConnection;
  */
 public class BadRequestException extends StatusCodeException {
 
-  public BadRequestException(String message) {
-    super(message, HttpURLConnection.HTTP_BAD_REQUEST);
-  }
+    public BadRequestException(String message) {
+        super(message, HttpURLConnection.HTTP_BAD_REQUEST);
+    }
 
-  public BadRequestException(String message, Throwable cause) {
-    super(message, cause, HttpURLConnection.HTTP_BAD_REQUEST);
-  }
+    public BadRequestException(String message, Throwable cause) {
+        super(message, cause, HttpURLConnection.HTTP_BAD_REQUEST);
+    }
 
 }

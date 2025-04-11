@@ -32,59 +32,59 @@ import java.util.List;
  */
 public class ParseExcelTest {
 
-  @Test
-  public void testBasicExcel() throws Exception {
-    try (InputStream stream = ParseAvroFileTest.class.getClassLoader().getResourceAsStream("titanic.xlsx")) {
-      byte[] data = IOUtils.toByteArray(stream);
+    @Test
+    public void testBasicExcel() throws Exception {
+        try (InputStream stream = ParseAvroFileTest.class.getClassLoader().getResourceAsStream("titanic.xlsx")) {
+            byte[] data = IOUtils.toByteArray(stream);
 
-      String[] directives = new String[]{
-        "parse-as-excel :body '0'",
-      };
+            String[] directives = new String[]{
+                    "parse-as-excel :body '0'",
+            };
 
-      List<Row> rows = new ArrayList<>();
-      rows.add(new Row("body", data));
+            List<Row> rows = new ArrayList<>();
+            rows.add(new Row("body", data));
 
-      List<Row> results = TestingRig.execute(directives, rows);
-      Assert.assertEquals(892, results.size());
-      Assert.assertEquals(0, results.get(0).getValue("fwd"));
-      Assert.assertEquals(891, results.get(0).getValue("bkd"));
+            List<Row> results = TestingRig.execute(directives, rows);
+            Assert.assertEquals(892, results.size());
+            Assert.assertEquals(0, results.get(0).getValue("fwd"));
+            Assert.assertEquals(891, results.get(0).getValue("bkd"));
+        }
     }
-  }
 
-  @Test
-  public void testNoSheetName() throws Exception {
-    try (InputStream stream = ParseAvroFileTest.class.getClassLoader().getResourceAsStream("titanic.xlsx")) {
-      byte[] data = IOUtils.toByteArray(stream);
+    @Test
+    public void testNoSheetName() throws Exception {
+        try (InputStream stream = ParseAvroFileTest.class.getClassLoader().getResourceAsStream("titanic.xlsx")) {
+            byte[] data = IOUtils.toByteArray(stream);
 
-      String[] directives = new String[]{
-        "parse-as-excel :body 'wrong_error'",
-      };
+            String[] directives = new String[]{
+                    "parse-as-excel :body 'wrong_error'",
+            };
 
-      List<Row> rows = new ArrayList<>();
-      rows.add(new Row("body", data));
-      Pair<List<Row>, List<Row>> pipeline = TestingRig.executeWithErrors(directives, rows);
-      Assert.assertEquals(0, pipeline.getFirst().size());
-      Assert.assertEquals(1, pipeline.getSecond().size());
+            List<Row> rows = new ArrayList<>();
+            rows.add(new Row("body", data));
+            Pair<List<Row>, List<Row>> pipeline = TestingRig.executeWithErrors(directives, rows);
+            Assert.assertEquals(0, pipeline.getFirst().size());
+            Assert.assertEquals(1, pipeline.getSecond().size());
+        }
     }
-  }
 
-  @Test
-  public void testDateFormatting() throws Exception {
-    try (InputStream stream =
-           ParseAvroFileTest.class.getClassLoader().getResourceAsStream("date-formats-test-sheet.xlsx")) {
-      byte[] data = IOUtils.toByteArray(stream);
+    @Test
+    public void testDateFormatting() throws Exception {
+        try (InputStream stream =
+                     ParseAvroFileTest.class.getClassLoader().getResourceAsStream("date-formats-test-sheet.xlsx")) {
+            byte[] data = IOUtils.toByteArray(stream);
 
-      String[] directives = new String[]{
-        "parse-as-excel :body '0'",
-      };
+            String[] directives = new String[]{
+                    "parse-as-excel :body '0'",
+            };
 
-      List<Row> rows = new ArrayList<>();
-      rows.add(new Row("body", data));
-      List<Row> results = TestingRig.execute(directives, rows);
+            List<Row> rows = new ArrayList<>();
+            rows.add(new Row("body", data));
+            List<Row> results = TestingRig.execute(directives, rows);
 
-      for (Row result : results) {
-        Assert.assertEquals(result.getValue("A"), result.getValue("B"));
-      }
+            for (Row result : results) {
+                Assert.assertEquals(result.getValue("A"), result.getValue("B"));
+            }
+        }
     }
-  }
 }

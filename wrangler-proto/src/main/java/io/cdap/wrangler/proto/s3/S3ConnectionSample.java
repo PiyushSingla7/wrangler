@@ -23,14 +23,14 @@ import io.cdap.wrangler.proto.ConnectionSample;
  * S3 connection sample information.
  */
 public class S3ConnectionSample extends ConnectionSample {
-  @SerializedName("bucket-name")
-  private final String bucketName;
-  private final String key;
+    @SerializedName("bucket-name")
+    private final String bucketName;
+    private final String key;
 
-  public S3ConnectionSample(String id, String name, String connection, String sampler, String connectionid,
-                            String bucketName, String key) {
-    super(id, name, connection, sampler, connectionid);
-    this.bucketName = bucketName;
-    this.key = key;
-  }
+    public S3ConnectionSample(String id, String name, String connection, String sampler, String connectionid,
+                              String bucketName, String key) {
+        super(id, name, connection, sampler, connectionid);
+        this.bucketName = bucketName;
+        this.key = key;
+    }
 }

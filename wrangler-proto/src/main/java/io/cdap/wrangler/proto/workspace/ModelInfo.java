@@ -18,17 +18,17 @@ package io.cdap.wrangler.proto.workspace;
 import javax.annotation.Nullable;
 
 /**
- *The ModelInfo
+ * The ModelInfo
  */
 public final class ModelInfo {
-  private final String id;
+    private final String id;
 
-  ModelInfo(@Nullable String id) {
-    this.id = id;
-  }
+    ModelInfo(@Nullable String id) {
+        this.id = id;
+    }
 
-  @Nullable
-  public String getId() {
-    return id;
-  }
+    @Nullable
+    public String getId() {
+        return id;
+    }
 }

@@ -34,107 +34,107 @@ import io.cdap.wrangler.proto.Contexts;
 import org.junit.Assert;
 import org.junit.Test;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import javax.annotation.Nullable;
 
 /**
  * Tests {@link CompositeDirectiveRegistry}
  */
 public class CompositeDirectiveRegistryTest {
 
-  @Plugin(type = Directive.TYPE)
-  @Name("my-test")
-  @Description("Test")
-  public static final class MyTest implements Directive {
-    private String column;
+    @Plugin(type = Directive.TYPE)
+    @Name("my-test")
+    @Description("Test")
+    public static final class MyTest implements Directive {
+        private String column;
 
-    @Override
-    public List<Row> execute(List<Row> row, ExecutorContext context) {
-      return row;
+        @Override
+        public List<Row> execute(List<Row> row, ExecutorContext context) {
+            return row;
+        }
+
+        @Override
+        public UsageDefinition define() {
+            UsageDefinition.Builder builder = UsageDefinition.builder("my-test");
+            builder.define("column", TokenType.COLUMN_NAME);
+            return builder.build();
+        }
+
+        @Override
+        public void initialize(Arguments args) {
+            column = ((ColumnName) args.value("column")).value();
+        }
+
+        @Override
+        public void destroy() {
+            // no-op
+        }
     }
 
-    @Override
-    public UsageDefinition define() {
-      UsageDefinition.Builder builder = UsageDefinition.builder("my-test");
-      builder.define("column", TokenType.COLUMN_NAME);
-      return builder.build();
+    private class TestDirectiveRegistry implements DirectiveRegistry {
+        private Map<String, DirectiveInfo> registry = new HashMap<>();
+
+        public TestDirectiveRegistry() throws InstantiationException, IllegalAccessException {
+            registry.put("my-test", DirectiveInfo.fromUser(MyTest.class,
+                    new ArtifactId("dummy", new ArtifactVersion("1.0"),
+                            ArtifactScope.USER)));
+        }
+
+        @Override
+        public Iterable<DirectiveInfo> list(String namespace) {
+            return registry.values();
+        }
+
+        @Nullable
+        @Override
+        public DirectiveInfo get(String namespace, String name) {
+            return registry.get(name);
+        }
+
+        @Override
+        public void reload(String namespace) {
+            // no-op
+        }
+
+        @Nullable
+        @Override
+        public ArtifactSummary getLatestWranglerArtifact() {
+            return null;
+        }
+
+        @Override
+        public void close() {
+            // no-op
+        }
     }
 
-    @Override
-    public void initialize(Arguments args) {
-      column = ((ColumnName) args.value("column")).value();
+    @Test
+    public void testIteratorUsage() throws Exception {
+        DirectiveRegistry registry = new CompositeDirectiveRegistry(
+                SystemDirectiveRegistry.INSTANCE,
+                new TestDirectiveRegistry()
+        );
+
+        Iterator<DirectiveInfo> iterator = registry.list(Contexts.SYSTEM).iterator();
+        int count = 0;
+        while (iterator.hasNext()) {
+            iterator.next();
+            count++;
+        }
+        Assert.assertEquals(85, count);
+
+        registry.reload("");
+
+        iterator = registry.list(Contexts.SYSTEM).iterator();
+        count = 0;
+        while (iterator.hasNext()) {
+            iterator.next();
+            count++;
+        }
+        Assert.assertEquals(85, count);
+
     }
-
-    @Override
-    public void destroy() {
-      // no-op
-    }
-  }
-
-  private class TestDirectiveRegistry implements DirectiveRegistry {
-    private Map<String, DirectiveInfo> registry = new HashMap<>();
-
-    public TestDirectiveRegistry() throws InstantiationException, IllegalAccessException {
-      registry.put("my-test", DirectiveInfo.fromUser(MyTest.class,
-                                                     new ArtifactId("dummy", new ArtifactVersion("1.0"),
-                                                                    ArtifactScope.USER)));
-    }
-
-    @Override
-    public Iterable<DirectiveInfo> list(String namespace) {
-      return registry.values();
-    }
-
-    @Nullable
-    @Override
-    public DirectiveInfo get(String namespace, String name) {
-      return registry.get(name);
-    }
-
-    @Override
-    public void reload(String namespace) {
-      // no-op
-    }
-
-    @Nullable
-    @Override
-    public ArtifactSummary getLatestWranglerArtifact() {
-      return null;
-    }
-
-    @Override
-    public void close() {
-      // no-op
-    }
-  }
-
-  @Test
-  public void testIteratorUsage() throws Exception {
-    DirectiveRegistry registry = new CompositeDirectiveRegistry(
-      SystemDirectiveRegistry.INSTANCE,
-      new TestDirectiveRegistry()
-    );
-
-    Iterator<DirectiveInfo> iterator = registry.list(Contexts.SYSTEM).iterator();
-    int count = 0;
-    while (iterator.hasNext()) {
-      iterator.next();
-      count++;
-    }
-    Assert.assertEquals(85, count);
-
-    registry.reload("");
-
-    iterator = registry.list(Contexts.SYSTEM).iterator();
-    count = 0;
-    while (iterator.hasNext()) {
-      iterator.next();
-      count++;
-    }
-    Assert.assertEquals(85, count);
-
-  }
 }

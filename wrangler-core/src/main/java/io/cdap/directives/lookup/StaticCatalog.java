@@ -25,30 +25,30 @@ import java.io.Serializable;
  */
 @PublicEvolving
 public interface StaticCatalog extends Serializable {
-  /**
-   * Configures a catalog.
-   *
-   * @return true if success in configuring, false otherwise.
-   */
-  boolean configure();
+    /**
+     * Configures a catalog.
+     *
+     * @return true if success in configuring, false otherwise.
+     */
+    boolean configure();
 
-  /**
-   * Looks up the code in the catalog.
-   *
-   * @param code to be looked up.
-   * @return StaticCatalog entry if found, else null.
-   */
-  StaticCatalog.Entry lookup(String code);
+    /**
+     * Looks up the code in the catalog.
+     *
+     * @param code to be looked up.
+     * @return StaticCatalog entry if found, else null.
+     */
+    StaticCatalog.Entry lookup(String code);
 
-  /**
-   * @return name of the catalog.
-   */
-  String getCatalog();
+    /**
+     * @return name of the catalog.
+     */
+    String getCatalog();
 
-  /**
-   * An entry in the catalog.
-   */
-  interface Entry {
-    String getDescription();
-  }
+    /**
+     * An entry in the catalog.
+     */
+    interface Entry {
+        String getDescription();
+    }
 }

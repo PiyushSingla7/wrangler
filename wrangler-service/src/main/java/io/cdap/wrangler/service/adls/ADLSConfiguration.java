@@ -25,45 +25,45 @@ import java.util.Map;
  * Credentials of the authorized user connecting to ADLS Gen1
  */
 public class ADLSConfiguration {
-  private static final List<String> CONFIG_FIELDS = ImmutableList.of("clientID", "clientSecret",
-          "refreshURL", "accountFQDN");
-  private final String clientID;
-  private final String clientSecret;
-  private final String refreshURL;
-  private final String accountFQDN;
+    private static final List<String> CONFIG_FIELDS = ImmutableList.of("clientID", "clientSecret",
+            "refreshURL", "accountFQDN");
+    private final String clientID;
+    private final String clientSecret;
+    private final String refreshURL;
+    private final String accountFQDN;
 
-  ADLSConfiguration(Map<String, String> properties) {
+    ADLSConfiguration(Map<String, String> properties) {
 
-    if (properties == null || properties.size() == 0) {
-      throw new IllegalArgumentException("ADLS properties are not defined. Check connection setting.");
+        if (properties == null || properties.size() == 0) {
+            throw new IllegalArgumentException("ADLS properties are not defined. Check connection setting.");
+        }
+
+        for (String property : CONFIG_FIELDS) {
+            if (!properties.containsKey(property)) {
+                throw new IllegalArgumentException("Missing configuration in connection for property " + property);
+            }
+        }
+
+        clientID = properties.get("clientID");
+        clientSecret = properties.get("clientSecret");
+        refreshURL = properties.get("refreshURL");
+        accountFQDN = properties.get("accountFQDN");
     }
 
-    for (String property : CONFIG_FIELDS) {
-      if (!properties.containsKey(property)) {
-        throw new IllegalArgumentException("Missing configuration in connection for property " + property);
-      }
+
+    public String getADLSClientID() {
+        return clientID;
     }
 
-    clientID = properties.get("clientID");
-    clientSecret = properties.get("clientSecret");
-    refreshURL = properties.get("refreshURL");
-    accountFQDN = properties.get("accountFQDN");
-  }
+    public String getClientKey() {
+        return clientSecret;
+    }
 
+    public String getEndpointURL() {
+        return refreshURL;
+    }
 
-  public String getADLSClientID() {
-    return clientID;
-  }
-
-  public String getClientKey() {
-    return clientSecret;
-  }
-
-  public String getEndpointURL() {
-    return refreshURL;
-  }
-
-  public String getAccountFQDN() {
-    return accountFQDN;
-  }
+    public String getAccountFQDN() {
+        return accountFQDN;
+    }
 }

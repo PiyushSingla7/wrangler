@@ -29,26 +29,26 @@ import java.util.List;
  * Tests {@link XmlToJson}
  */
 public class XmlToJsonTest {
-  @Test
-  public void testAutoConversionOfStringField() throws Exception {
-    String[] directives = new String[] {
-      "copy body body_1 true",
-      "copy body body_2 true",
-      "copy body body_3 true",
-      "parse-xml-to-json body_1 1",
-      "parse-xml-to-json body_2 1 false",
-      "parse-xml-to-json body_3 1 true"
-    };
+    @Test
+    public void testAutoConversionOfStringField() throws Exception {
+        String[] directives = new String[]{
+                "copy body body_1 true",
+                "copy body body_2 true",
+                "copy body body_3 true",
+                "parse-xml-to-json body_1 1",
+                "parse-xml-to-json body_2 1 false",
+                "parse-xml-to-json body_3 1 true"
+        };
 
-    List<Row> rows = Arrays.asList(
-      new Row("body",
-              "<?xml version=\"1.0\" encoding=\"UTF-8\" ?><Data><tagid>303246306303E8</tagid></Data>")
-    );
+        List<Row> rows = Arrays.asList(
+                new Row("body",
+                        "<?xml version=\"1.0\" encoding=\"UTF-8\" ?><Data><tagid>303246306303E8</tagid></Data>")
+        );
 
-    rows = TestingRig.execute(directives, rows);
-    Assert.assertEquals(1, rows.size());
-    Assert.assertEquals("{\"tagid\":3.03246306303E19}", rows.get(0).getValue("body_1_Data").toString());
-    Assert.assertEquals("{\"tagid\":3.03246306303E19}", rows.get(0).getValue("body_2_Data").toString());
-    Assert.assertEquals("{\"tagid\":\"303246306303E8\"}", rows.get(0).getValue("body_3_Data").toString());
-  }
+        rows = TestingRig.execute(directives, rows);
+        Assert.assertEquals(1, rows.size());
+        Assert.assertEquals("{\"tagid\":3.03246306303E19}", rows.get(0).getValue("body_1_Data").toString());
+        Assert.assertEquals("{\"tagid\":3.03246306303E19}", rows.get(0).getValue("body_2_Data").toString());
+        Assert.assertEquals("{\"tagid\":\"303246306303E8\"}", rows.get(0).getValue("body_3_Data").toString());
+    }
 }

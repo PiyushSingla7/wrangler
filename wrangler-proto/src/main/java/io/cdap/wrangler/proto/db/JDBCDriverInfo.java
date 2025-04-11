@@ -25,21 +25,21 @@ import java.util.Map;
  * Information about a JDBC driver plugin.
  */
 public class JDBCDriverInfo {
-  private final String label;
-  private final String version;
-  private final String url;
-  @SerializedName("default.port")
-  private final String port;
-  private final List<String> fields;
-  private final Map<String, String> properties;
+    private final String label;
+    private final String version;
+    private final String url;
+    @SerializedName("default.port")
+    private final String port;
+    private final List<String> fields;
+    private final Map<String, String> properties;
 
-  public JDBCDriverInfo(String label, String version, String url, String port, List<String> fields,
-                        Map<String, String> properties) {
-    this.label = label;
-    this.version = version;
-    this.url = url;
-    this.port = port;
-    this.fields = fields;
-    this.properties = properties;
-  }
+    public JDBCDriverInfo(String label, String version, String url, String port, List<String> fields,
+                          Map<String, String> properties) {
+        this.label = label;
+        this.version = version;
+        this.url = url;
+        this.port = port;
+        this.fields = fields;
+        this.properties = properties;
+    }
 }

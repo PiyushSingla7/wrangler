@@ -22,10 +22,10 @@ import io.cdap.wrangler.proto.NamespacedId;
  * A schema ID and entry version.
  */
 public class SchemaEntryVersion extends NamespacedId {
-  private final long version;
+    private final long version;
 
-  public SchemaEntryVersion(NamespacedId id, long version) {
-    super(id);
-    this.version = version;
-  }
+    public SchemaEntryVersion(NamespacedId id, long version) {
+        super(id);
+        this.version = version;
+    }
 }

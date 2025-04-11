@@ -21,20 +21,20 @@ package io.cdap.wrangler.proto.workspace;
  */
 public final class DataModelInfo {
 
-  public static final Long INVALID_REVISION = -1L;
-  private final String id;
-  private final Long revision;
+    public static final Long INVALID_REVISION = -1L;
+    private final String id;
+    private final Long revision;
 
-  public DataModelInfo(String id, Long revision) {
-    this.id = id;
-    this.revision = revision;
-  }
+    public DataModelInfo(String id, Long revision) {
+        this.id = id;
+        this.revision = revision;
+    }
 
-  public String getId() {
-    return this.id;
-  }
+    public String getId() {
+        return this.id;
+    }
 
-  public Long getRevision() {
-    return this.revision;
-  }
+    public Long getRevision() {
+        return this.revision;
+    }
 }

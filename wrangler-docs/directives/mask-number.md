@@ -2,15 +2,14 @@
 
 The MASK-NUMBER directive applies substitution masking on the column values.
 
-
 ## Syntax
+
 ```
 mask-number <columm> <pattern>
 ```
 
 * The `<column>` specifies the name of an existing column to be masked
 * The `<pattern>` is a substitution pattern to be used to mask the column values.
-
 
 ## Usage Notes
 
@@ -23,10 +22,10 @@ These rules are used for the pattern:
 * Use of `#` will include the digit from the position
 * Use `x` or any other character to mask the digit at that position
 
-
 ## Examples
 
 Using this record as an example:
+
 ```
 {
   "first": "Root",
@@ -37,11 +36,13 @@ Using this record as an example:
 ```
 
 Applying this directive:
+
 ```
 mask-number ssn XXX-XX-####
 ```
 
 would result in this record:
+
 ```
 {
   "first": "Root",
@@ -52,11 +53,13 @@ would result in this record:
 ```
 
 Applying this directive:
+
 ```
 mask-number cc XXXXXXXXXXXX####
 ```
 
 would result in this record:
+
 ```
 {
   "first": "Root",

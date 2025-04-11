@@ -24,104 +24,108 @@ import javax.annotation.Nullable;
 /**
  * An interface to implement a page request. Pagination utility class that contains relevant fields and methods
  * that describe a page.
+ *
  * @param <T> Type of resource that the page request is for.
  */
 public abstract class PageRequest<T> {
-  /**
-   * Maximum number of results to return in a page.
-   */
-  protected final int pageSize;
+    /**
+     * Maximum number of results to return in a page.
+     */
+    protected final int pageSize;
 
-  /**
-   * Token to identify the page to retrieve. Either received from a previous page or left empty to fetch the first page.
-   */
-  @Nullable
-  protected final String pageToken;
+    /**
+     * Token to identify the page to retrieve. Either received from a previous page or left empty to fetch the first page.
+     */
+    @Nullable
+    protected final String pageToken;
 
-  /**
-   * Indicates the table column name based on which results should be sorted.
-   */
-  protected final String sortBy;
+    /**
+     * Indicates the table column name based on which results should be sorted.
+     */
+    protected final String sortBy;
 
-  /**
-   * Indicates the sorting order (ascending or descending).
-   */
-  protected final SortOrder sortOrder;
+    /**
+     * Indicates the sorting order (ascending or descending).
+     */
+    protected final SortOrder sortOrder;
 
-  public static final String SORT_ORDER_ASC = "asc";
-  public static final String SORT_ORDER_DESC = "desc";
-  public static final int PAGE_SIZE_DEFAULT = 10;
+    public static final String SORT_ORDER_ASC = "asc";
+    public static final String SORT_ORDER_DESC = "desc";
+    public static final int PAGE_SIZE_DEFAULT = 10;
 
-  protected PageRequest(Integer pageSize, @Nullable String pageToken, String sortBy, String sortOrder) {
-    this.pageToken = pageToken;
+    protected PageRequest(Integer pageSize, @Nullable String pageToken, String sortBy, String sortOrder) {
+        this.pageToken = pageToken;
 
-    validateSortBy(sortBy);
-    this.sortBy = sortBy == null ? getDefaultSortBy() : getSortByColumnName(sortBy);
+        validateSortBy(sortBy);
+        this.sortBy = sortBy == null ? getDefaultSortBy() : getSortByColumnName(sortBy);
 
-    validatePageSize(pageSize);
-    this.pageSize = pageSize == null ? PAGE_SIZE_DEFAULT : pageSize;
+        validatePageSize(pageSize);
+        this.pageSize = pageSize == null ? PAGE_SIZE_DEFAULT : pageSize;
 
-    validateSortOrder(sortOrder);
-    this.sortOrder = (sortOrder == null || sortOrder.equals(SORT_ORDER_ASC)) ? SortOrder.ASC : SortOrder.DESC;
-  }
-
-  public int getPageSize() {
-    return pageSize;
-  }
-
-  @Nullable
-  public String getPageToken() {
-    return pageToken;
-  }
-
-  public String getSortBy() {
-    return sortBy;
-  }
-
-  public SortOrder getSortOrder() {
-    return sortOrder;
-  }
-
-  /**
-   * Checks whether given sortBy value has a respective table column mapping.
-   * @param sortBy field based on which results should be sorted
-   * @throws IllegalArgumentException if the value does not have a mapping
-   */
-  protected abstract void validateSortBy(String sortBy) throws IllegalArgumentException;
-
-  /**
-   * Get the default table column name using which results will be sorted.
-   */
-  protected abstract String getDefaultSortBy();
-
-  /**
-   * Get the table column name mapped to given sortBy value.
-   */
-  protected abstract String getSortByColumnName(String sortBy);
-
-  /**
-   * Constructs the range used to query the storage table.
-   * @return {@link Range} corresponding to page query parameters.
-   */
-  public abstract Range getScanRange();
-
-  /**
-   * Get the nextPageToken returned as part of response to request.
-   * @param object resource returned by the request
-   */
-  public abstract String getNextPageToken(T object);
-
-  protected void validatePageSize(Integer pageSize) {
-    if (pageSize != null && pageSize <= 0) {
-      throw new IllegalArgumentException("pageSize cannot be negative or zero.");
+        validateSortOrder(sortOrder);
+        this.sortOrder = (sortOrder == null || sortOrder.equals(SORT_ORDER_ASC)) ? SortOrder.ASC : SortOrder.DESC;
     }
-  }
 
-  protected void validateSortOrder(String sortOrder) {
-    if (sortOrder != null && !(sortOrder.equals(SORT_ORDER_ASC) || sortOrder.equals(SORT_ORDER_DESC))) {
-      throw new IllegalArgumentException(
-        String.format("Invalid sortOrder '%s' specified. sortOrder must be one of: '%s' or '%s'",
-                      sortOrder, SORT_ORDER_ASC, SORT_ORDER_DESC));
+    public int getPageSize() {
+        return pageSize;
     }
-  }
+
+    @Nullable
+    public String getPageToken() {
+        return pageToken;
+    }
+
+    public String getSortBy() {
+        return sortBy;
+    }
+
+    public SortOrder getSortOrder() {
+        return sortOrder;
+    }
+
+    /**
+     * Checks whether given sortBy value has a respective table column mapping.
+     *
+     * @param sortBy field based on which results should be sorted
+     * @throws IllegalArgumentException if the value does not have a mapping
+     */
+    protected abstract void validateSortBy(String sortBy) throws IllegalArgumentException;
+
+    /**
+     * Get the default table column name using which results will be sorted.
+     */
+    protected abstract String getDefaultSortBy();
+
+    /**
+     * Get the table column name mapped to given sortBy value.
+     */
+    protected abstract String getSortByColumnName(String sortBy);
+
+    /**
+     * Constructs the range used to query the storage table.
+     *
+     * @return {@link Range} corresponding to page query parameters.
+     */
+    public abstract Range getScanRange();
+
+    /**
+     * Get the nextPageToken returned as part of response to request.
+     *
+     * @param object resource returned by the request
+     */
+    public abstract String getNextPageToken(T object);
+
+    protected void validatePageSize(Integer pageSize) {
+        if (pageSize != null && pageSize <= 0) {
+            throw new IllegalArgumentException("pageSize cannot be negative or zero.");
+        }
+    }
+
+    protected void validateSortOrder(String sortOrder) {
+        if (sortOrder != null && !(sortOrder.equals(SORT_ORDER_ASC) || sortOrder.equals(SORT_ORDER_DESC))) {
+            throw new IllegalArgumentException(
+                    String.format("Invalid sortOrder '%s' specified. sortOrder must be one of: '%s' or '%s'",
+                            sortOrder, SORT_ORDER_ASC, SORT_ORDER_DESC));
+        }
+    }
 }

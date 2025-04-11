@@ -25,27 +25,27 @@ import io.cdap.wrangler.api.annotations.PublicEvolving;
  */
 @PublicEvolving
 public class ColumnName implements Token {
-  private String value;
+    private String value;
 
-  public ColumnName(String value) {
-    this.value = value;
-  }
+    public ColumnName(String value) {
+        this.value = value;
+    }
 
-  @Override
-  public String value() {
-    return value;
-  }
+    @Override
+    public String value() {
+        return value;
+    }
 
-  @Override
-  public TokenType type() {
-    return TokenType.COLUMN_NAME;
-  }
+    @Override
+    public TokenType type() {
+        return TokenType.COLUMN_NAME;
+    }
 
-  @Override
-  public JsonElement toJson() {
-    JsonObject object = new JsonObject();
-    object.addProperty("type", TokenType.COLUMN_NAME.name());
-    object.addProperty("value", value);
-    return object;
-  }
+    @Override
+    public JsonElement toJson() {
+        JsonObject object = new JsonObject();
+        object.addProperty("type", TokenType.COLUMN_NAME.name());
+        object.addProperty("value", value);
+        return object;
+    }
 }

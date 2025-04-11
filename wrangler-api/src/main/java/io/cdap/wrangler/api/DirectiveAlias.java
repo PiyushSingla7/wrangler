@@ -22,18 +22,19 @@ package io.cdap.wrangler.api;
  */
 public interface DirectiveAlias {
 
-  /**
-   * Checks if the directive is aliased.
-   *
-   * @param directive to be checked for aliasing.
-   * @return true if the directive has an alias, false otherwise.
-   */
-  boolean hasAlias(String directive);
+    /**
+     * Checks if the directive is aliased.
+     *
+     * @param directive to be checked for aliasing.
+     * @return true if the directive has an alias, false otherwise.
+     */
+    boolean hasAlias(String directive);
 
-  /**
-   * Returns the root directive aliasee
-   * @param directive
-   * @return
-   */
-  String getAlias(String directive);
+    /**
+     * Returns the root directive aliasee
+     *
+     * @param directive
+     * @return
+     */
+    String getAlias(String directive);
 }

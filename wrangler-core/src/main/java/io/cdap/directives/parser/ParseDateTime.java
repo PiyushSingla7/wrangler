@@ -18,13 +18,7 @@ package io.cdap.directives.parser;
 import io.cdap.cdap.api.annotation.Description;
 import io.cdap.cdap.api.annotation.Name;
 import io.cdap.cdap.api.annotation.Plugin;
-import io.cdap.wrangler.api.Arguments;
-import io.cdap.wrangler.api.Directive;
-import io.cdap.wrangler.api.DirectiveParseException;
-import io.cdap.wrangler.api.ErrorRowException;
-import io.cdap.wrangler.api.ExecutorContext;
-import io.cdap.wrangler.api.Optional;
-import io.cdap.wrangler.api.Row;
+import io.cdap.wrangler.api.*;
 import io.cdap.wrangler.api.annotations.Categories;
 import io.cdap.wrangler.api.lineage.Lineage;
 import io.cdap.wrangler.api.lineage.Mutation;
@@ -46,67 +40,67 @@ import java.util.List;
 @Description("Parse a column value as datetime using the given format")
 public class ParseDateTime implements Directive, Lineage {
 
-  public static final String NAME = "parse-as-datetime";
-  private static final String COLUMN = "column";
-  private static final String FORMAT = "format";
-  private String column;
-  private String format;
-  private DateTimeFormatter formatter;
+    public static final String NAME = "parse-as-datetime";
+    private static final String COLUMN = "column";
+    private static final String FORMAT = "format";
+    private String column;
+    private String format;
+    private DateTimeFormatter formatter;
 
-  @Override
-  public UsageDefinition define() {
-    UsageDefinition.Builder builder = UsageDefinition.builder(NAME);
-    builder.define(COLUMN, TokenType.COLUMN_NAME);
-    builder.define(FORMAT, TokenType.TEXT, Optional.FALSE);
-    return builder.build();
-  }
-
-  @Override
-  public void initialize(Arguments args) throws DirectiveParseException {
-    this.column = ((ColumnName) args.value(COLUMN)).value();
-    this.format = args.value(FORMAT).value().toString();
-    try {
-      this.formatter = DateTimeFormatter.ofPattern(this.format);
-    } catch (IllegalArgumentException exception) {
-      throw new DirectiveParseException(NAME, String.format("'%s' is an invalid datetime format.", this.format),
-                                        exception);
+    @Override
+    public UsageDefinition define() {
+        UsageDefinition.Builder builder = UsageDefinition.builder(NAME);
+        builder.define(COLUMN, TokenType.COLUMN_NAME);
+        builder.define(FORMAT, TokenType.TEXT, Optional.FALSE);
+        return builder.build();
     }
-  }
 
-  @Override
-  public List<Row> execute(List<Row> rows, ExecutorContext context) throws ErrorRowException {
-    for (Row row : rows) {
-      int idx = row.find(column);
-      if (idx == -1) {
-        continue;
-      }
-      Object value = row.getValue(idx);
-      // If the data in the cell is null or is already Datetime , then skip this row.
-      if (value == null || value instanceof LocalDateTime) {
-        continue;
-      }
-
-      try {
-        LocalDateTime localDateTime = LocalDateTime.parse(value.toString(), formatter);
-        row.setValue(idx, localDateTime);
-      } catch (DateTimeParseException exception) {
-        throw new ErrorRowException(NAME, String.format("Value %s for column %s is not in expected format %s",
-                                                        value.toString(), column, format), 2, exception);
-      }
+    @Override
+    public void initialize(Arguments args) throws DirectiveParseException {
+        this.column = ((ColumnName) args.value(COLUMN)).value();
+        this.format = args.value(FORMAT).value().toString();
+        try {
+            this.formatter = DateTimeFormatter.ofPattern(this.format);
+        } catch (IllegalArgumentException exception) {
+            throw new DirectiveParseException(NAME, String.format("'%s' is an invalid datetime format.", this.format),
+                    exception);
+        }
     }
-    return rows;
-  }
 
-  @Override
-  public void destroy() {
-    //no op
-  }
+    @Override
+    public List<Row> execute(List<Row> rows, ExecutorContext context) throws ErrorRowException {
+        for (Row row : rows) {
+            int idx = row.find(column);
+            if (idx == -1) {
+                continue;
+            }
+            Object value = row.getValue(idx);
+            // If the data in the cell is null or is already Datetime , then skip this row.
+            if (value == null || value instanceof LocalDateTime) {
+                continue;
+            }
 
-  @Override
-  public Mutation lineage() {
-    return Mutation.builder()
-      .readable("Parsed column '%s' in format '%s' as datetime", column, format)
-      .relation(column, column)
-      .build();
-  }
+            try {
+                LocalDateTime localDateTime = LocalDateTime.parse(value.toString(), formatter);
+                row.setValue(idx, localDateTime);
+            } catch (DateTimeParseException exception) {
+                throw new ErrorRowException(NAME, String.format("Value %s for column %s is not in expected format %s",
+                        value.toString(), column, format), 2, exception);
+            }
+        }
+        return rows;
+    }
+
+    @Override
+    public void destroy() {
+        //no op
+    }
+
+    @Override
+    public Mutation lineage() {
+        return Mutation.builder()
+                .readable("Parsed column '%s' in format '%s' as datetime", column, format)
+                .relation(column, column)
+                .build();
+    }
 }

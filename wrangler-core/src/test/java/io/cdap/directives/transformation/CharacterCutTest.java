@@ -29,48 +29,48 @@ import java.util.List;
  */
 public class CharacterCutTest {
 
-  @Test
-  public void testBasicCharacterCut() throws Exception {
-    String[] directives = new String[] {
-      "cut-character body one 1-3",
-      "cut-character body two 5-7",
-      "cut-character body three 9-13",
-      "cut-character body four 15-",
-      "cut-character body five 1,2,3",
-      "cut-character body six -3",
-      "cut-character body seven 1,2,3-5",
-    };
+    @Test
+    public void testBasicCharacterCut() throws Exception {
+        String[] directives = new String[]{
+                "cut-character body one 1-3",
+                "cut-character body two 5-7",
+                "cut-character body three 9-13",
+                "cut-character body four 15-",
+                "cut-character body five 1,2,3",
+                "cut-character body six -3",
+                "cut-character body seven 1,2,3-5",
+        };
 
-    List<Row> rows = Arrays.asList(
-      new Row("body", "one two three four five six seven eight")
-    );
+        List<Row> rows = Arrays.asList(
+                new Row("body", "one two three four five six seven eight")
+        );
 
-    rows = TestingRig.execute(directives, rows);
+        rows = TestingRig.execute(directives, rows);
 
-    Assert.assertTrue(rows.size() == 1);
-    Assert.assertEquals(8, rows.get(0).width());
-    Assert.assertEquals("one", rows.get(0).getValue("one"));
-    Assert.assertEquals("two", rows.get(0).getValue("two"));
-    Assert.assertEquals("three", rows.get(0).getValue("three"));
-    Assert.assertEquals("four five six seven eight", rows.get(0).getValue("four"));
-    Assert.assertEquals("one", rows.get(0).getValue("five"));
-    Assert.assertEquals("one", rows.get(0).getValue("six"));
-    Assert.assertEquals("one t", rows.get(0).getValue("seven"));
-  }
+        Assert.assertTrue(rows.size() == 1);
+        Assert.assertEquals(8, rows.get(0).width());
+        Assert.assertEquals("one", rows.get(0).getValue("one"));
+        Assert.assertEquals("two", rows.get(0).getValue("two"));
+        Assert.assertEquals("three", rows.get(0).getValue("three"));
+        Assert.assertEquals("four five six seven eight", rows.get(0).getValue("four"));
+        Assert.assertEquals("one", rows.get(0).getValue("five"));
+        Assert.assertEquals("one", rows.get(0).getValue("six"));
+        Assert.assertEquals("one t", rows.get(0).getValue("seven"));
+    }
 
-  @Test
-  public void testDollarIncludedInString() throws Exception {
-    String[] directives = new String[] {
-      "cut-character body value 2-"
-    };
+    @Test
+    public void testDollarIncludedInString() throws Exception {
+        String[] directives = new String[]{
+                "cut-character body value 2-"
+        };
 
-    List<Row> rows = Arrays.asList(
-      new Row("body", "$734.77")
-    );
+        List<Row> rows = Arrays.asList(
+                new Row("body", "$734.77")
+        );
 
-    rows = TestingRig.execute(directives, rows);
+        rows = TestingRig.execute(directives, rows);
 
-    Assert.assertTrue(rows.size() == 1);
-    Assert.assertEquals("734.77", rows.get(0).getValue("value"));
-  }
+        Assert.assertTrue(rows.size() == 1);
+        Assert.assertEquals("734.77", rows.get(0).getValue("value"));
+    }
 }

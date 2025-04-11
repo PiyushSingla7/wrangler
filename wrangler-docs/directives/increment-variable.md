@@ -4,6 +4,7 @@ The INCREMENT-VARIABLE directive increments the value of the variable that is
 local to the input record being processed.
 
 ## Syntax
+
 ```
 increment-variable <variable> <value> <expression>
 ```

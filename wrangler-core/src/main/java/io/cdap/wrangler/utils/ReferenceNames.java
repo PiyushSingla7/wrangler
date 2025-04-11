@@ -22,35 +22,35 @@ import java.util.regex.Pattern;
  * Utility methods for reference name
  */
 public class ReferenceNames {
-  private static final Pattern DATASET_PATTERN = Pattern.compile("[$\\.a-zA-Z0-9_-]+");
-  private static final String REGEX = "[^$\\.a-zA-Z0-9_-]+";
+    private static final Pattern DATASET_PATTERN = Pattern.compile("[$\\.a-zA-Z0-9_-]+");
+    private static final String REGEX = "[^$\\.a-zA-Z0-9_-]+";
 
-  private ReferenceNames() {
-  }
-
-  /**
-   * Check if a given reference name is valid
-   *
-   * @param referenceName reference name to check
-   */
-  public static void validate(String referenceName) {
-    if (!DATASET_PATTERN.matcher(referenceName).matches()) {
-      throw new IllegalArgumentException(
-        String.format("Invalid reference name '%s'. Supported characters are: letters, " +
-                        "numbers, and '_', '-', '.', or '$'.", referenceName));
+    private ReferenceNames() {
     }
-  }
 
-  /**
-   * Cleanse the given reference name. This method will remove all the disallowed characters in the given reference
-   * name. For example, 111-22-33(1).csv will get convert to 111-22-331.csv. If no valid characters, the method will
-   * return "sample".
-   *
-   * @param referenceName the old reference name
-   * @return the reference name with only allowed characters
-   */
-  public static String cleanseReferenceName(String referenceName) {
-    String result = referenceName.replaceAll(REGEX, "");
-    return result.isEmpty() ? "sample" : result;
-  }
+    /**
+     * Check if a given reference name is valid
+     *
+     * @param referenceName reference name to check
+     */
+    public static void validate(String referenceName) {
+        if (!DATASET_PATTERN.matcher(referenceName).matches()) {
+            throw new IllegalArgumentException(
+                    String.format("Invalid reference name '%s'. Supported characters are: letters, " +
+                            "numbers, and '_', '-', '.', or '$'.", referenceName));
+        }
+    }
+
+    /**
+     * Cleanse the given reference name. This method will remove all the disallowed characters in the given reference
+     * name. For example, 111-22-33(1).csv will get convert to 111-22-331.csv. If no valid characters, the method will
+     * return "sample".
+     *
+     * @param referenceName the old reference name
+     * @return the reference name with only allowed characters
+     */
+    public static String cleanseReferenceName(String referenceName) {
+        String result = referenceName.replaceAll(REGEX, "");
+        return result.isEmpty() ? "sample" : result;
+    }
 }

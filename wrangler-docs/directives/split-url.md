@@ -2,14 +2,13 @@
 
 The SPLIT-URL directive splits a URL into protocol, authority, host, port, path, filename, and query.
 
-
 ## Syntax
+
 ```
 split-url <column>
 ```
 
 The `<column>` is a column containing the URL.
-
 
 ## Usage Notes
 
@@ -27,10 +26,10 @@ URL, the directive creates seven new columns by appending to the original column
 If the URL cannot be parsed correctly, an exception is throw. If the URL column does not
 exist, columns with a `null` value are added to the record.
 
-
 ## Examples
 
 Using this record as an example:
+
 ```
 {
   "url": "http://example.com:80/docs/books/tutorial/index.html?name=networking#DOWNLOADING"
@@ -38,11 +37,13 @@ Using this record as an example:
 ```
 
 Applying this directive:
+
 ```
 split-url url
 ```
 
 would result in this record:
+
 ```
 {
   "url": "http://example.com:80/docs/books/tutorial/index.html?name=networking#DOWNLOADING",
@@ -57,6 +58,7 @@ would result in this record:
 ```
 
 When the URL field in the record is `null`:
+
 ```
 {
   "url": null
@@ -64,6 +66,7 @@ When the URL field in the record is `null`:
 ```
 
 the directive will generate:
+
 ```
 {
   "url": null,

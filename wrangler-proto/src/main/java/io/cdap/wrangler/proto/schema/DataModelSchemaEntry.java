@@ -24,49 +24,49 @@ import java.util.Objects;
  */
 public final class DataModelSchemaEntry {
 
-  private final NamespacedId namespacedId;
-  private final String displayName;
-  private final String description;
-  private final Long revision;
+    private final NamespacedId namespacedId;
+    private final String displayName;
+    private final String description;
+    private final Long revision;
 
-  public DataModelSchemaEntry(NamespacedId namespacedId, String displayName, String description, Long revision) {
-    this.namespacedId = namespacedId;
-    this.displayName = displayName;
-    this.description = description;
-    this.revision = revision;
-  }
-
-  public NamespacedId getNamespacedId() {
-    return namespacedId;
-  }
-
-  public String getDisplayName() {
-    return displayName;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public Long getRevision() {
-    return revision;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
+    public DataModelSchemaEntry(NamespacedId namespacedId, String displayName, String description, Long revision) {
+        this.namespacedId = namespacedId;
+        this.displayName = displayName;
+        this.description = description;
+        this.revision = revision;
     }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
+
+    public NamespacedId getNamespacedId() {
+        return namespacedId;
     }
-    if (!super.equals(o)) {
-      return false;
+
+    public String getDisplayName() {
+        return displayName;
     }
-    DataModelSchemaEntry that = (DataModelSchemaEntry) o;
-    return Objects.equals(namespacedId, that.namespacedId) &&
-      Objects.equals(displayName, that.displayName) &&
-      Objects.equals(description, that.description) &&
-      Objects.equals(revision, that.revision);
-  }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Long getRevision() {
+        return revision;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        DataModelSchemaEntry that = (DataModelSchemaEntry) o;
+        return Objects.equals(namespacedId, that.namespacedId) &&
+                Objects.equals(displayName, that.displayName) &&
+                Objects.equals(description, that.description) &&
+                Objects.equals(revision, that.revision);
+    }
 }

@@ -2,23 +2,19 @@
 
 This recipe shows using data prep directives to parse a HL7 CCDA XML file.
 
-
 ## Version
 
 To paste this receipe as-is requires:
 
 * Wrangler Service Artifact >= 1.1.0
 
-
 ## Sample Data
 
 [Sample HL7 CCDA XML Data](sample/CCDA_R2_CCD_HL7.xml) can be used with this recipe.
 
-
 ## CDAP Pipeline
 
 * CDAP Version 4.1.0 - [Parse HL7 CCDA XML Pipeline](pipelines/parse-hl7-ccda-xml.json)
-
 
 ## Recipe
 

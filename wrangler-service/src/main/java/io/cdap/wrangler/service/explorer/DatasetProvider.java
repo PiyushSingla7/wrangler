@@ -24,6 +24,7 @@ import io.cdap.cdap.api.dataset.Dataset;
  * @param <T> type of dataset provided
  */
 public interface DatasetProvider<T extends Dataset> {
-  T acquire() throws Exception;
-  void release(T dataset);
+    T acquire() throws Exception;
+
+    void release(T dataset);
 }

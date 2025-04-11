@@ -2,14 +2,13 @@
 
 The SPLIT-EMAIL directive splits an email ID into an account and its domain.
 
-
 ## Syntax
+
 ```
 split-email <column>
 ```
 
 The `<column>` is a column containing an email address.
-
 
 ## Usage Notes
 
@@ -25,7 +24,6 @@ the original column name:
 If the email address cannot be parsed correctly, the additional columns will still be
 generated, but they would be set to `null` depending on the parts that could not be parsed.
 
-
 ## Examples
 
 Using this record as an example:
@@ -38,11 +36,13 @@ Using this record as an example:
 ```
 
 Applying this directive:
+
 ```
 split-email email_address
 ```
 
 would result in this record:
+
 ```
 {
   "name": "Root, Joltie",
@@ -53,6 +53,7 @@ would result in this record:
 ```
 
 In case of any errors parsing: when the email address field in the record is `null`:
+
 ```
 {
   "email": null
@@ -60,6 +61,7 @@ In case of any errors parsing: when the email address field in the record is `nu
 ```
 
 this would result in the record:
+
 ```
 {
   "email": null,
@@ -69,6 +71,7 @@ this would result in the record:
 ```
 
 Using these records as an example, with a variety of email IDs:
+
 ```
 [
   { "email": "root@example.org" },
@@ -82,6 +85,7 @@ Using these records as an example, with a variety of email IDs:
 ```
 
 running the directive results in these records:
+
 ```
 [
   { "email": "root@example.org", "email_account": "root", "email_domain": "cask.co" },

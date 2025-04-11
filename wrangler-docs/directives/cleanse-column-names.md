@@ -6,16 +6,16 @@ The CLEANSE-COLUMN-NAMES directive sanatizes column names, following these rules
 * Lowercases the column name
 * Replaces any character that are not one of `[A-Z][a-z][0-9]` or `_` with an underscore (`_`)
 
-
 ## Syntax
+
 ```
 cleanse-column-names
 ```
 
-
 ## Example
 
 Using this record as an example:
+
 ```
 {
   "COL1": 1,
@@ -27,11 +27,13 @@ Using this record as an example:
 ```
 
 Applying this directive:
+
 ```
 cleanse-column-names
 ```
 
 would result in this record:
+
 ```
 {
   "col1": 1,

@@ -21,6 +21,7 @@ import io.cdap.wrangler.api.TokenGroup;
 import io.cdap.wrangler.parser.GrammarWalker;
 import io.cdap.wrangler.registry.DirectiveInfo;
 import io.cdap.wrangler.registry.SystemDirectiveRegistry;
+
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -30,22 +31,22 @@ import java.util.Set;
  * script
  */
 public class UserDirectivesCollector implements GrammarWalker.Visitor<RuntimeException> {
-  private static final Set<String> userDirectives = new LinkedHashSet<>();
+    private static final Set<String> userDirectives = new LinkedHashSet<>();
 
-  @Override
-  public void visit(String command, TokenGroup tokenGroup) {
-    DirectiveInfo info = SystemDirectiveRegistry.INSTANCE.get(command);
-    if (info == null) {
-      userDirectives.add(command);
+    @Override
+    public void visit(String command, TokenGroup tokenGroup) {
+        DirectiveInfo info = SystemDirectiveRegistry.INSTANCE.get(command);
+        if (info == null) {
+            userDirectives.add(command);
+        }
     }
-  }
 
-  /**
-   * If any user directives was found, adds load-directives pragma as the first command.
-   */
-  public void addLoadDirectivesPragma(List<String> directives) {
-    if (!userDirectives.isEmpty()) {
-      directives.add(0, "#pragma load-directives " + String.join(",", userDirectives) + ";");
+    /**
+     * If any user directives was found, adds load-directives pragma as the first command.
+     */
+    public void addLoadDirectivesPragma(List<String> directives) {
+        if (!userDirectives.isEmpty()) {
+            directives.add(0, "#pragma load-directives " + String.join(",", userDirectives) + ";");
+        }
     }
-  }
 }

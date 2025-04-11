@@ -3,8 +3,8 @@
 The PARSE-AS-FIXED-LENGTH directive parses a column as a fixed length record with widths
 for each field specified.
 
-
 ## Syntax
+
 ```
 parse-as-fixed-length <column> <width>[,<width>]* [<padding>]
 ```
@@ -21,10 +21,10 @@ would be categorized as a fixed-width text file.
 
 If not defined, the `<padding>` character is assumed to be a space character.
 
-
 ## Example
 
 Using this record as an example:
+
 ```
 {
   "body": "12  10  ABCXYZ"
@@ -32,11 +32,13 @@ Using this record as an example:
 ```
 
 Applying this directive:
+
 ```
 parse-as-fixed-length body 2,4,5,3
 ```
 
 would result in this record:
+
 ```
 {
   "body": "12  10  ABCXYZ",

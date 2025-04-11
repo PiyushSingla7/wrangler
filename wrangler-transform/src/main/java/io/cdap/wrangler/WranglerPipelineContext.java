@@ -32,89 +32,89 @@ import java.util.Map;
  * {@link Executor} execution.
  */
 class WranglerPipelineContext implements ExecutorContext {
-  private final Environment environment;
-  private final TransformContext context;
+    private final Environment environment;
+    private final TransformContext context;
 
-  private final TransientStore store;
-  private final StageMetrics metrics;
-  private final String name;
-  private final Map<String, String> properties;
+    private final TransientStore store;
+    private final StageMetrics metrics;
+    private final String name;
+    private final Map<String, String> properties;
 
-  WranglerPipelineContext(Environment environment, TransformContext context, TransientStore store) {
-    this.environment = environment;
-    this.metrics = context.getMetrics();
-    this.name = context.getStageName();
-    this.properties = new HashMap<>(context.getPluginProperties().getProperties());
-    for (Map.Entry<String, String> next : context.getArguments()) {
-      this.properties.put(next.getKey(), next.getValue());
+    WranglerPipelineContext(Environment environment, TransformContext context, TransientStore store) {
+        this.environment = environment;
+        this.metrics = context.getMetrics();
+        this.name = context.getStageName();
+        this.properties = new HashMap<>(context.getPluginProperties().getProperties());
+        for (Map.Entry<String, String> next : context.getArguments()) {
+            this.properties.put(next.getKey(), next.getValue());
+        }
+        this.context = context;
+        this.store = store;
     }
-    this.context = context;
-    this.store = store;
-  }
 
-  @Override
-  public String getNamespace() {
-    return context.getNamespace();
-  }
+    @Override
+    public String getNamespace() {
+        return context.getNamespace();
+    }
 
-  /**
-   * @return Environment this context is prepared for.
-   */
-  @Override
-  public Environment getEnvironment() {
-    return environment;
-  }
+    /**
+     * @return Environment this context is prepared for.
+     */
+    @Override
+    public Environment getEnvironment() {
+        return environment;
+    }
 
-  /**
-   * @return Measurements context.
-   */
-  @Override
-  public StageMetrics getMetrics() {
-    return metrics;
-  }
+    /**
+     * @return Measurements context.
+     */
+    @Override
+    public StageMetrics getMetrics() {
+        return metrics;
+    }
 
-  /**
-   * @return Context name.
-   */
-  @Override
-  public String getContextName() {
-    return name;
-  }
+    /**
+     * @return Context name.
+     */
+    @Override
+    public String getContextName() {
+        return name;
+    }
 
-  /**
-   * @return Properties associated with run and pipeline.
-   */
-  @Override
-  public Map<String, String> getProperties() {
-    return properties;
-  }
+    /**
+     * @return Properties associated with run and pipeline.
+     */
+    @Override
+    public Map<String, String> getProperties() {
+        return properties;
+    }
 
-  /**
-   * Returns a valid service url.
-   *
-   * @param applicationId id of the application to which a service url.
-   * @param serviceId     id of the service within application.
-   * @return URL if service exists, else null.
-   */
-  @Override
-  public URL getService(String applicationId, String serviceId) {
-    return context.getServiceURL(applicationId, serviceId);
-  }
+    /**
+     * Returns a valid service url.
+     *
+     * @param applicationId id of the application to which a service url.
+     * @param serviceId     id of the service within application.
+     * @return URL if service exists, else null.
+     */
+    @Override
+    public URL getService(String applicationId, String serviceId) {
+        return context.getServiceURL(applicationId, serviceId);
+    }
 
-  @Override
-  public TransientStore getTransientStore() {
-    return store;
-  }
+    @Override
+    public TransientStore getTransientStore() {
+        return store;
+    }
 
-  /**
-   * Provides a handle to dataset for lookup.
-   *
-   * @param s name of the dataset.
-   * @param map properties associated with dataset.
-   * @return handle to dataset for lookup.
-   */
-  @Override
-  public <T> Lookup<T> provide(String s, Map<String, String> map) {
-    return context.provide(s, map);
-  }
+    /**
+     * Provides a handle to dataset for lookup.
+     *
+     * @param s   name of the dataset.
+     * @param map properties associated with dataset.
+     * @return handle to dataset for lookup.
+     */
+    @Override
+    public <T> Lookup<T> provide(String s, Map<String, String> map) {
+        return context.provide(s, map);
+    }
 }

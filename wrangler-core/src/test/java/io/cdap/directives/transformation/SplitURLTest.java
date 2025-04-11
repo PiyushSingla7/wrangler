@@ -29,21 +29,21 @@ import java.util.List;
  */
 public class SplitURLTest {
 
-  @Test
-  public void testBasicURLWorking() throws Exception {
-    String[] directives = new String[] {
-      "split-url url",
-    };
+    @Test
+    public void testBasicURLWorking() throws Exception {
+        String[] directives = new String[]{
+                "split-url url",
+        };
 
-    List<Row> rows = Arrays.asList(
-      new Row("url", "http://example.com:80/docs/books/tutorial/index.html?name=networking#DOWNLOADING")
-    );
+        List<Row> rows = Arrays.asList(
+                new Row("url", "http://example.com:80/docs/books/tutorial/index.html?name=networking#DOWNLOADING")
+        );
 
-    rows = TestingRig.execute(directives, rows);
+        rows = TestingRig.execute(directives, rows);
 
-    Assert.assertTrue(rows.size() == 1);
-    Assert.assertEquals(80, rows.get(0).getValue("url_port"));
-    Assert.assertEquals("example.com", rows.get(0).getValue("url_host"));
-  }
+        Assert.assertTrue(rows.size() == 1);
+        Assert.assertEquals(80, rows.get(0).getValue("url_port"));
+        Assert.assertEquals("example.com", rows.get(0).getValue("url_host"));
+    }
 
 }

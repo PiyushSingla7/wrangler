@@ -18,13 +18,7 @@ package io.cdap.directives.datetime;
 import io.cdap.cdap.api.annotation.Description;
 import io.cdap.cdap.api.annotation.Name;
 import io.cdap.cdap.api.annotation.Plugin;
-import io.cdap.wrangler.api.Arguments;
-import io.cdap.wrangler.api.Directive;
-import io.cdap.wrangler.api.DirectiveParseException;
-import io.cdap.wrangler.api.ErrorRowException;
-import io.cdap.wrangler.api.ExecutorContext;
-import io.cdap.wrangler.api.Optional;
-import io.cdap.wrangler.api.Row;
+import io.cdap.wrangler.api.*;
 import io.cdap.wrangler.api.annotations.Categories;
 import io.cdap.wrangler.api.lineage.Lineage;
 import io.cdap.wrangler.api.lineage.Mutation;
@@ -47,71 +41,71 @@ import java.util.List;
 @Description("Converts a datetime column to timestamp")
 public class DateTimeToTimeStamp implements Directive, Lineage {
 
-  public static final String NAME = "datetime-to-timestamp";
-  private static final String COLUMN = "column";
-  private static final String ZONE = "timezone";
-  private String column;
-  private String zone;
-  private ZoneId zoneId;
+    public static final String NAME = "datetime-to-timestamp";
+    private static final String COLUMN = "column";
+    private static final String ZONE = "timezone";
+    private String column;
+    private String zone;
+    private ZoneId zoneId;
 
-  @Override
-  public UsageDefinition define() {
-    UsageDefinition.Builder builder = UsageDefinition.builder(NAME);
-    builder.define(COLUMN, TokenType.COLUMN_NAME);
-    builder.define(ZONE, TokenType.TEXT, Optional.TRUE);
-    return builder.build();
-  }
-
-  @Override
-  public void initialize(Arguments args) throws DirectiveParseException {
-    this.column = ((ColumnName) args.value(COLUMN)).value();
-    if (args.value(ZONE) == null) {
-      this.zoneId = ZoneId.of("UTC");
-      this.zone = this.zoneId.toString();
-      return;
+    @Override
+    public UsageDefinition define() {
+        UsageDefinition.Builder builder = UsageDefinition.builder(NAME);
+        builder.define(COLUMN, TokenType.COLUMN_NAME);
+        builder.define(ZONE, TokenType.TEXT, Optional.TRUE);
+        return builder.build();
     }
-    this.zone = args.value(ZONE).value().toString();
-    try {
-      this.zoneId = ZoneId.of(this.zone);
-    } catch (IllegalArgumentException | ZoneRulesException exception) {
-      throw new DirectiveParseException(NAME, String.format("Zone '%s' is invalid.", this.zone), exception);
+
+    @Override
+    public void initialize(Arguments args) throws DirectiveParseException {
+        this.column = ((ColumnName) args.value(COLUMN)).value();
+        if (args.value(ZONE) == null) {
+            this.zoneId = ZoneId.of("UTC");
+            this.zone = this.zoneId.toString();
+            return;
+        }
+        this.zone = args.value(ZONE).value().toString();
+        try {
+            this.zoneId = ZoneId.of(this.zone);
+        } catch (IllegalArgumentException | ZoneRulesException exception) {
+            throw new DirectiveParseException(NAME, String.format("Zone '%s' is invalid.", this.zone), exception);
+        }
     }
-  }
 
-  @Override
-  public List<Row> execute(List<Row> rows, ExecutorContext context) throws ErrorRowException {
-    for (Row row : rows) {
-      int idx = row.find(column);
-      if (idx == -1) {
-        continue;
-      }
-      Object value = row.getValue(idx);
-      // If the data in the cell is null, then skip this row.
-      if (value == null) {
-        continue;
-      }
+    @Override
+    public List<Row> execute(List<Row> rows, ExecutorContext context) throws ErrorRowException {
+        for (Row row : rows) {
+            int idx = row.find(column);
+            if (idx == -1) {
+                continue;
+            }
+            Object value = row.getValue(idx);
+            // If the data in the cell is null, then skip this row.
+            if (value == null) {
+                continue;
+            }
 
-      if (!(value instanceof LocalDateTime)) {
-        throw new ErrorRowException(NAME, String.format("Value %s for column %s expected to be datetime but found %s",
-                                                        value.toString(), column, value.getClass().getSimpleName()), 2);
-      }
+            if (!(value instanceof LocalDateTime)) {
+                throw new ErrorRowException(NAME, String.format("Value %s for column %s expected to be datetime but found %s",
+                        value.toString(), column, value.getClass().getSimpleName()), 2);
+            }
 
-      ZonedDateTime zonedDateTime = ZonedDateTime.of((LocalDateTime) value, zoneId);
-      row.setValue(idx, zonedDateTime);
+            ZonedDateTime zonedDateTime = ZonedDateTime.of((LocalDateTime) value, zoneId);
+            row.setValue(idx, zonedDateTime);
+        }
+        return rows;
     }
-    return rows;
-  }
 
-  @Override
-  public void destroy() {
-    //no op
-  }
+    @Override
+    public void destroy() {
+        //no op
+    }
 
-  @Override
-  public Mutation lineage() {
-    return Mutation.builder()
-      .readable("Datetime column '%s' converted to timestamp with zone '%s'", column, zone)
-      .relation(column, column)
-      .build();
-  }
+    @Override
+    public Mutation lineage() {
+        return Mutation.builder()
+                .readable("Datetime column '%s' converted to timestamp with zone '%s'", column, zone)
+                .relation(column, column)
+                .build();
+    }
 }

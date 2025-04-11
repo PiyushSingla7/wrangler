@@ -21,14 +21,14 @@ import io.cdap.wrangler.proto.PluginSpec;
 
 /**
  * Plugin specification for a spanner pipeline source.
- *
+ * <p>
  * TODO: (CDAP-14652) clean up this API. There is no reason for this class to exist.
  */
 public class SpannerSpec {
-  @SerializedName("Spanner")
-  private final PluginSpec spec;
+    @SerializedName("Spanner")
+    private final PluginSpec spec;
 
-  public SpannerSpec(PluginSpec spec) {
-    this.spec = spec;
-  }
+    public SpannerSpec(PluginSpec spec) {
+        this.spec = spec;
+    }
 }

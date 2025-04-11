@@ -4,17 +4,17 @@
   },
   "configuration-groups": [
     {
-      "label" : "Input Selection and Prefilters",
-      "properties" : [
+      "label": "Input Selection and Prefilters",
+      "properties": [
         {
-          "widget-type" : "hidden",
-          "name" : "workspace"
+          "widget-type": "hidden",
+          "name": "workspace"
         },
         {
           "widget-type": "textbox",
           "label": "Input field name",
           "name": "field",
-          "widget-attributes" : {
+          "widget-attributes": {
             "default": "*"
           }
         },
@@ -41,16 +41,16 @@
           "widget-type": "textbox",
           "label": "Precondition (JEXL)",
           "name": "precondition",
-          "widget-attributes" : {
-            "default" : "false"
+          "widget-attributes": {
+            "default": "false"
           }
         },
         {
           "widget-type": "textbox",
           "label": "Precondition (SQL)",
           "name": "preconditionSQL",
-          "widget-attributes" : {
-            "default" : "false"
+          "widget-attributes": {
+            "default": "false"
           }
         }
       ]
@@ -62,8 +62,8 @@
           "widget-type": "wrangler-directives",
           "label": "Recipe",
           "name": "directives",
-          "widget-attributes" : {
-            "placeholder" : "#pragma load-directives my-directive; my-directive :body;"
+          "widget-attributes": {
+            "placeholder": "#pragma load-directives my-directive; my-directive :body;"
           }
         },
         {
@@ -74,8 +74,8 @@
       ]
     },
     {
-      "label" : "Error Handling",
-      "properties" : [
+      "label": "Error Handling",
+      "properties": [
         {
           "name": "on-error",
           "label": "On Error",

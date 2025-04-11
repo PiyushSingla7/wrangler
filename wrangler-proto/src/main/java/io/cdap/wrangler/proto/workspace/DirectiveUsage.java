@@ -22,24 +22,24 @@ import io.cdap.wrangler.api.parser.UsageDefinition;
  * Information about how to use a directive
  */
 public class DirectiveUsage {
-  private final String directive;
-  private final String usage;
-  private final String description;
-  private final boolean excluded;
-  private final boolean alias;
-  private final String scope;
-  private final UsageDefinition arguments;
-  private final String[] categories;
+    private final String directive;
+    private final String usage;
+    private final String description;
+    private final boolean excluded;
+    private final boolean alias;
+    private final String scope;
+    private final UsageDefinition arguments;
+    private final String[] categories;
 
-  public DirectiveUsage(String directive, String usage, String description, boolean excluded, boolean alias,
-                        String scope, UsageDefinition arguments, String[] categories) {
-    this.directive = directive;
-    this.usage = usage;
-    this.description = description;
-    this.excluded = excluded;
-    this.alias = alias;
-    this.scope = scope;
-    this.arguments = arguments;
-    this.categories = categories;
-  }
+    public DirectiveUsage(String directive, String usage, String description, boolean excluded, boolean alias,
+                          String scope, UsageDefinition arguments, String[] categories) {
+        this.directive = directive;
+        this.usage = usage;
+        this.description = description;
+        this.excluded = excluded;
+        this.alias = alias;
+        this.scope = scope;
+        this.arguments = arguments;
+        this.categories = categories;
+    }
 }

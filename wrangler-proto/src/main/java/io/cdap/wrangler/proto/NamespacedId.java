@@ -24,41 +24,41 @@ import java.util.Objects;
  * It is named 'id' for backward compatibility reasons.
  */
 public class NamespacedId {
-  protected final Namespace namespace;
-  protected final String id;
+    protected final Namespace namespace;
+    protected final String id;
 
-  protected NamespacedId(NamespacedId other) {
-    this(other.namespace, other.id);
-  }
-
-  public NamespacedId(Namespace namespace, String id) {
-    this.namespace = namespace;
-    this.id = id;
-  }
-
-  public Namespace getNamespace() {
-    return namespace;
-  }
-
-  public String getId() {
-    return id;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
+    protected NamespacedId(NamespacedId other) {
+        this(other.namespace, other.id);
     }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    NamespacedId that = (NamespacedId) o;
-    return Objects.equals(namespace, that.namespace) &&
-      Objects.equals(id, that.id);
-  }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(namespace, id);
-  }
+    public NamespacedId(Namespace namespace, String id) {
+        this.namespace = namespace;
+        this.id = id;
+    }
+
+    public Namespace getNamespace() {
+        return namespace;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        NamespacedId that = (NamespacedId) o;
+        return Objects.equals(namespace, that.namespace) &&
+                Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(namespace, id);
+    }
 }

@@ -2,19 +2,17 @@
 
 The PARSE-AS-SIMPLE-DATE directive parses date strings.
 
-
 ## Syntax
+
 ```
 parse-as-simple-date <column> <pattern>
 ```
-
 
 ## Usage Notes
 
 The PARSE-AS-SIMPLE-DATE directive will parse a date string, using a pattern string. If
 the column is `null` or has already been parsed as a date, applying this directive is a
 no-op. The column to be parsed as a date should be of type string.
-
 
 ## Examples
 

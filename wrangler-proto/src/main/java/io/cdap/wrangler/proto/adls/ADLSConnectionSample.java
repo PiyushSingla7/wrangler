@@ -21,10 +21,10 @@ import io.cdap.wrangler.proto.ConnectionSample;
  * ADLS connection sample information.
  */
 public class ADLSConnectionSample extends ConnectionSample {
-  private final String fileName;
+    private final String fileName;
 
-  public ADLSConnectionSample(String id, String name, String connection, String sampler, String connectionid) {
-    super(id, name, connection, sampler, connectionid);
-    this.fileName = name;
-  }
+    public ADLSConnectionSample(String id, String name, String connection, String sampler, String connectionid) {
+        super(id, name, connection, sampler, connectionid);
+        this.fileName = name;
+    }
 }

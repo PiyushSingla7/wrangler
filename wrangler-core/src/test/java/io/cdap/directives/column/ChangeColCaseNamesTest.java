@@ -32,50 +32,50 @@ import java.util.List;
  */
 public class ChangeColCaseNamesTest {
 
-  @Test
-  public void testColumnCaseChanges() throws Exception {
-    String[] directives = new String[] {
-      "change-column-case lower",
-    };
+    @Test
+    public void testColumnCaseChanges() throws Exception {
+        String[] directives = new String[]{
+                "change-column-case lower",
+        };
 
-    List<Row> rows = Arrays.asList(
-      new Row("Url", "1").add("Fname", "2").add("LName", "3").add("ADDRESS", "4")
-    );
+        List<Row> rows = Arrays.asList(
+                new Row("Url", "1").add("Fname", "2").add("LName", "3").add("ADDRESS", "4")
+        );
 
-    rows = TestingRig.execute(directives, rows);
+        rows = TestingRig.execute(directives, rows);
 
-    Assert.assertTrue(rows.size() == 1);
-    Assert.assertEquals("url", rows.get(0).getColumn(0));
-  }
-
-  @Test
-  public void testGetOutputSchemaForCaseChangedCols() throws Exception {
-    String[] directives = new String[] {
-      "change-column-case lower",
-    };
-    List<Row> rows = Collections.singletonList(
-      new Row("ALL_CAPS", 1).add("MiXeD_CAse", "random").add("all_lower", new BigDecimal("143235.016"))
-    );
-    Schema inputSchema = Schema.recordOf(
-      "inputSchema",
-      Schema.Field.of("ALL_CAPS", Schema.of(Schema.Type.INT)),
-      Schema.Field.of("MiXeD_CAse", Schema.of(Schema.Type.STRING)),
-      Schema.Field.of("all_lower", Schema.decimalOf(10, 3))
-    );
-    Schema expectedSchema = Schema.recordOf(
-      "expectedSchema",
-      Schema.Field.of("all_caps", Schema.of(Schema.Type.INT)),
-      Schema.Field.of("mixed_case", Schema.of(Schema.Type.STRING)),
-      Schema.Field.of("all_lower", Schema.decimalOf(10, 3))
-    );
-
-    Schema outputSchema = TestingRig.executeAndGetSchema(directives, rows, inputSchema);
-
-    Assert.assertEquals(outputSchema.getFields().size(), expectedSchema.getFields().size());
-    for (Schema.Field expectedField : expectedSchema.getFields()) {
-      Assert.assertEquals(
-        outputSchema.getField(expectedField.getName()).getSchema().getType(), expectedField.getSchema().getType()
-      );
+        Assert.assertTrue(rows.size() == 1);
+        Assert.assertEquals("url", rows.get(0).getColumn(0));
     }
-  }
+
+    @Test
+    public void testGetOutputSchemaForCaseChangedCols() throws Exception {
+        String[] directives = new String[]{
+                "change-column-case lower",
+        };
+        List<Row> rows = Collections.singletonList(
+                new Row("ALL_CAPS", 1).add("MiXeD_CAse", "random").add("all_lower", new BigDecimal("143235.016"))
+        );
+        Schema inputSchema = Schema.recordOf(
+                "inputSchema",
+                Schema.Field.of("ALL_CAPS", Schema.of(Schema.Type.INT)),
+                Schema.Field.of("MiXeD_CAse", Schema.of(Schema.Type.STRING)),
+                Schema.Field.of("all_lower", Schema.decimalOf(10, 3))
+        );
+        Schema expectedSchema = Schema.recordOf(
+                "expectedSchema",
+                Schema.Field.of("all_caps", Schema.of(Schema.Type.INT)),
+                Schema.Field.of("mixed_case", Schema.of(Schema.Type.STRING)),
+                Schema.Field.of("all_lower", Schema.decimalOf(10, 3))
+        );
+
+        Schema outputSchema = TestingRig.executeAndGetSchema(directives, rows, inputSchema);
+
+        Assert.assertEquals(outputSchema.getFields().size(), expectedSchema.getFields().size());
+        for (Schema.Field expectedField : expectedSchema.getFields()) {
+            Assert.assertEquals(
+                    outputSchema.getField(expectedField.getName()).getSchema().getType(), expectedField.getSchema().getType()
+            );
+        }
+    }
 }

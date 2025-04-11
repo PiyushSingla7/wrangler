@@ -2,8 +2,8 @@
 
 The HASH directive generates a message digest.
 
-
 ## Syntax
+
 ```
 hash <column> <algorithm> [<encode>]
 ```
@@ -13,7 +13,6 @@ The `<column>` is the name of the column to which the hashing `<algorithm>` is a
 If `<encode>` is set to `true`, the hashed digest is encoded as `hex` with left-padding
 zeroes. By default, `<encode>` is set to `true`. To disable `hex` encoding, set `<encode>` to
 false.
-
 
 ## Usage Notes
 
@@ -70,10 +69,10 @@ These algorithms are supported by the HASH directive:
 * Tiger
 * WHIRLPOOL
 
-
 ## Example
 
 Using this record as an example:
+
 ```
 {
   "message": "secret message"
@@ -81,11 +80,13 @@ Using this record as an example:
 ```
 
 Applying this directive:
+
 ```
 hash message SHA3-384
 ```
 
 would generate a message digest and replace the column with it:
+
 ```
 {
   "message": "9cc25835d1ef78b4cd8b36a0c4ad636a6094fbb944b1d880f21c7129a645e819d3be987e8ae2f0f8d6cbebb8452419ef"

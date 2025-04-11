@@ -18,32 +18,32 @@ package io.cdap.wrangler.api;
 
 /**
  * A pair consisting of two elements - first & second.
- *
+ * <p>
  * This class provides immutable access to elements of the pair.
  *
  * @param <F> type of the first element
  * @param <S> type of the second element
  */
 public final class Pair<F, S> {
-  private final F first;
-  private final S second;
+    private final F first;
+    private final S second;
 
-  public Pair(F first, S second) {
-    this.first = first;
-    this.second = second;
-  }
+    public Pair(F first, S second) {
+        this.first = first;
+        this.second = second;
+    }
 
-  /**
-   * @return First element of the pair.
-   */
-  public F getFirst() {
-    return first;
-  }
+    /**
+     * @return First element of the pair.
+     */
+    public F getFirst() {
+        return first;
+    }
 
-  /**
-   * @return Second element of the pair.
-   */
-  public S getSecond() {
-    return second;
-  }
+    /**
+     * @return Second element of the pair.
+     */
+    public S getSecond() {
+        return second;
+    }
 }

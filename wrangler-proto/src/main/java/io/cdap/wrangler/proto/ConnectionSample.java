@@ -18,23 +18,23 @@ package io.cdap.wrangler.proto;
 
 /**
  * Information about a sample taken using a connection.
- *
+ * <p>
  * TODO: (CDAP-14652) check if these fields are all used/needed.
  * For example, why are 'connection' (actually connection type) and connection id in this object
  * when the client must supply this information in order to get the sample
  */
 public class ConnectionSample {
-  private final String id;
-  private final String name;
-  private final String connection;
-  private final String sampler;
-  private final String connectionid;
+    private final String id;
+    private final String name;
+    private final String connection;
+    private final String sampler;
+    private final String connectionid;
 
-  public ConnectionSample(String id, String name, String connection, String sampler, String connectionid) {
-    this.id = id;
-    this.name = name;
-    this.connection = connection;
-    this.sampler = sampler;
-    this.connectionid = connectionid;
-  }
+    public ConnectionSample(String id, String name, String connection, String sampler, String connectionid) {
+        this.id = id;
+        this.name = name;
+        this.connection = connection;
+        this.sampler = sampler;
+        this.connectionid = connectionid;
+    }
 }

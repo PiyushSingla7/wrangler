@@ -33,112 +33,112 @@ import java.util.Random;
  * @param <T> The type of the sampler.
  */
 public class Reservoir<T> extends Sampler<T> {
-  private final int numSamples;
-  private final Random random;
+    private final int numSamples;
+    private final Random random;
 
-  /**
-   * Create a new sampler with reservoir size and a supplied random number generator.
-   *
-   * @param numSamples Maximum number of samples to retain in reservoir, must be non-negative.
-   * @param random     Instance of random number generator for sampling.
-   */
-  public Reservoir(int numSamples, Random random) {
-    Preconditions.checkArgument(numSamples >= 0, "numSamples should be non-negative.");
-    this.numSamples = numSamples;
-    this.random = random;
-  }
-
-  /**
-   * Create a new sampler with reservoir size and a default random number generator.
-   *
-   * @param numSamples Maximum number of samples to retain in reservoir, must be non-negative.
-   */
-  public Reservoir(int numSamples) {
-    this(numSamples, new XORShiftRNG());
-  }
-
-  /**
-   * Create a new sampler with reservoir size and the seed for random number generator.
-   *
-   * @param numSamples Maximum number of samples to retain in reservoir, must be non-negative.
-   * @param seed       Random number generator seed.
-   */
-  public Reservoir(int numSamples, long seed) {
-    this(numSamples, new XORShiftRNG(seed));
-  }
-
-  @Override
-  public Iterator<T> sample(Iterator<T> input) {
-    if (numSamples == 0) {
-      return emptyIterable;
+    /**
+     * Create a new sampler with reservoir size and a supplied random number generator.
+     *
+     * @param numSamples Maximum number of samples to retain in reservoir, must be non-negative.
+     * @param random     Instance of random number generator for sampling.
+     */
+    public Reservoir(int numSamples, Random random) {
+        Preconditions.checkArgument(numSamples >= 0, "numSamples should be non-negative.");
+        this.numSamples = numSamples;
+        this.random = random;
     }
 
-    // This queue holds fixed number elements with the top K weight for current partition.
-    PriorityQueue<IntermediateSample<T>> queue = new PriorityQueue<>(numSamples);
-    int index = 0;
-    IntermediateSample<T> smallest = null;
-    while (input.hasNext()) {
-      T element = input.next();
-      if (index < numSamples) {
-        // Fill the queue with first K elements from input.
-        queue.add(new IntermediateSample<T>(random.nextDouble(), element));
-        smallest = queue.peek();
-      } else {
-        double rand = random.nextDouble();
-        // Remove the element with the smallest weight, and append current element into the queue.
-        if (rand > smallest.getWeight()) {
-          queue.remove();
-          queue.add(new IntermediateSample<T>(rand, element));
-          smallest = queue.peek();
-        }
-      }
-      index++;
+    /**
+     * Create a new sampler with reservoir size and a default random number generator.
+     *
+     * @param numSamples Maximum number of samples to retain in reservoir, must be non-negative.
+     */
+    public Reservoir(int numSamples) {
+        this(numSamples, new XORShiftRNG());
     }
 
-    final Iterator<IntermediateSample<T>> itr = queue.iterator();
-    return new Iterator<T>() {
-      @Override
-      public boolean hasNext() {
-        return itr.hasNext();
-      }
-
-      @Override
-      public T next() {
-        return itr.next().getElement();
-      }
-
-      @Override
-      public void remove() {
-        itr.remove();
-      }
-    };
-  }
-
-  /**
-   * An intermediate sample
-   *
-   * @param <T> the element type
-   */
-  public static class IntermediateSample<T> implements Comparable<IntermediateSample<T>> {
-    private double weight;
-    private T element;
-
-    public IntermediateSample(double weight, T element) {
-      this.weight = weight;
-      this.element = element;
-    }
-
-    public double getWeight() {
-      return weight;
-    }
-
-    public T getElement() {
-      return element;
+    /**
+     * Create a new sampler with reservoir size and the seed for random number generator.
+     *
+     * @param numSamples Maximum number of samples to retain in reservoir, must be non-negative.
+     * @param seed       Random number generator seed.
+     */
+    public Reservoir(int numSamples, long seed) {
+        this(numSamples, new XORShiftRNG(seed));
     }
 
     @Override
-    public int compareTo(IntermediateSample<T> other) {
-      return this.weight >= other.getWeight() ? 1 : -1;
+    public Iterator<T> sample(Iterator<T> input) {
+        if (numSamples == 0) {
+            return emptyIterable;
+        }
+
+        // This queue holds fixed number elements with the top K weight for current partition.
+        PriorityQueue<IntermediateSample<T>> queue = new PriorityQueue<>(numSamples);
+        int index = 0;
+        IntermediateSample<T> smallest = null;
+        while (input.hasNext()) {
+            T element = input.next();
+            if (index < numSamples) {
+                // Fill the queue with first K elements from input.
+                queue.add(new IntermediateSample<T>(random.nextDouble(), element));
+                smallest = queue.peek();
+            } else {
+                double rand = random.nextDouble();
+                // Remove the element with the smallest weight, and append current element into the queue.
+                if (rand > smallest.getWeight()) {
+                    queue.remove();
+                    queue.add(new IntermediateSample<T>(rand, element));
+                    smallest = queue.peek();
+                }
+            }
+            index++;
+        }
+
+        final Iterator<IntermediateSample<T>> itr = queue.iterator();
+        return new Iterator<T>() {
+            @Override
+            public boolean hasNext() {
+                return itr.hasNext();
+            }
+
+            @Override
+            public T next() {
+                return itr.next().getElement();
+            }
+
+            @Override
+            public void remove() {
+                itr.remove();
+            }
+        };
     }
-  }
+
+    /**
+     * An intermediate sample
+     *
+     * @param <T> the element type
+     */
+    public static class IntermediateSample<T> implements Comparable<IntermediateSample<T>> {
+        private double weight;
+        private T element;
+
+        public IntermediateSample(double weight, T element) {
+            this.weight = weight;
+            this.element = element;
+        }
+
+        public double getWeight() {
+            return weight;
+        }
+
+        public T getElement() {
+            return element;
+        }
+
+        @Override
+        public int compareTo(IntermediateSample<T> other) {
+            return this.weight >= other.getWeight() ? 1 : -1;
+        }
+    }
 }

@@ -31,41 +31,41 @@ Applies directives on the data in a workspace.
 
 * **Success Response**
 
-  * **Code:** 200
-    **Content:**
-    ```
-      {
-        'status': 200,
-        'message': 'Success',
-        'items': <count of records>,
-        'header': [ 'header-1', 'header-2', ..., 'header-n' ],
-        'value': {
-          { processed record - 1},
-          { processed record - 2},
-          . . .
-          { processed record - n}
+    * **Code:** 200
+      **Content:**
+      ```
+        {
+          'status': 200,
+          'message': 'Success',
+          'items': <count of records>,
+          'header': [ 'header-1', 'header-2', ..., 'header-n' ],
+          'value': {
+            { processed record - 1},
+            { processed record - 2},
+            . . .
+            { processed record - n}
+          }
         }
-      }
-    ```
+      ```
 
 * **Error Responses**
 
-  * **Code:** 500 Server Error
-    **Content:**
-    ```
-      {
-        'status': 500,
-        'message': "<appropriate error message>"
-      }
-    ```
+    * **Code:** 500 Server Error
+      **Content:**
+      ```
+        {
+          'status': 500,
+          'message': "<appropriate error message>"
+        }
+      ```
 
-    or
+      or
 
-  * **Code:** 500 Server Error
-    **Content:**
-    ```
-      Unable to route to service <url>
-    ```
+    * **Code:** 500 Server Error
+      **Content:**
+      ```
+        Unable to route to service <url>
+      ```
 
 * **Sample Call**
 

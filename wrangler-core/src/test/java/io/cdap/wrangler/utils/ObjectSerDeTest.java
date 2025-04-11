@@ -35,72 +35,73 @@ import java.util.List;
  */
 public class ObjectSerDeTest {
 
-  @Test
-  public void testSerDe() throws Exception {
-    ObjectSerDe<List<Row>> objectSerDe = new ObjectSerDe<>();
-    List<Row> rows = new ArrayList<>();
-    rows.add(new Row("bytes", "foo".getBytes(Charsets.UTF_8)).add("a", 1).add("b", 2.0));
-    rows.add(new Row("bytes", "boo".getBytes(Charsets.UTF_8)).add("a", 2).add("b", 3.0));
-    byte[] bytes = objectSerDe.toByteArray(rows);
-    List<Row> newRows = objectSerDe.toObject(bytes);
-    Assert.assertEquals(rows.size(), newRows.size());
-    Assert.assertEquals(rows.get(0).getColumn(0), newRows.get(0).getColumn(0));
-    Assert.assertEquals(rows.get(0).getColumn(1), newRows.get(0).getColumn(1));
-    Assert.assertEquals(rows.get(0).getColumn(2), newRows.get(0).getColumn(2));
-  }
+    @Test
+    public void testSerDe() throws Exception {
+        ObjectSerDe<List<Row>> objectSerDe = new ObjectSerDe<>();
+        List<Row> rows = new ArrayList<>();
+        rows.add(new Row("bytes", "foo".getBytes(Charsets.UTF_8)).add("a", 1).add("b", 2.0));
+        rows.add(new Row("bytes", "boo".getBytes(Charsets.UTF_8)).add("a", 2).add("b", 3.0));
+        byte[] bytes = objectSerDe.toByteArray(rows);
+        List<Row> newRows = objectSerDe.toObject(bytes);
+        Assert.assertEquals(rows.size(), newRows.size());
+        Assert.assertEquals(rows.get(0).getColumn(0), newRows.get(0).getColumn(0));
+        Assert.assertEquals(rows.get(0).getColumn(1), newRows.get(0).getColumn(1));
+        Assert.assertEquals(rows.get(0).getColumn(2), newRows.get(0).getColumn(2));
+    }
 
-  @Test
-  public void testNull() throws Exception {
-    ObjectSerDe<List<Row>> objectSerDe = new ObjectSerDe<>();
-    List<Row> rows = new ArrayList<>();
-    rows.add(new Row("bytes", null));
-    rows.add(new Row("bytes", null));
-    byte[] bytes = objectSerDe.toByteArray(rows);
-    List<Row> newRows = objectSerDe.toObject(bytes);
-    Assert.assertEquals(rows.size(), newRows.size());
-  }
+    @Test
+    public void testNull() throws Exception {
+        ObjectSerDe<List<Row>> objectSerDe = new ObjectSerDe<>();
+        List<Row> rows = new ArrayList<>();
+        rows.add(new Row("bytes", null));
+        rows.add(new Row("bytes", null));
+        byte[] bytes = objectSerDe.toByteArray(rows);
+        List<Row> newRows = objectSerDe.toObject(bytes);
+        Assert.assertEquals(rows.size(), newRows.size());
+    }
 
-  @Test
-  public void testLogicalTypeSerDe() throws Exception {
-    ObjectSerDe<List<Row>> objectSerDe = new ObjectSerDe<>();
-    List<Row> expectedRows = new ArrayList<>();
+    @Test
+    public void testLogicalTypeSerDe() throws Exception {
+        ObjectSerDe<List<Row>> objectSerDe = new ObjectSerDe<>();
+        List<Row> expectedRows = new ArrayList<>();
 
-    Row firstRow = new Row();
-    firstRow.add("id", 1);
-    firstRow.add("name", "abc");
-    firstRow.add("date", LocalDate.of(2018, 11, 11));
-    firstRow.add("time", LocalTime.of(11, 11, 11));
-    firstRow.add("timestamp", ZonedDateTime.of(2018, 11 , 11 , 11, 11, 11, 0, ZoneId.of("UTC")));
-    expectedRows.add(firstRow);
-    byte[] bytes = objectSerDe.toByteArray(expectedRows);
-    List<Row> actualRows = objectSerDe.toObject(bytes);
-    Assert.assertEquals(expectedRows.size(), actualRows.size());
+        Row firstRow = new Row();
+        firstRow.add("id", 1);
+        firstRow.add("name", "abc");
+        firstRow.add("date", LocalDate.of(2018, 11, 11));
+        firstRow.add("time", LocalTime.of(11, 11, 11));
+        firstRow.add("timestamp", ZonedDateTime.of(2018, 11, 11, 11, 11, 11, 0, ZoneId.of("UTC")));
+        expectedRows.add(firstRow);
+        byte[] bytes = objectSerDe.toByteArray(expectedRows);
+        List<Row> actualRows = objectSerDe.toObject(bytes);
+        Assert.assertEquals(expectedRows.size(), actualRows.size());
 
-    Row secondRow = new Row();
-    secondRow.add("id", 2);
-    secondRow.add("name", null);
-    secondRow.add("date", LocalDate.of(2018, 12, 11));
-    secondRow.add("time", LocalTime.of(11, 12, 11));
-    secondRow.add("timestamp", null);
-    expectedRows.add(secondRow);
-    bytes = objectSerDe.toByteArray(expectedRows);
-    actualRows = objectSerDe.toObject(bytes);
-    Assert.assertEquals(expectedRows.size(), actualRows.size());
-  }
-  @Test
-  public void testRemoteDirectiveResponseSerDe() throws Exception {
-    List<Row> expectedRows = new ArrayList<>();
-    Row firstRow = new Row();
-    firstRow.add("id", 1);
-    expectedRows.add(firstRow);
-    Schema expectedSchema = Schema.recordOf(Schema.Field.of("id", Schema.of(Schema.Type.INT)));
-    RemoteDirectiveResponse expectedResponse = new RemoteDirectiveResponse(expectedRows, expectedSchema);
-    ObjectSerDe<RemoteDirectiveResponse> objectSerDe = new ObjectSerDe<>();
+        Row secondRow = new Row();
+        secondRow.add("id", 2);
+        secondRow.add("name", null);
+        secondRow.add("date", LocalDate.of(2018, 12, 11));
+        secondRow.add("time", LocalTime.of(11, 12, 11));
+        secondRow.add("timestamp", null);
+        expectedRows.add(secondRow);
+        bytes = objectSerDe.toByteArray(expectedRows);
+        actualRows = objectSerDe.toObject(bytes);
+        Assert.assertEquals(expectedRows.size(), actualRows.size());
+    }
 
-    byte[] bytes = objectSerDe.toByteArray(expectedResponse);
-    RemoteDirectiveResponse actualResponse = objectSerDe.toObject(bytes);
+    @Test
+    public void testRemoteDirectiveResponseSerDe() throws Exception {
+        List<Row> expectedRows = new ArrayList<>();
+        Row firstRow = new Row();
+        firstRow.add("id", 1);
+        expectedRows.add(firstRow);
+        Schema expectedSchema = Schema.recordOf(Schema.Field.of("id", Schema.of(Schema.Type.INT)));
+        RemoteDirectiveResponse expectedResponse = new RemoteDirectiveResponse(expectedRows, expectedSchema);
+        ObjectSerDe<RemoteDirectiveResponse> objectSerDe = new ObjectSerDe<>();
 
-    Assert.assertEquals(expectedResponse.getRows().size(), actualResponse.getRows().size());
-    Assert.assertEquals(expectedResponse.getOutputSchema(), actualResponse.getOutputSchema());
-  }
+        byte[] bytes = objectSerDe.toByteArray(expectedResponse);
+        RemoteDirectiveResponse actualResponse = objectSerDe.toObject(bytes);
+
+        Assert.assertEquals(expectedResponse.getRows().size(), actualResponse.getRows().size());
+        Assert.assertEquals(expectedResponse.getOutputSchema(), actualResponse.getOutputSchema());
+    }
 }

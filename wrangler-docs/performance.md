@@ -65,6 +65,7 @@ mean rate      = 64998.50 records/second
 * Total time: 1294 seconds (21.5 minutes)
 
 ### Performance Numbers
+
 ```
 count          = 80,944,061
 mean rate      = 62465.93 records/second

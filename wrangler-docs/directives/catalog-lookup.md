@@ -4,8 +4,8 @@ The CATALOG-LOOKUP directive provides lookups into catalogs that are pre-loaded
 (static). Currently, the directive supports looking up health care ICD-9 and
 ICD-10-{2016,2017} codes.
 
-
 ## Syntax
+
 ```
 catalog-lookup <catalog> <column>
 ```
@@ -19,11 +19,11 @@ These catalogs are currently supported:
 * ICD-10-2016
 * ICD-10-2017
 
-
 ## Usage Notes
 
 Using this record as an example: a record containing a single field (`code`) that requires
 looking up:
+
 ```
 {
   "code": "Y36521S"
@@ -31,6 +31,7 @@ looking up:
 ```
 
 Applying the CATALOG-LOOKUP directive with the ICD-10-2016 Catalog:
+
 ```
 catalog-lookup ICD-10-2016 code
 ```
@@ -38,6 +39,7 @@ catalog-lookup ICD-10-2016 code
 would result in the record having an additional column `code_<catalog>_description`
 containing the result of the lookup. In cases where there is no matching code, a `null` is
 stored instead. For this example, in `code_icd_10_2016_description`:
+
 ```
 {
   "code": "Y36521S",

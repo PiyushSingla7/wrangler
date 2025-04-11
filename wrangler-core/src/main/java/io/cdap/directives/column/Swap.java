@@ -20,13 +20,7 @@ import io.cdap.cdap.api.annotation.Description;
 import io.cdap.cdap.api.annotation.Name;
 import io.cdap.cdap.api.annotation.Plugin;
 import io.cdap.cdap.api.data.schema.Schema;
-import io.cdap.wrangler.api.Arguments;
-import io.cdap.wrangler.api.Directive;
-import io.cdap.wrangler.api.DirectiveExecutionException;
-import io.cdap.wrangler.api.DirectiveParseException;
-import io.cdap.wrangler.api.ExecutorContext;
-import io.cdap.wrangler.api.Row;
-import io.cdap.wrangler.api.SchemaResolutionContext;
+import io.cdap.wrangler.api.*;
 import io.cdap.wrangler.api.annotations.Categories;
 import io.cdap.wrangler.api.lineage.Lineage;
 import io.cdap.wrangler.api.lineage.Many;
@@ -43,71 +37,71 @@ import java.util.stream.Collectors;
  */
 @Plugin(type = Directive.TYPE)
 @Name(Swap.NAME)
-@Categories(categories = { "column"})
+@Categories(categories = {"column"})
 @Description("Swaps the column names of two columns.")
 public class Swap implements Directive, Lineage {
-  public static final String NAME = "swap";
-  private String left;
-  private String right;
+    public static final String NAME = "swap";
+    private String left;
+    private String right;
 
-  @Override
-  public UsageDefinition define() {
-    UsageDefinition.Builder builder = UsageDefinition.builder(NAME);
-    builder.define("left", TokenType.COLUMN_NAME);
-    builder.define("right", TokenType.COLUMN_NAME);
-    return builder.build();
-  }
-
-  @Override
-  public void initialize(Arguments args) throws DirectiveParseException {
-    left = ((ColumnName) args.value("left")).value();
-    right = ((ColumnName) args.value("right")).value();
-  }
-
-  @Override
-  public void destroy() {
-    // no-op
-  }
-
-  @Override
-  public List<Row> execute(List<Row> rows, ExecutorContext context) throws DirectiveExecutionException {
-    for (Row row : rows) {
-      int sidx = row.find(left);
-      int didx = row.find(right);
-
-      if (sidx == -1) {
-        throw new DirectiveExecutionException(NAME, String.format("Column '%s' does not exist.", left));
-      }
-
-      if (didx == -1) {
-        throw new DirectiveExecutionException(NAME, String.format("Column '%s' does not exist.", right));
-      }
-
-      row.setColumn(sidx, right);
-      row.setColumn(didx, left);
+    @Override
+    public UsageDefinition define() {
+        UsageDefinition.Builder builder = UsageDefinition.builder(NAME);
+        builder.define("left", TokenType.COLUMN_NAME);
+        builder.define("right", TokenType.COLUMN_NAME);
+        return builder.build();
     }
-    return rows;
-  }
 
-  @Override
-  public Mutation lineage() {
-    return Mutation.builder()
-      .readable("Swapped columns '%s' and '%s'", left, right)
-      .relation(Many.of(left, right), Many.of(right, left))
-      .build();
-  }
+    @Override
+    public void initialize(Arguments args) throws DirectiveParseException {
+        left = ((ColumnName) args.value("left")).value();
+        right = ((ColumnName) args.value("right")).value();
+    }
 
-  @Override
-  public Schema getOutputSchema(SchemaResolutionContext context) {
-    Schema inputSchema = context.getInputSchema();
-    return Schema.recordOf(
-      "outputSchema",
-      inputSchema.getFields().stream()
-        .map(
-          field -> field.getName().equals(left) ? Schema.Field.of(right, field.getSchema()) :
-            (field.getName().equals(right) ? Schema.Field.of(left, field.getSchema()) : field)
-        )
-        .collect(Collectors.toList())
-    );
-  }
+    @Override
+    public void destroy() {
+        // no-op
+    }
+
+    @Override
+    public List<Row> execute(List<Row> rows, ExecutorContext context) throws DirectiveExecutionException {
+        for (Row row : rows) {
+            int sidx = row.find(left);
+            int didx = row.find(right);
+
+            if (sidx == -1) {
+                throw new DirectiveExecutionException(NAME, String.format("Column '%s' does not exist.", left));
+            }
+
+            if (didx == -1) {
+                throw new DirectiveExecutionException(NAME, String.format("Column '%s' does not exist.", right));
+            }
+
+            row.setColumn(sidx, right);
+            row.setColumn(didx, left);
+        }
+        return rows;
+    }
+
+    @Override
+    public Mutation lineage() {
+        return Mutation.builder()
+                .readable("Swapped columns '%s' and '%s'", left, right)
+                .relation(Many.of(left, right), Many.of(right, left))
+                .build();
+    }
+
+    @Override
+    public Schema getOutputSchema(SchemaResolutionContext context) {
+        Schema inputSchema = context.getInputSchema();
+        return Schema.recordOf(
+                "outputSchema",
+                inputSchema.getFields().stream()
+                        .map(
+                                field -> field.getName().equals(left) ? Schema.Field.of(right, field.getSchema()) :
+                                        (field.getName().equals(right) ? Schema.Field.of(left, field.getSchema()) : field)
+                        )
+                        .collect(Collectors.toList())
+        );
+    }
 }

@@ -24,101 +24,101 @@ import javax.annotation.Nullable;
  * Information about an S3 object.
  */
 public class S3ObjectInfo {
-  private final String name;
-  private final String type;
-  private final String path;
-  private final String owner;
-  @SerializedName("class")
-  private final String storageClass;
-  private final Long created;
-  @SerializedName("last-modified")
-  private final Long lastModified;
-  private final Long size;
-  private final Boolean directory;
-  private final Boolean wrangle;
-
-  private S3ObjectInfo(String name, String type, @Nullable String path, @Nullable String owner,
-                       @Nullable String storageClass, @Nullable Long created, @Nullable Long lastModified,
-                       @Nullable Long size, @Nullable Boolean directory, @Nullable Boolean wrangle) {
-    this.name = name;
-    this.path = path;
-    this.type = type;
-    this.owner = owner;
-    this.storageClass = storageClass;
-    this.created = created;
-    this.lastModified = lastModified;
-    this.size = size;
-    this.directory = directory;
-    this.wrangle = wrangle;
-  }
-
-  public static Builder builder(String name, String type) {
-    return new Builder(name, type);
-  }
-
-  /**
-   * Builds S3ObjectInfo instances.
-   */
-  public static class Builder {
     private final String name;
     private final String type;
-    private String path;
-    private String owner;
-    private String storageClass;
-    private Long created;
-    private Long lastModified;
-    private Long size;
-    private Boolean isDirectory;
-    private Boolean canWrangle;
+    private final String path;
+    private final String owner;
+    @SerializedName("class")
+    private final String storageClass;
+    private final Long created;
+    @SerializedName("last-modified")
+    private final Long lastModified;
+    private final Long size;
+    private final Boolean directory;
+    private final Boolean wrangle;
 
-    private Builder(String name, String type) {
-      this.name = name;
-      this.type = type;
+    private S3ObjectInfo(String name, String type, @Nullable String path, @Nullable String owner,
+                         @Nullable String storageClass, @Nullable Long created, @Nullable Long lastModified,
+                         @Nullable Long size, @Nullable Boolean directory, @Nullable Boolean wrangle) {
+        this.name = name;
+        this.path = path;
+        this.type = type;
+        this.owner = owner;
+        this.storageClass = storageClass;
+        this.created = created;
+        this.lastModified = lastModified;
+        this.size = size;
+        this.directory = directory;
+        this.wrangle = wrangle;
     }
 
-    public Builder setPath(String path) {
-      this.path = path;
-      return this;
+    public static Builder builder(String name, String type) {
+        return new Builder(name, type);
     }
 
-    public Builder setOwner(String owner) {
-      this.owner = owner;
-      return this;
-    }
+    /**
+     * Builds S3ObjectInfo instances.
+     */
+    public static class Builder {
+        private final String name;
+        private final String type;
+        private String path;
+        private String owner;
+        private String storageClass;
+        private Long created;
+        private Long lastModified;
+        private Long size;
+        private Boolean isDirectory;
+        private Boolean canWrangle;
 
-    public Builder setStorageClass(String storageClass) {
-      this.storageClass = storageClass;
-      return this;
-    }
+        private Builder(String name, String type) {
+            this.name = name;
+            this.type = type;
+        }
 
-    public Builder setCreated(long created) {
-      this.created = created;
-      return this;
-    }
+        public Builder setPath(String path) {
+            this.path = path;
+            return this;
+        }
 
-    public Builder setLastModified(long lastModified) {
-      this.lastModified = lastModified;
-      return this;
-    }
+        public Builder setOwner(String owner) {
+            this.owner = owner;
+            return this;
+        }
 
-    public Builder setSize(long size) {
-      this.size = size;
-      return this;
-    }
+        public Builder setStorageClass(String storageClass) {
+            this.storageClass = storageClass;
+            return this;
+        }
 
-    public Builder setIsDirectory(boolean isDirectory) {
-      this.isDirectory = isDirectory;
-      return this;
-    }
+        public Builder setCreated(long created) {
+            this.created = created;
+            return this;
+        }
 
-    public Builder setCanWrangle(boolean canWrangle) {
-      this.canWrangle = canWrangle;
-      return this;
-    }
+        public Builder setLastModified(long lastModified) {
+            this.lastModified = lastModified;
+            return this;
+        }
 
-    public S3ObjectInfo build() {
-      return new S3ObjectInfo(name, type, path, owner, storageClass, created, lastModified, size,
-                              isDirectory, canWrangle);
+        public Builder setSize(long size) {
+            this.size = size;
+            return this;
+        }
+
+        public Builder setIsDirectory(boolean isDirectory) {
+            this.isDirectory = isDirectory;
+            return this;
+        }
+
+        public Builder setCanWrangle(boolean canWrangle) {
+            this.canWrangle = canWrangle;
+            return this;
+        }
+
+        public S3ObjectInfo build() {
+            return new S3ObjectInfo(name, type, path, owner, storageClass, created, lastModified, size,
+                    isDirectory, canWrangle);
+        }
     }
-  }
 }

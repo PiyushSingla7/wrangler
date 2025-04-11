@@ -24,14 +24,14 @@ import java.util.List;
  * Represents a paginated list of recipes as a response.
  */
 public class RecipeListResponse extends ServiceResponse<Recipe> {
-  String nextPageToken;
+    String nextPageToken;
 
-  public RecipeListResponse(List<Recipe> recipes, String nextPageToken) {
-    super(recipes);
-    this.nextPageToken = nextPageToken;
-  }
+    public RecipeListResponse(List<Recipe> recipes, String nextPageToken) {
+        super(recipes);
+        this.nextPageToken = nextPageToken;
+    }
 
-  public String getNextPageToken() {
-    return nextPageToken;
-  }
+    public String getNextPageToken() {
+        return nextPageToken;
+    }
 }

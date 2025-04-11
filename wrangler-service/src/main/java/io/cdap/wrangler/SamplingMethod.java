@@ -23,40 +23,40 @@ import io.cdap.wrangler.api.annotations.PublicEvolving;
  */
 @PublicEvolving
 public enum SamplingMethod {
-  NONE("none"),
-  FIRST("first"),
-  POISSON("poisson"),
-  BERNOULLI("bernoulli"),
-  RESERVOIR("reservoir");
+    NONE("none"),
+    FIRST("first"),
+    POISSON("poisson"),
+    BERNOULLI("bernoulli"),
+    RESERVOIR("reservoir");
 
-  private String method;
+    private String method;
 
-  SamplingMethod(String method) {
-    this.method = method;
-  }
-
-  /**
-   * @return String representation of enum.
-   */
-  public String getMethod() {
-    return method;
-  }
-
-  /**
-   * Provided the sampling method as string, determine the enum type of {@link SamplingMethod}.
-   *
-   * @param from string for which the {@link SamplingMethod} instance need to be determined.
-   * @return if there is a string representation of enum, else null.
-   */
-  public static SamplingMethod fromString(String from) {
-    if (from == null || from.isEmpty()) {
-      return null;
+    SamplingMethod(String method) {
+        this.method = method;
     }
-    for (SamplingMethod method : SamplingMethod.values()) {
-      if (method.method.equalsIgnoreCase(from)) {
+
+    /**
+     * @return String representation of enum.
+     */
+    public String getMethod() {
         return method;
-      }
     }
-    return null;
-  }
+
+    /**
+     * Provided the sampling method as string, determine the enum type of {@link SamplingMethod}.
+     *
+     * @param from string for which the {@link SamplingMethod} instance need to be determined.
+     * @return if there is a string representation of enum, else null.
+     */
+    public static SamplingMethod fromString(String from) {
+        if (from == null || from.isEmpty()) {
+            return null;
+        }
+        for (SamplingMethod method : SamplingMethod.values()) {
+            if (method.method.equalsIgnoreCase(from)) {
+                return method;
+            }
+        }
+        return null;
+    }
 }

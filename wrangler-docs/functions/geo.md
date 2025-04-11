@@ -53,19 +53,24 @@ represented as Double type values .
 ```
 
 ## InFence
+
 Checks if the given coordinate is inside any of the given polygonal geofences based on the winding number algorithm.
 If any of the inputs is null, this method will return false
 
 ### Namespace
+
 `geo`
 
 ### Input
+
 latitude(`double`), longitude(`double`), json fence (`string`)
 
 ### Output
+
 true/false
 
 ### Example
+
 if `latitude` contains `37.378990156513105` and `longitude` contains `-122.05076694488525` and
 `fence` contains the previously mentioned json string, then resulting operation is `true`
 

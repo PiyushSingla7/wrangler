@@ -23,48 +23,48 @@ import java.util.List;
  * It's paramterized on the type of the response object returned from service within the list.
  */
 class Response<T> {
-  // Status of the backend processing of the request.
-  private int status;
+    // Status of the backend processing of the request.
+    private int status;
 
-  // Message associated with the status.
-  private String message;
+    // Message associated with the status.
+    private String message;
 
-  // Number of items in the list.
-  private int count;
+    // Number of items in the list.
+    private int count;
 
-  // Instance of object in the list.
-  private List<T> values;
+    // Instance of object in the list.
+    private List<T> values;
 
-  Response(int status, String message) {
-    this.status = status;
-    this.message = message;
-  }
+    Response(int status, String message) {
+        this.status = status;
+        this.message = message;
+    }
 
-  /**
-   * @return status of the processing on the backend.
-   */
-  public int getStatus() {
-    return status;
-  }
+    /**
+     * @return status of the processing on the backend.
+     */
+    public int getStatus() {
+        return status;
+    }
 
-  /**
-   * @return Readable form of status of processing in the backend.
-   */
-  public String getMessage() {
-    return message;
-  }
+    /**
+     * @return Readable form of status of processing in the backend.
+     */
+    public String getMessage() {
+        return message;
+    }
 
-  /**
-   * @return Count of objects within the list.
-   */
-  public int getCount() {
-    return count;
-  }
+    /**
+     * @return Count of objects within the list.
+     */
+    public int getCount() {
+        return count;
+    }
 
-  /**
-   * @return List of the objects of type T.
-   */
-  public List<T> getValues() {
-    return values;
-  }
+    /**
+     * @return List of the objects of type T.
+     */
+    public List<T> getValues() {
+        return values;
+    }
 }

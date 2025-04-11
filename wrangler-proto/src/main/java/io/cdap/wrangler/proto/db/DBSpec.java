@@ -21,14 +21,14 @@ import io.cdap.wrangler.proto.PluginSpec;
 
 /**
  * Specification for an DB pipeline source plugin.
- *
+ * <p>
  * TODO: (CDAP-14652) clean up this API. There is no reason for this class to exist.
  */
 public class DBSpec {
-  @SerializedName("Database")
-  private final PluginSpec spec;
+    @SerializedName("Database")
+    private final PluginSpec spec;
 
-  public DBSpec(PluginSpec spec) {
-    this.spec = spec;
-  }
+    public DBSpec(PluginSpec spec) {
+        this.spec = spec;
+    }
 }

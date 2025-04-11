@@ -2,8 +2,8 @@
 
 The QUANTIZE directive quantizes a column based on specified ranges.
 
-
 ## Syntax
+
 ```
 copy <source> <destination> <range_lower1:range_upper1=value>[,<range_lower2:range_upper2=value>*]
 ```
@@ -12,7 +12,6 @@ copy <source> <destination> <range_lower1:range_upper1=value>[,<range_lower2:ran
 * The `<destination>` column is the column where the results of the quantization are to be written
 
 The QUANTIZE directive quantizes based on values of the `<source>` column.
-
 
 ## Usage Notes
 
@@ -33,10 +32,10 @@ The values in the `<source>` column must be numeric.
 
 The `<value>` of the range can be numeric or a string.
 
-
 ## Example
 
 Using these records as an example:
+
 ```
 [
   {
@@ -58,11 +57,13 @@ Using these records as an example:
 ```
 
 Applying this directives:
+
 ```
 quantize body body_q 1:2=20,3:4=40,5:10=max
 ```
 
 would result in these records:
+
 ```
 [
   {

@@ -26,42 +26,42 @@ import javax.annotation.Nullable;
  */
 public class DirectiveClass {
 
-  private final String name;
-  private final DirectiveScope scope;
-  private final ArtifactId artifactId;
-  private final String className;
+    private final String name;
+    private final DirectiveScope scope;
+    private final ArtifactId artifactId;
+    private final String className;
 
-  public DirectiveClass(String name, String className, DirectiveScope scope, @Nullable ArtifactId artifactId) {
-    this.name = name;
-    this.className = className;
-    this.scope = scope;
-    this.artifactId = artifactId;
-  }
+    public DirectiveClass(String name, String className, DirectiveScope scope, @Nullable ArtifactId artifactId) {
+        this.name = name;
+        this.className = className;
+        this.scope = scope;
+        this.artifactId = artifactId;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public String getClassName() {
-    return className;
-  }
+    public String getClassName() {
+        return className;
+    }
 
-  public DirectiveScope getScope() {
-    return scope;
-  }
+    public DirectiveScope getScope() {
+        return scope;
+    }
 
-  @Nullable
-  public ArtifactId getArtifactId() {
-    return artifactId;
-  }
+    @Nullable
+    public ArtifactId getArtifactId() {
+        return artifactId;
+    }
 
-  @Override
-  public String toString() {
-    return "DirectiveClass{" +
-      "name='" + name + '\'' +
-      ", scope=" + scope +
-      ", artifactId=" + artifactId +
-      ", className='" + className + '\'' +
-      '}';
-  }
+    @Override
+    public String toString() {
+        return "DirectiveClass{" +
+                "name='" + name + '\'' +
+                ", scope=" + scope +
+                ", artifactId=" + artifactId +
+                ", className='" + className + '\'' +
+                '}';
+    }
 }

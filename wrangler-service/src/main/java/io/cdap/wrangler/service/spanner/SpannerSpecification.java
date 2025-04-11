@@ -22,52 +22,52 @@ import io.cdap.cdap.api.data.schema.Schema;
  * Spanner specification properties for spanner source plugin
  */
 public class SpannerSpecification {
-  private final String referenceName;
-  // gcp properties
-  private final String serviceFilePath;
-  private final String project;
-  // spanner properties
-  private final String instance;
-  private final String database;
-  private final String table;
-  private final String schema;
+    private final String referenceName;
+    // gcp properties
+    private final String serviceFilePath;
+    private final String project;
+    // spanner properties
+    private final String instance;
+    private final String database;
+    private final String table;
+    private final String schema;
 
-  SpannerSpecification(String referenceName, String serviceFilePath, String project, String instance,
-                       String database, String table, Schema schema) {
-    this.referenceName = referenceName;
-    this.serviceFilePath = serviceFilePath;
-    this.project = project;
-    this.instance = instance;
-    this.database = database;
-    this.table = table;
-    this.schema = schema.toString();
-  }
+    SpannerSpecification(String referenceName, String serviceFilePath, String project, String instance,
+                         String database, String table, Schema schema) {
+        this.referenceName = referenceName;
+        this.serviceFilePath = serviceFilePath;
+        this.project = project;
+        this.instance = instance;
+        this.database = database;
+        this.table = table;
+        this.schema = schema.toString();
+    }
 
-  public String getReferenceName() {
-    return referenceName;
-  }
+    public String getReferenceName() {
+        return referenceName;
+    }
 
-  public String getServiceFilePath() {
-    return serviceFilePath;
-  }
+    public String getServiceFilePath() {
+        return serviceFilePath;
+    }
 
-  public String getProject() {
-    return project;
-  }
+    public String getProject() {
+        return project;
+    }
 
-  public String getInstance() {
-    return instance;
-  }
+    public String getInstance() {
+        return instance;
+    }
 
-  public String getDatabase() {
-    return database;
-  }
+    public String getDatabase() {
+        return database;
+    }
 
-  public String getTable() {
-    return table;
-  }
+    public String getTable() {
+        return table;
+    }
 
-  public String getSchema() {
-    return schema;
-  }
+    public String getSchema() {
+        return schema;
+    }
 }

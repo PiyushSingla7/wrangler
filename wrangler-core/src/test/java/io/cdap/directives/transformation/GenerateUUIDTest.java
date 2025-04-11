@@ -29,24 +29,24 @@ import java.util.List;
  */
 public class GenerateUUIDTest {
 
-  @Test
-  public void testUUIDGeneration() throws Exception {
-    String[] directives = new String[] {
-      "generate-uuid uuid",
-    };
+    @Test
+    public void testUUIDGeneration() throws Exception {
+        String[] directives = new String[]{
+                "generate-uuid uuid",
+        };
 
-    List<Row> rows = Arrays.asList(
-      new Row("value", "abc"),
-      new Row("value", "xyz"),
-      new Row("value", "Should be fine")
-    );
+        List<Row> rows = Arrays.asList(
+                new Row("value", "abc"),
+                new Row("value", "xyz"),
+                new Row("value", "Should be fine")
+        );
 
-    rows = TestingRig.execute(directives, rows);
+        rows = TestingRig.execute(directives, rows);
 
-    Assert.assertTrue(rows.size() == 3);
-    Assert.assertEquals(2, rows.get(0).width());
-    Assert.assertEquals("uuid", rows.get(1).getColumn(1));
-    Assert.assertEquals("Should be fine", rows.get(2).getValue("value"));
-  }
+        Assert.assertTrue(rows.size() == 3);
+        Assert.assertEquals(2, rows.get(0).width());
+        Assert.assertEquals("uuid", rows.get(1).getColumn(1));
+        Assert.assertEquals("Should be fine", rows.get(2).getValue("value"));
+    }
 
 }

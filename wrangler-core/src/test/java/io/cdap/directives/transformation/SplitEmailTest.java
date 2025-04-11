@@ -29,79 +29,79 @@ import java.util.List;
  * Tests {@link SplitEmail}
  */
 public class SplitEmailTest {
-  @Test
-  public void testSplitEmail() throws Exception {
-    String[] directives = new String[] {
-      "split-email email",
-    };
+    @Test
+    public void testSplitEmail() throws Exception {
+        String[] directives = new String[]{
+                "split-email email",
+        };
 
-    List<Row> rows = Arrays.asList(
-      new Row("email", "root@cask.co"),
-      new Row("email", "joltie.xxx@gmail.com"),
-      new Row("email", "joltie_xxx@hotmail.com"),
-      new Row("email", "joltie.\"@.\"root.\"@\".@yahoo.com"),
-      new Row("email", "Joltie, Root <joltie.root@hotmail.com>"),
-      new Row("email", "Joltie,Root<joltie.root@hotmail.com>"),
-      new Row("email", "Joltie,Root<joltie.root@hotmail.com") // bad email
-    );
+        List<Row> rows = Arrays.asList(
+                new Row("email", "root@cask.co"),
+                new Row("email", "joltie.xxx@gmail.com"),
+                new Row("email", "joltie_xxx@hotmail.com"),
+                new Row("email", "joltie.\"@.\"root.\"@\".@yahoo.com"),
+                new Row("email", "Joltie, Root <joltie.root@hotmail.com>"),
+                new Row("email", "Joltie,Root<joltie.root@hotmail.com>"),
+                new Row("email", "Joltie,Root<joltie.root@hotmail.com") // bad email
+        );
 
-    rows = TestingRig.execute(directives, rows);
+        rows = TestingRig.execute(directives, rows);
 
-    Assert.assertTrue(rows.size() == 7);
+        Assert.assertTrue(rows.size() == 7);
 
-    Assert.assertEquals("root", rows.get(0).getValue("email_account"));
-    Assert.assertEquals("cask.co", rows.get(0).getValue("email_domain"));
+        Assert.assertEquals("root", rows.get(0).getValue("email_account"));
+        Assert.assertEquals("cask.co", rows.get(0).getValue("email_domain"));
 
-    Assert.assertEquals("joltie.xxx", rows.get(1).getValue("email_account"));
-    Assert.assertEquals("gmail.com", rows.get(1).getValue("email_domain"));
+        Assert.assertEquals("joltie.xxx", rows.get(1).getValue("email_account"));
+        Assert.assertEquals("gmail.com", rows.get(1).getValue("email_domain"));
 
-    Assert.assertEquals("joltie_xxx", rows.get(2).getValue("email_account"));
-    Assert.assertEquals("hotmail.com", rows.get(2).getValue("email_domain"));
+        Assert.assertEquals("joltie_xxx", rows.get(2).getValue("email_account"));
+        Assert.assertEquals("hotmail.com", rows.get(2).getValue("email_domain"));
 
-    Assert.assertEquals("joltie.\"@.\"root.\"@\".", rows.get(3).getValue("email_account"));
-    Assert.assertEquals("yahoo.com", rows.get(3).getValue("email_domain"));
+        Assert.assertEquals("joltie.\"@.\"root.\"@\".", rows.get(3).getValue("email_account"));
+        Assert.assertEquals("yahoo.com", rows.get(3).getValue("email_domain"));
 
-    Assert.assertEquals("joltie.root", rows.get(4).getValue("email_account"));
-    Assert.assertEquals("hotmail.com", rows.get(4).getValue("email_domain"));
+        Assert.assertEquals("joltie.root", rows.get(4).getValue("email_account"));
+        Assert.assertEquals("hotmail.com", rows.get(4).getValue("email_domain"));
 
-    Assert.assertEquals("joltie.root", rows.get(5).getValue("email_account"));
-    Assert.assertEquals("hotmail.com", rows.get(5).getValue("email_domain"));
+        Assert.assertEquals("joltie.root", rows.get(5).getValue("email_account"));
+        Assert.assertEquals("hotmail.com", rows.get(5).getValue("email_domain"));
 
-    Assert.assertNull(rows.get(6).getValue("email_account"));
-    Assert.assertNull(rows.get(6).getValue("email_domain"));
-  }
+        Assert.assertNull(rows.get(6).getValue("email_account"));
+        Assert.assertNull(rows.get(6).getValue("email_domain"));
+    }
 
-  @Test(expected = RecipeException.class)
-  public void testBadType() throws Exception {
-    String[] directives = new String[] {
-      "split-email email",
-    };
+    @Test(expected = RecipeException.class)
+    public void testBadType() throws Exception {
+        String[] directives = new String[]{
+                "split-email email",
+        };
 
-    List<Row> rows = Arrays.asList(
-      new Row("email", new Integer(1)) // Injecting bad type.
-    );
+        List<Row> rows = Arrays.asList(
+                new Row("email", new Integer(1)) // Injecting bad type.
+        );
 
-    TestingRig.execute(directives, rows);
-  }
+        TestingRig.execute(directives, rows);
+    }
 
-  @Test
-  public void testBadEmailId() throws Exception {
-    String[] directives = new String[] {
-      "split-email email",
-    };
+    @Test
+    public void testBadEmailId() throws Exception {
+        String[] directives = new String[]{
+                "split-email email",
+        };
 
-    List<Row> rows = Arrays.asList(
-      new Row("email", "root@hotmail@com"),
-      new Row("email", "root.hotmail.com"),
-      new Row("email", ""),
-      new Row("email", null)
-    );
+        List<Row> rows = Arrays.asList(
+                new Row("email", "root@hotmail@com"),
+                new Row("email", "root.hotmail.com"),
+                new Row("email", ""),
+                new Row("email", null)
+        );
 
-    rows = TestingRig.execute(directives, rows);
-    Assert.assertTrue(rows.size() == 4);
+        rows = TestingRig.execute(directives, rows);
+        Assert.assertTrue(rows.size() == 4);
 
-    Assert.assertNotNull(rows.get(0).getValue("email_account"));
-    Assert.assertNotNull(rows.get(0).getValue("email_domain"));
-    Assert.assertNull(rows.get(1).getValue("email_account"));
-  }
+        Assert.assertNotNull(rows.get(0).getValue("email_account"));
+        Assert.assertNotNull(rows.get(0).getValue("email_domain"));
+        Assert.assertNull(rows.get(1).getValue("email_account"));
+    }
 }

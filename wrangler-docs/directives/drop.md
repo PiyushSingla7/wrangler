@@ -2,24 +2,23 @@
 
 The DROP directive is used to drop a column in a record.
 
-
 ## Syntax
+
 ```
 drop <column>[,<column>]*
 ```
 
 The `<column>` is the name of the column in the record to be droped.
 
-
 ## Usage Notes
 
 After the DROP directive is applied, the column and its associated value are removed from
 the record. Later directives will not be able to reference the dropped column.
 
-
 ## Example
 
 Using this record as an example:
+
 ```
 {
   "id": 1,
@@ -30,11 +29,13 @@ Using this record as an example:
 ```
 
 Applying this directive:
+
 ```
 drop isvalid,measurement
 ```
 
 would result in a record with no `isvalid` or `measurement` fields:
+
 ```
 {
   "id": 1,

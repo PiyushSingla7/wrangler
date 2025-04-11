@@ -29,39 +29,39 @@ import java.util.List;
  */
 public class CreateRecordTest {
 
-  /**
-   * | col1 | col2 | col3
-   * | "A"  | "B"  | "C"
-   *
-   * Directive
-   * create-record :result, :col1, :col2, :col3
-   *
-   * Result
-   *
-   * | col1 | col2 | col3 | result
-   * | "A"  | "B"  | "C" |  {col1: "A", col2: "B", col3: "C"}
-   *
-   * @throws Exception
-   */
-  @Test
-  public void testBasicCase() throws Exception {
-    String[] directives = new String[] {
-      "create-record :result :col1, :col2, :col3",
-    };
+    /**
+     * | col1 | col2 | col3
+     * | "A"  | "B"  | "C"
+     * <p>
+     * Directive
+     * create-record :result, :col1, :col2, :col3
+     * <p>
+     * Result
+     * <p>
+     * | col1 | col2 | col3 | result
+     * | "A"  | "B"  | "C" |  {col1: "A", col2: "B", col3: "C"}
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testBasicCase() throws Exception {
+        String[] directives = new String[]{
+                "create-record :result :col1, :col2, :col3",
+        };
 
-    Row newObjectRow = new Row("col1", "A")
-      .add("col2", "B")
-      .add("col3", "C");
+        Row newObjectRow = new Row("col1", "A")
+                .add("col2", "B")
+                .add("col3", "C");
 
 
-    List<Row> rows = Arrays.asList(
-      new Row(newObjectRow)
-    );
+        List<Row> rows = Arrays.asList(
+                new Row(newObjectRow)
+        );
 
-    rows = TestingRig.execute(directives, rows);
+        rows = TestingRig.execute(directives, rows);
 
-    Row expectedResultRow = new Row(newObjectRow).add("result", newObjectRow);
-    Assert.assertTrue(expectedResultRow.equals(rows.get(0)));
-  }
+        Row expectedResultRow = new Row(newObjectRow).add("result", newObjectRow);
+        Assert.assertTrue(expectedResultRow.equals(rows.get(0)));
+    }
 
 }

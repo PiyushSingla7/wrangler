@@ -24,29 +24,29 @@ import java.util.List;
  * Utility methods for {@link Row}
  */
 public class RowHelper {
-  private RowHelper() {
-    throw new AssertionError("Cannot instantiate a static utility class");
-  }
-
-  /**
-   * Creates a merged record after iterating through all rows.
-   *
-   * @param rows list of all rows.
-   * @return A single record will rows merged across all columns.
-   */
-  public static Row createMergedRow(List<Row> rows) {
-    Row merged = new Row();
-    for (Row row : rows) {
-      for (int i = 0; i < row.width(); ++i) {
-        Object o = row.getValue(i);
-        if (o != null) {
-          int idx = merged.find(row.getColumn(i));
-          if (idx == -1) {
-            merged.add(row.getColumn(i), o);
-          }
-        }
-      }
+    private RowHelper() {
+        throw new AssertionError("Cannot instantiate a static utility class");
     }
-    return merged;
-  }
+
+    /**
+     * Creates a merged record after iterating through all rows.
+     *
+     * @param rows list of all rows.
+     * @return A single record will rows merged across all columns.
+     */
+    public static Row createMergedRow(List<Row> rows) {
+        Row merged = new Row();
+        for (Row row : rows) {
+            for (int i = 0; i < row.width(); ++i) {
+                Object o = row.getValue(i);
+                if (o != null) {
+                    int idx = merged.find(row.getColumn(i));
+                    if (idx == -1) {
+                        merged.add(row.getColumn(i), o);
+                    }
+                }
+            }
+        }
+        return merged;
+    }
 }

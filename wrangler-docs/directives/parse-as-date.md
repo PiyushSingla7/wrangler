@@ -2,8 +2,8 @@
 
 The PARSE-AS-DATE directive is for parsing dates using natural language processing.
 
-
 ## Syntax
+
 ```
 parse-as-date <column> [<time-zone>]
 ```
@@ -23,10 +23,10 @@ It will create a new column using the syntax `<column>_1` containing the results
 
 If `<time-zone>` is not provided, UTC is used as the timezone.
 
-
 ## Examples
 
 Using this record as an example:
+
 ```
 {
   "create_date": "now",
@@ -34,11 +34,13 @@ Using this record as an example:
 ```
 
 Applying this directive:
+
 ```
 parse-as-date create_date US/Eastern
 ```
 
 would result in this record (the actual results depending on when this was run):
+
 ```
 {
   "create_date": "now",

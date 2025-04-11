@@ -21,10 +21,10 @@ package io.cdap.wrangler.schema;
  * NOTE: Please add any needed value in {@link io.cdap.wrangler.api.RemoteDirectiveResponse}
  */
 public final class TransientStoreKeys {
-  public static final String INPUT_SCHEMA = "ws_input_schema";
-  public static final String OUTPUT_SCHEMA = "ws_output_schema";
+    public static final String INPUT_SCHEMA = "ws_input_schema";
+    public static final String OUTPUT_SCHEMA = "ws_output_schema";
 
-  private TransientStoreKeys() {
-    throw new AssertionError("Cannot instantiate a static utility class.");
-  }
+    private TransientStoreKeys() {
+        throw new AssertionError("Cannot instantiate a static utility class.");
+    }
 }

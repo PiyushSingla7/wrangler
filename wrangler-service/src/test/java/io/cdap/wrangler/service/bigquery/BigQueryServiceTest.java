@@ -31,22 +31,22 @@ import java.util.Set;
  */
 public class BigQueryServiceTest {
 
-  @Test
-  public void testDatasetWhitelistParsing() {
-    ConnectionMeta connection = ConnectionMeta.builder()
-      .setName("test")
-      .setType(ConnectionType.BIGQUERY)
-      .putProperty(GCPUtils.PROJECT_ID, "pX")
-      // [p0,d0], [p1,d1], 'p2:' is invalid and should be ignored, [pX,d2], [pX,d3]
-      .putProperty("datasetWhitelist", "p0:d0 , p1:d1 , p2: , d2 , :d3")
-      .build();
+    @Test
+    public void testDatasetWhitelistParsing() {
+        ConnectionMeta connection = ConnectionMeta.builder()
+                .setName("test")
+                .setType(ConnectionType.BIGQUERY)
+                .putProperty(GCPUtils.PROJECT_ID, "pX")
+                // [p0,d0], [p1,d1], 'p2:' is invalid and should be ignored, [pX,d2], [pX,d3]
+                .putProperty("datasetWhitelist", "p0:d0 , p1:d1 , p2: , d2 , :d3")
+                .build();
 
-    Set<DatasetId> expected = new HashSet<>();
-    expected.add(DatasetId.of("p0", "d0"));
-    expected.add(DatasetId.of("p1", "d1"));
-    expected.add(DatasetId.of("pX", "d2"));
-    expected.add(DatasetId.of("pX", "d3"));
-    Set<DatasetId> actual = BigQueryHandler.getDatasetWhitelist(connection);
-    Assert.assertEquals(expected, actual);
-  }
+        Set<DatasetId> expected = new HashSet<>();
+        expected.add(DatasetId.of("p0", "d0"));
+        expected.add(DatasetId.of("p1", "d1"));
+        expected.add(DatasetId.of("pX", "d2"));
+        expected.add(DatasetId.of("pX", "d3"));
+        Set<DatasetId> actual = BigQueryHandler.getDatasetWhitelist(connection);
+        Assert.assertEquals(expected, actual);
+    }
 }

@@ -31,71 +31,72 @@ import java.util.stream.Collectors;
  */
 public class AvroSchemaGlossary {
 
-  private static final Logger LOG = LoggerFactory.getLogger(AvroSchemaGlossary.class);
-  private static final String REVISION_PROPERTY = "_revision";
+    private static final Logger LOG = LoggerFactory.getLogger(AvroSchemaGlossary.class);
+    private static final String REVISION_PROPERTY = "_revision";
 
-  private AvroSchemaLoader avroSchemaLoader;
-  private SetValuedMap<String, Schema> glossary = new HashSetValuedHashMap<>();
+    private AvroSchemaLoader avroSchemaLoader;
+    private SetValuedMap<String, Schema> glossary = new HashSetValuedHashMap<>();
 
-  public AvroSchemaGlossary(AvroSchemaLoader avroSchemaLoader) {
-    this.avroSchemaLoader = avroSchemaLoader;
-  }
-
-  /**
-   * Setter for the {@link AvroSchemaLoader} to use when populating the glossary.
-   *
-   * @param avroSchemaLoader the loader used to populate the glossary.
-   */
-  public void setAvroSchemaLoader(AvroSchemaLoader avroSchemaLoader) {
-    this.avroSchemaLoader = avroSchemaLoader;
-  }
-  /**
-   * Configures the {@link AvroSchemaGlossary} with the schemas accessible through the {@link AvroSchemaLoader}.
-   *
-   * @return true if successfully configure, otherwise false.
-   */
-  public boolean configure() {
-    try {
-      glossary = avroSchemaLoader.load();
-    } catch (IOException e) {
-      return false;
+    public AvroSchemaGlossary(AvroSchemaLoader avroSchemaLoader) {
+        this.avroSchemaLoader = avroSchemaLoader;
     }
-    return true;
-  }
 
-  /**
-   * Retrieves the {@link Schema} from the glossary.
-   *
-   * @param name the name of the schema to retrieve.
-   * @param revision the revision of the schema to retrieve.
-   * @return {@link Schema} if found, otherwise null.
-   */
-  public Schema get(String name, long revision) {
-    Collection<Schema> schemas = glossary.get(name);
-    Schema result = null;
-    for (Schema schema : schemas) {
-      try {
-        long rev = Long.parseLong(schema.getProp(AvroSchemaGlossary.REVISION_PROPERTY), 10);
-        if (rev == revision) {
-          result = schema;
-          break;
+    /**
+     * Setter for the {@link AvroSchemaLoader} to use when populating the glossary.
+     *
+     * @param avroSchemaLoader the loader used to populate the glossary.
+     */
+    public void setAvroSchemaLoader(AvroSchemaLoader avroSchemaLoader) {
+        this.avroSchemaLoader = avroSchemaLoader;
+    }
+
+    /**
+     * Configures the {@link AvroSchemaGlossary} with the schemas accessible through the {@link AvroSchemaLoader}.
+     *
+     * @return true if successfully configure, otherwise false.
+     */
+    public boolean configure() {
+        try {
+            glossary = avroSchemaLoader.load();
+        } catch (IOException e) {
+            return false;
         }
-      } catch (NumberFormatException e) {
-        LOG.error(String.format("unable to parse %s property within schema %s", AvroSchemaGlossary.REVISION_PROPERTY,
-                                schema.getFullName()));
-      }
+        return true;
     }
-    return result;
-  }
 
-  /**
-   * Retrieves all of the {@link Schema} contained within the glossary.
-   *
-   * @return a collection of all {@link Schema}
-   */
-  public Collection<Schema> getAll() {
-    return glossary.entries().stream()
-      .map(Map.Entry::getValue)
-      .collect(Collectors.toList());
-  }
+    /**
+     * Retrieves the {@link Schema} from the glossary.
+     *
+     * @param name     the name of the schema to retrieve.
+     * @param revision the revision of the schema to retrieve.
+     * @return {@link Schema} if found, otherwise null.
+     */
+    public Schema get(String name, long revision) {
+        Collection<Schema> schemas = glossary.get(name);
+        Schema result = null;
+        for (Schema schema : schemas) {
+            try {
+                long rev = Long.parseLong(schema.getProp(AvroSchemaGlossary.REVISION_PROPERTY), 10);
+                if (rev == revision) {
+                    result = schema;
+                    break;
+                }
+            } catch (NumberFormatException e) {
+                LOG.error(String.format("unable to parse %s property within schema %s", AvroSchemaGlossary.REVISION_PROPERTY,
+                        schema.getFullName()));
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Retrieves all of the {@link Schema} contained within the glossary.
+     *
+     * @return a collection of all {@link Schema}
+     */
+    public Collection<Schema> getAll() {
+        return glossary.entries().stream()
+                .map(Map.Entry::getValue)
+                .collect(Collectors.toList());
+    }
 }

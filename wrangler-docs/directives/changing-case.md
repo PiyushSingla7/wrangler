@@ -3,8 +3,8 @@
 The UPPERCASE, LOWERCASE, and TITLECASE directives change the case of column
 values they are applied to.
 
-
 ## Syntax
+
 ```
 lowercase <column>
 uppercase <column>
@@ -13,10 +13,10 @@ titlecase <column>
 
 The directive performs an in-place change of case.
 
-
 ## Example
 
 Using this record as an example:
+
 ```
 {
   "id": 1,
@@ -28,6 +28,7 @@ Using this record as an example:
 ```
 
 Applying these directives
+
 ```
 uppercase gender
 titlecase fname
@@ -36,6 +37,7 @@ lowercase address
 ```
 
 would result in this record:
+
 ```
 {
   "id": 1,

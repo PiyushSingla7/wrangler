@@ -20,19 +20,19 @@ package io.cdap.wrangler.proto;
  * An exception that has an associated status code.
  */
 public class StatusCodeException extends RuntimeException {
-  private final int code;
+    private final int code;
 
-  public StatusCodeException(String s, int code) {
-    super(s);
-    this.code = code;
-  }
+    public StatusCodeException(String s, int code) {
+        super(s);
+        this.code = code;
+    }
 
-  public StatusCodeException(String s, Throwable throwable, int code) {
-    super(s, throwable);
-    this.code = code;
-  }
+    public StatusCodeException(String s, Throwable throwable, int code) {
+        super(s, throwable);
+        this.code = code;
+    }
 
-  public int getCode() {
-    return code;
-  }
+    public int getCode() {
+        return code;
+    }
 }

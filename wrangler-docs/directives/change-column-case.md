@@ -2,18 +2,18 @@
 
 The CHANGE-COLUMN-CASE directive changes column names to either lowercase or uppercase.
 
-
 ## Syntax
+
 ```
 change-column-case lower|upper
 ```
 
 If the case specified is either incorrect or missing, it defaults to lowercase.
 
-
 ## Examples
 
 Using this record as an example:
+
 ```
 {
   "Id": 1,
@@ -25,11 +25,13 @@ Using this record as an example:
 ```
 
 Applying this directive:
+
 ```
 change-column-case lower
 ```
 
 would result in this record:
+
 ```
 {
   "id": 1,
@@ -41,11 +43,13 @@ would result in this record:
 ```
 
 Applying this directive:
+
 ```
 change-column-case upper
 ```
 
 would result in this record:
+
 ```
 {
   "ID": 1,

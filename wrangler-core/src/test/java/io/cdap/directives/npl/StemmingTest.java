@@ -31,55 +31,55 @@ import java.util.List;
  */
 public class StemmingTest {
 
-  @Test
-  public void testPorterStemming() throws Exception {
-    PorterStemmer stemmer = new PorterStemmer();
-    String[] i = new String[]{
-      "How",
-      "are",
-      "you",
-      "doing",
-      "do",
-      "you",
-      "have",
-      "apples"
-    };
-    List<String> o = stemmer.process(Arrays.asList(i));
-    Assert.assertTrue(o.size() > 1);
-  }
+    @Test
+    public void testPorterStemming() throws Exception {
+        PorterStemmer stemmer = new PorterStemmer();
+        String[] i = new String[]{
+                "How",
+                "are",
+                "you",
+                "doing",
+                "do",
+                "you",
+                "have",
+                "apples"
+        };
+        List<String> o = stemmer.process(Arrays.asList(i));
+        Assert.assertTrue(o.size() > 1);
+    }
 
-  @Test
-  public void testStemming() throws Exception {
-    String[] directives = new String[] {
-      "stemming words",
-    };
+    @Test
+    public void testStemming() throws Exception {
+        String[] directives = new String[]{
+                "stemming words",
+        };
 
-    List<Row> rows = Arrays.asList(
-      new Row("words", Arrays.asList("how", "are", "you", "doing", "do", "you", "have", "apples"))
-    );
+        List<Row> rows = Arrays.asList(
+                new Row("words", Arrays.asList("how", "are", "you", "doing", "do", "you", "have", "apples"))
+        );
 
-    rows = TestingRig.execute(directives, rows);
+        rows = TestingRig.execute(directives, rows);
 
-    Assert.assertTrue(rows.size() == 1);
-    Assert.assertEquals(Arrays.asList("how", "ar", "you", "do", "do", "you", "have", "appl"),
-                        rows.get(0).getValue("words_porter"));
-  }
+        Assert.assertTrue(rows.size() == 1);
+        Assert.assertEquals(Arrays.asList("how", "ar", "you", "do", "do", "you", "have", "appl"),
+                rows.get(0).getValue("words_porter"));
+    }
 
-  @Test
-  public void testStringStemming() throws Exception {
-    String[] directives = new String[] {
-      "stemming words",
-    };
+    @Test
+    public void testStringStemming() throws Exception {
+        String[] directives = new String[]{
+                "stemming words",
+        };
 
-    List<Row> rows = Arrays.asList(
-      new Row("words", "how are you doing ? do you have apples")
-    );
+        List<Row> rows = Arrays.asList(
+                new Row("words", "how are you doing ? do you have apples")
+        );
 
-    rows = TestingRig.execute(directives, rows);
+        rows = TestingRig.execute(directives, rows);
 
-    Assert.assertTrue(rows.size() == 1);
-    Assert.assertEquals(Arrays.asList("how", "ar", "you", "do", "do", "you", "have", "appl"),
-                        rows.get(0).getValue("words_porter"));
-  }
+        Assert.assertTrue(rows.size() == 1);
+        Assert.assertEquals(Arrays.asList("how", "ar", "you", "do", "do", "you", "have", "appl"),
+                rows.get(0).getValue("words_porter"));
+    }
 
 }

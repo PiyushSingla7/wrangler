@@ -3,8 +3,8 @@
 The PARSE-AS-CURRENCY is a directive for parsing a currency value that is a string representation of locale currency
 into a number.
 
-
 ## Syntax
+
 ```
 parse-as-currency <source> <destination> [<locale>]
 ```
@@ -12,7 +12,6 @@ parse-as-currency <source> <destination> [<locale>]
 The `<source>` specifies the name of the column that contains string representation of locale currency.
 The `<destination>` contains the parsed value of currency as `double`. Optional locale specifies the
 locale to be used for parsing the string representation of currency in the `<source>` column.
-
 
 ## Usage Notes
 

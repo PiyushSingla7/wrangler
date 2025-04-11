@@ -20,11 +20,11 @@ package io.cdap.wrangler.service.explorer;
  * Exception thrown when there is issue with File System exploration.
  */
 public class ExplorerException extends Exception {
-  public ExplorerException(String message) {
-    super(message);
-  }
+    public ExplorerException(String message) {
+        super(message);
+    }
 
-  public ExplorerException(Exception e) {
-    super(e);
-  }
+    public ExplorerException(Exception e) {
+        super(e);
+    }
 }

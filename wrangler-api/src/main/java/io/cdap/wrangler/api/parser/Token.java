@@ -14,48 +14,47 @@
  * the License.
  */
 
- package io.cdap.wrangler.api.parser;
+package io.cdap.wrangler.api.parser;
 
- import java.io.Serializable;
+import com.google.gson.JsonElement;
+import io.cdap.wrangler.api.annotations.PublicEvolving;
 
- import com.google.gson.JsonElement;
+import java.io.Serializable;
 
- import io.cdap.wrangler.api.annotations.PublicEvolving;
- 
- /**
-  * The <code>Token</code> class represents the object that contains the value and type of
-  * the token as parsed by the parser of the grammar defined for the recipe.
-  *
-  * <p>This class provides methods for retrieving the wrapped value of the token parsed,
-  * as well as the type of token the implementation of this interface represents.</p>
-  *
-  * <p>It also provides a method for providing the {@code JsonElement} representation
-  * of the implementation of this interface.</p>
-  */
- @PublicEvolving
- public interface Token extends Serializable {
- 
-     /**
-      * Returns the {@code value} of the object wrapped by the implementation
-      * of this interface.
-      *
-      * @return The {@code value} wrapped by the implementation of this interface.
-      */
-     Object value();
- 
-     /**
-      * Returns the {@code TokenType} of the object represented by the implementation
-      * of this interface.
-      *
-      * @return The {@code TokenType} of the implementation object.
-      */
-     TokenType type();
- 
-     /**
-      * The class implementing this interface will return the {@code JsonElement}
-      * instance including the values of the object.
-      *
-      * @return The {@code JsonElement} object containing members of the implementing class.
-      */
-     JsonElement toJson();
- }
+/**
+ * The <code>Token</code> class represents the object that contains the value and type of
+ * the token as parsed by the parser of the grammar defined for the recipe.
+ *
+ * <p>This class provides methods for retrieving the wrapped value of the token parsed,
+ * as well as the type of token the implementation of this interface represents.</p>
+ *
+ * <p>It also provides a method for providing the {@code JsonElement} representation
+ * of the implementation of this interface.</p>
+ */
+@PublicEvolving
+public interface Token extends Serializable {
+
+    /**
+     * Returns the {@code value} of the object wrapped by the implementation
+     * of this interface.
+     *
+     * @return The {@code value} wrapped by the implementation of this interface.
+     */
+    Object value();
+
+    /**
+     * Returns the {@code TokenType} of the object represented by the implementation
+     * of this interface.
+     *
+     * @return The {@code TokenType} of the implementation object.
+     */
+    TokenType type();
+
+    /**
+     * The class implementing this interface will return the {@code JsonElement}
+     * instance including the values of the object.
+     *
+     * @return The {@code JsonElement} object containing members of the implementing class.
+     */
+    JsonElement toJson();
+}

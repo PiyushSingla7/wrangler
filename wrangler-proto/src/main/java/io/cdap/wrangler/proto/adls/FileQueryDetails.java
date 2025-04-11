@@ -20,43 +20,43 @@ package io.cdap.wrangler.proto.adls;
  */
 public class FileQueryDetails {
 
-  private String filePath;
-  private int lines;
-  private String sampler;
-  private double fraction;
-  private String scope;
-  private String header;
+    private String filePath;
+    private int lines;
+    private String sampler;
+    private double fraction;
+    private String scope;
+    private String header;
 
-  public FileQueryDetails(String header, String filePath, int lines, String sampler, double fraction, String scope) {
-    this.filePath = filePath;
-    this.lines = lines;
-    this.sampler = sampler;
-    this.fraction = fraction;
-    this.scope = scope;
-    this.header = header;
-  }
+    public FileQueryDetails(String header, String filePath, int lines, String sampler, double fraction, String scope) {
+        this.filePath = filePath;
+        this.lines = lines;
+        this.sampler = sampler;
+        this.fraction = fraction;
+        this.scope = scope;
+        this.header = header;
+    }
 
-  public String getFilePath() {
-    return filePath;
-  }
+    public String getFilePath() {
+        return filePath;
+    }
 
-  public String getHeader() {
-    return header;
-  }
+    public String getHeader() {
+        return header;
+    }
 
-  public int getLines() {
-    return lines;
-  }
+    public int getLines() {
+        return lines;
+    }
 
-  public String getSampler() {
-    return sampler;
-  }
+    public String getSampler() {
+        return sampler;
+    }
 
-  public double getFraction() {
-    return fraction;
-  }
+    public double getFraction() {
+        return fraction;
+    }
 
-  public String getScope() {
-    return scope;
-  }
+    public String getScope() {
+        return scope;
+    }
 }

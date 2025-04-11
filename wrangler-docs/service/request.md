@@ -5,14 +5,13 @@ arguments. This causes issues on some browsers as there are limits as to how muc
 be pushed using this approach. This document describes the format that is used for sending
 a request to the back-end.
 
-
 ## Specification Version
 
 This document covers version 1.0 of the request specification and details how this should
 be handled on the front- and back-ends.
 
-
 ## JSON Request Format
+
 ```
   {
     "version": 1.0
@@ -43,7 +42,6 @@ be handled on the front- and back-ends.
 Specifies the version of this specification (`1.0`). If there are any additions or
 deletions to the specification, this version would be updated.
 
-
 ### Workspace
 
 This section of the specification provides information about the workspace that directives
@@ -51,10 +49,9 @@ are being applied in and the number of records (the `results`) that the request 
 return when the results are computed.
 
 | Field     | Mandatory | Description                                                                          |
-| :-------- | :-------: | :----------------------------------------------------------------------------------- |
-| `name`    | Yes       | Name of the workspace that Data Prep should operate on                               |
-| `results` | Yes       | Number of records that should be returned in response to execution of the directives |
-
+|:----------|:---------:|:-------------------------------------------------------------------------------------|
+| `name`    |    Yes    | Name of the workspace that Data Prep should operate on                               |
+| `results` |    Yes    | Number of records that should be returned in response to execution of the directives |
 
 ### Recipe
 
@@ -62,11 +59,10 @@ This section of the specification contains all of the directives that are to be 
 the data in the workspace, with an option to save the directives as a recipe with a name.
 
 | Field        | Mandatory | Description                                                                                            |
-| :----------- | :-------: | :----------------------------------------------------------------------------------------------------- |
-| `directives` | Yes       | List of directives to be applied on the data                                                           |
-| `save`       | No        | If `true`, specifies that the directives should be saved. If so, then `name` should also be specified. |
-| `name`       | No        | Name of the recipe. This option is valid only when `save` is set to `true`.                            |
-
+|:-------------|:---------:|:-------------------------------------------------------------------------------------------------------|
+| `directives` |    Yes    | List of directives to be applied on the data                                                           |
+| `save`       |    No     | If `true`, specifies that the directives should be saved. If so, then `name` should also be specified. |
+| `name`       |    No     | Name of the recipe. This option is valid only when `save` is set to `true`.                            |
 
 ### Sampling
 
@@ -74,11 +70,10 @@ This section of the specification provides information about how the input data 
 sampled.
 
 | Field    | Mandatory | Description                                                                                 |
-| :------- | :-------: | :------------------------------------------------------------------------------------------ |
-| `method` | Yes       | Type of sampling to be applied while selecting input data. Currently only supports `first`. |
-| `seed`   | No        | The random seed to be used when sampling data                                               |
-| `limit`  | Yes       | The number of input records to be read from the source when applying directives             |
-
+|:---------|:---------:|:--------------------------------------------------------------------------------------------|
+| `method` |    Yes    | Type of sampling to be applied while selecting input data. Currently only supports `first`. |
+| `seed`   |    No     | The random seed to be used when sampling data                                               |
+| `limit`  |    Yes    | The number of input records to be read from the source when applying directives             |
 
 ## Example
 

@@ -30,33 +30,33 @@ import java.util.List;
  */
 public class MessageHashTest {
 
-  @Test
-  public void testHashBasic() throws Exception {
-    String[] directives = new String[] {
-      "hash message1 SHA-384 true",
-      "hash message2 SHA-384 false",
-    };
+    @Test
+    public void testHashBasic() throws Exception {
+        String[] directives = new String[]{
+                "hash message1 SHA-384 true",
+                "hash message2 SHA-384 false",
+        };
 
-    List<Row> rows = Arrays.asList(
-      new Row("message1", "secret message.")
-          .add("message2", "This is a very secret message and a digest will be created.")
-    );
+        List<Row> rows = Arrays.asList(
+                new Row("message1", "secret message.")
+                        .add("message2", "This is a very secret message and a digest will be created.")
+        );
 
-    rows = TestingRig.execute(directives, rows);
-    Assert.assertEquals(1, rows.size());
-  }
+        rows = TestingRig.execute(directives, rows);
+        Assert.assertEquals(1, rows.size());
+    }
 
-  @Test(expected = RecipeException.class)
-  public void testBadAlgorithm() throws Exception {
-    String[] directives = new String[] {
-      "hash message1 SHA-385 true",
-    };
+    @Test(expected = RecipeException.class)
+    public void testBadAlgorithm() throws Exception {
+        String[] directives = new String[]{
+                "hash message1 SHA-385 true",
+        };
 
-    List<Row> rows = Arrays.asList(
-      new Row("message1", "This is a very secret message and a digest will be created.")
-    );
+        List<Row> rows = Arrays.asList(
+                new Row("message1", "This is a very secret message and a digest will be created.")
+        );
 
-    TestingRig.execute(directives, rows);
-  }
+        TestingRig.execute(directives, rows);
+    }
 
 }

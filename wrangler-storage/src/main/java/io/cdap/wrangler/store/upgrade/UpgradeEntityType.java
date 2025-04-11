@@ -21,6 +21,6 @@ package io.cdap.wrangler.store.upgrade;
  * Upgrade entity type
  */
 public enum UpgradeEntityType {
-  WORKSPACE,
-  CONNECTION
+    WORKSPACE,
+    CONNECTION
 }

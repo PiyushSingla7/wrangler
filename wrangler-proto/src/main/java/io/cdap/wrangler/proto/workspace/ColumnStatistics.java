@@ -16,28 +16,28 @@
 
 package io.cdap.wrangler.proto.workspace;
 
-import java.util.Map;
 import javax.annotation.Nullable;
+import java.util.Map;
 
 /**
  * Statistics about the result of executing directives on a workspace.
  */
 public class ColumnStatistics {
-  private final Map<String, Float> general;
-  private final Map<String, Float> types;
+    private final Map<String, Float> general;
+    private final Map<String, Float> types;
 
-  public ColumnStatistics(@Nullable Map<String, Float> general, @Nullable Map<String, Float> types) {
-    this.general = general;
-    this.types = types;
-  }
+    public ColumnStatistics(@Nullable Map<String, Float> general, @Nullable Map<String, Float> types) {
+        this.general = general;
+        this.types = types;
+    }
 
-  @Nullable
-  public Map<String, Float> getGeneral() {
-    return general;
-  }
+    @Nullable
+    public Map<String, Float> getGeneral() {
+        return general;
+    }
 
-  @Nullable
-  public Map<String, Float> getTypes() {
-    return types;
-  }
+    @Nullable
+    public Map<String, Float> getTypes() {
+        return types;
+    }
 }

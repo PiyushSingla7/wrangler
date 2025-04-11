@@ -21,10 +21,10 @@ import io.cdap.cdap.api.artifact.ArtifactSummary;
 import io.cdap.wrangler.api.DirectiveLoadException;
 import io.cdap.wrangler.utils.ArtifactSummaryComparator;
 
+import javax.annotation.Nullable;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Nullable;
 
 /**
  * This class implements a Composition of multiple registries.
@@ -36,78 +36,78 @@ import javax.annotation.Nullable;
  * is returned.</p>
  */
 public final class CompositeDirectiveRegistry implements DirectiveRegistry {
-  private final DirectiveRegistry[] registries;
+    private final DirectiveRegistry[] registries;
 
-  public CompositeDirectiveRegistry(DirectiveRegistry ... registries) {
-    this.registries = registries;
-  }
-
-  /**
-   * This method looks for the <tt>directive</tt> in all the registered registries.
-   *
-   * <p>The order of search is as specified by the collection order. Upon finding
-   * the first valid instance of directive, the <tt>DirectiveInfo</tt> is returned.</p>
-   *
-   * @param directive of the directive to be retrived from the registry.
-   * @return an instance of {@link DirectiveInfo} if found, else null.
-   */
-  @Nullable
-  @Override
-  public DirectiveInfo get(String namespace, String directive) throws DirectiveLoadException {
-    for (DirectiveRegistry registry : registries) {
-      DirectiveInfo info = registry.get(namespace, directive);
-      if (info != null) {
-        return info;
-      }
+    public CompositeDirectiveRegistry(DirectiveRegistry... registries) {
+        this.registries = registries;
     }
-    return null;
-  }
 
-  @Override
-  public void reload(String namespace) throws DirectiveLoadException {
-    for (DirectiveRegistry registry : registries) {
-      registry.reload(namespace);
+    /**
+     * This method looks for the <tt>directive</tt> in all the registered registries.
+     *
+     * <p>The order of search is as specified by the collection order. Upon finding
+     * the first valid instance of directive, the <tt>DirectiveInfo</tt> is returned.</p>
+     *
+     * @param directive of the directive to be retrived from the registry.
+     * @return an instance of {@link DirectiveInfo} if found, else null.
+     */
+    @Nullable
+    @Override
+    public DirectiveInfo get(String namespace, String directive) throws DirectiveLoadException {
+        for (DirectiveRegistry registry : registries) {
+            DirectiveInfo info = registry.get(namespace, directive);
+            if (info != null) {
+                return info;
+            }
+        }
+        return null;
     }
-  }
 
-  @Nullable
-  @Override
-  public ArtifactSummary getLatestWranglerArtifact() {
-    ArtifactSummary latestArtifact = null;
-    for (DirectiveRegistry registry : registries) {
-      ArtifactSummary artifact = registry.getLatestWranglerArtifact();
-      if (artifact == null) {
-        continue;
-      }
-      if (latestArtifact == null) {
-        latestArtifact = artifact;
-      } else {
-        latestArtifact = ArtifactSummaryComparator.pickLatest(latestArtifact, artifact);
-      }
+    @Override
+    public void reload(String namespace) throws DirectiveLoadException {
+        for (DirectiveRegistry registry : registries) {
+            registry.reload(namespace);
+        }
     }
-    return latestArtifact;
-  }
 
-  /**
-   * @return Returns an iterator to iterate through all the <code>DirectiveInfo</code> objects
-   * maintained within the registry.
-   */
-  @Override
-  public Iterable<DirectiveInfo> list(String namespace) {
-    List<Iterable<DirectiveInfo>> lists = new ArrayList<>();
-    for (DirectiveRegistry registry : registries) {
-      lists.add(registry.list(namespace));
+    @Nullable
+    @Override
+    public ArtifactSummary getLatestWranglerArtifact() {
+        ArtifactSummary latestArtifact = null;
+        for (DirectiveRegistry registry : registries) {
+            ArtifactSummary artifact = registry.getLatestWranglerArtifact();
+            if (artifact == null) {
+                continue;
+            }
+            if (latestArtifact == null) {
+                latestArtifact = artifact;
+            } else {
+                latestArtifact = ArtifactSummaryComparator.pickLatest(latestArtifact, artifact);
+            }
+        }
+        return latestArtifact;
     }
-    return Iterables.concat(lists);
-  }
 
-  /**
-   * Closes any resources acquired during initialization or otherwise.
-   */
-  @Override
-  public void close() throws IOException {
-    for (DirectiveRegistry registry : registries) {
-      registry.close();
+    /**
+     * @return Returns an iterator to iterate through all the <code>DirectiveInfo</code> objects
+     * maintained within the registry.
+     */
+    @Override
+    public Iterable<DirectiveInfo> list(String namespace) {
+        List<Iterable<DirectiveInfo>> lists = new ArrayList<>();
+        for (DirectiveRegistry registry : registries) {
+            lists.add(registry.list(namespace));
+        }
+        return Iterables.concat(lists);
     }
-  }
+
+    /**
+     * Closes any resources acquired during initialization or otherwise.
+     */
+    @Override
+    public void close() throws IOException {
+        for (DirectiveRegistry registry : registries) {
+            registry.close();
+        }
+    }
 }

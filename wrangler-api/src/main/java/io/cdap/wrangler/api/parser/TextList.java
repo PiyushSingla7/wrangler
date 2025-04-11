@@ -29,32 +29,32 @@ import java.util.List;
  */
 @PublicEvolving
 public class TextList implements Token {
-  private List<String> values;
+    private List<String> values;
 
-  public TextList(List<String> values) {
-    this.values = values;
-  }
-
-  @Override
-  public List<String> value() {
-    return values;
-  }
-
-  @Override
-  public TokenType type() {
-    return TokenType.TEXT_LIST;
-  }
-
-
-  @Override
-  public JsonElement toJson() {
-    JsonObject object = new JsonObject();
-    object.addProperty("type", TokenType.TEXT_LIST.name());
-    JsonArray array = new JsonArray();
-    for (String value : values) {
-      array.add(new JsonPrimitive(value));
+    public TextList(List<String> values) {
+        this.values = values;
     }
-    object.add("value", array);
-    return object;
-  }
+
+    @Override
+    public List<String> value() {
+        return values;
+    }
+
+    @Override
+    public TokenType type() {
+        return TokenType.TEXT_LIST;
+    }
+
+
+    @Override
+    public JsonElement toJson() {
+        JsonObject object = new JsonObject();
+        object.addProperty("type", TokenType.TEXT_LIST.name());
+        JsonArray array = new JsonArray();
+        for (String value : values) {
+            array.add(new JsonPrimitive(value));
+        }
+        object.add("value", array);
+        return object;
+    }
 }

@@ -27,27 +27,27 @@ import java.util.Set;
  * V2 version of execution response
  */
 public class DirectiveExecutionResponse extends ServiceResponse<Map<String, Object>> {
-  private final Set<String> headers;
-  private final Map<String, String> types;
-  private final WorkspaceValidationResult summary;
+    private final Set<String> headers;
+    private final Map<String, String> types;
+    private final WorkspaceValidationResult summary;
 
-  public DirectiveExecutionResponse(List<Map<String, Object>> values, Set<String> headers, Map<String, String> types,
-                                    WorkspaceValidationResult summary) {
-    super(values);
-    this.headers = headers;
-    this.types = types;
-    this.summary = summary;
-  }
+    public DirectiveExecutionResponse(List<Map<String, Object>> values, Set<String> headers, Map<String, String> types,
+                                      WorkspaceValidationResult summary) {
+        super(values);
+        this.headers = headers;
+        this.types = types;
+        this.summary = summary;
+    }
 
-  public Set<String> getHeaders() {
-    return headers;
-  }
+    public Set<String> getHeaders() {
+        return headers;
+    }
 
-  public Map<String, String> getTypes() {
-    return types;
-  }
+    public Map<String, String> getTypes() {
+        return types;
+    }
 
-  public WorkspaceValidationResult getSummary() {
-    return summary;
-  }
+    public WorkspaceValidationResult getSummary() {
+        return summary;
+    }
 }

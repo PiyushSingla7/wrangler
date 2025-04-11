@@ -29,30 +29,30 @@ import java.util.List;
  */
 public class FailTest {
 
-  @Test(expected = RecipeException.class)
-  public void testFailEvaluationToTrue() throws Exception {
-    String[] directives = new String[] {
-      "fail count > 0",
-    };
+    @Test(expected = RecipeException.class)
+    public void testFailEvaluationToTrue() throws Exception {
+        String[] directives = new String[]{
+                "fail count > 0",
+        };
 
-    List<Row> rows = Arrays.asList(
-      new Row("count", 1)
-    );
+        List<Row> rows = Arrays.asList(
+                new Row("count", 1)
+        );
 
-    TestingRig.execute(directives, rows);
-  }
+        TestingRig.execute(directives, rows);
+    }
 
-  @Test
-  public void testFailEvaluationToFalse() throws Exception {
-    String[] directives = new String[] {
-      "fail count > 10",
-    };
+    @Test
+    public void testFailEvaluationToFalse() throws Exception {
+        String[] directives = new String[]{
+                "fail count > 10",
+        };
 
-    List<Row> rows = Arrays.asList(
-      new Row("count", 1)
-    );
+        List<Row> rows = Arrays.asList(
+                new Row("count", 1)
+        );
 
-    TestingRig.execute(directives, rows);
-  }
+        TestingRig.execute(directives, rows);
+    }
 
 }

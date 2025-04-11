@@ -23,9 +23,9 @@ import org.junit.Test;
  */
 public class SystemDirectiveRegistryTest {
 
-  @Test
-  public void testLoadingDefaults() throws Exception {
-    new SystemDirectiveRegistry();
-  }
+    @Test
+    public void testLoadingDefaults() throws Exception {
+        new SystemDirectiveRegistry();
+    }
 
 }

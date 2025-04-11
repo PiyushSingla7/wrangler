@@ -28,95 +28,91 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Tests {@link SetTransientVariable}
  */
 public class SetTransientVariableTest {
 
-  @Test
-  public void testSettingOfVariable() throws Exception {
-    String[] recipe = new String[]{
-      "set-variable test fwd == 0 ? A : test"
-    };
-
-    List<Row> rows = new ArrayList<>();
-    rows.add(new Row("fwd", 0).add("A", 2));
-    rows.add(new Row("fwd", 1).add("A", 2));
-
-    final Map<String, Object> s = new HashMap<>();
-    rows = TestingRig.execute(recipe, rows, new ExecutorContext() {
-      @Override
-      public Environment getEnvironment() {
-        return Environment.TESTING;
-      }
-
-      @Override
-      public String getNamespace() {
-        return Contexts.SYSTEM;
-      }
-
-      @Override
-      public StageMetrics getMetrics() {
-        return null;
-      }
-
-      @Override
-      public String getContextName() {
-        return "test";
-      }
-
-      @Override
-      public Map<String, String> getProperties() {
-        return new HashMap<>();
-      }
-
-      @Override
-      public URL getService(String applicationId, String serviceId) {
-        return null;
-      }
-
-      @Override
-      public TransientStore getTransientStore() {
-        return new TransientStore() {
-          @Override
-          public void reset(TransientVariableScope scope) {
-
-          }
-
-          @Override
-          public <T> T get(String name) {
-            return (T) s.get(name);
-          }
-
-          @Override
-          public void set(TransientVariableScope scope, String name, Object value) {
-            s.put(name, value);
-          }
-
-          @Override
-          public void increment(TransientVariableScope scope, String name, long value) {
-
-          }
-
-          @Override
-          public Set<String> getVariables() {
-            return s.keySet();
-          }
+    @Test
+    public void testSettingOfVariable() throws Exception {
+        String[] recipe = new String[]{
+                "set-variable test fwd == 0 ? A : test"
         };
-      }
 
-      @Override
-      public <T> Lookup<T> provide(String s, Map<String, String> map) {
-        return null;
-      }
-    });
-    Assert.assertEquals(2, rows.size());
-    Assert.assertEquals(2, s.get("test"));
-  }
+        List<Row> rows = new ArrayList<>();
+        rows.add(new Row("fwd", 0).add("A", 2));
+        rows.add(new Row("fwd", 1).add("A", 2));
+
+        final Map<String, Object> s = new HashMap<>();
+        rows = TestingRig.execute(recipe, rows, new ExecutorContext() {
+            @Override
+            public Environment getEnvironment() {
+                return Environment.TESTING;
+            }
+
+            @Override
+            public String getNamespace() {
+                return Contexts.SYSTEM;
+            }
+
+            @Override
+            public StageMetrics getMetrics() {
+                return null;
+            }
+
+            @Override
+            public String getContextName() {
+                return "test";
+            }
+
+            @Override
+            public Map<String, String> getProperties() {
+                return new HashMap<>();
+            }
+
+            @Override
+            public URL getService(String applicationId, String serviceId) {
+                return null;
+            }
+
+            @Override
+            public TransientStore getTransientStore() {
+                return new TransientStore() {
+                    @Override
+                    public void reset(TransientVariableScope scope) {
+
+                    }
+
+                    @Override
+                    public <T> T get(String name) {
+                        return (T) s.get(name);
+                    }
+
+                    @Override
+                    public void set(TransientVariableScope scope, String name, Object value) {
+                        s.put(name, value);
+                    }
+
+                    @Override
+                    public void increment(TransientVariableScope scope, String name, long value) {
+
+                    }
+
+                    @Override
+                    public Set<String> getVariables() {
+                        return s.keySet();
+                    }
+                };
+            }
+
+            @Override
+            public <T> Lookup<T> provide(String s, Map<String, String> map) {
+                return null;
+            }
+        });
+        Assert.assertEquals(2, rows.size());
+        Assert.assertEquals(2, s.get("test"));
+    }
 }

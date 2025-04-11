@@ -21,11 +21,11 @@ package io.cdap.wrangler.expression;
  */
 public class ELException extends Exception {
 
-  public ELException(Throwable cause) {
-    super(cause);
-  }
+    public ELException(Throwable cause) {
+        super(cause);
+    }
 
-  public ELException(String message, Throwable cause) {
-    super(message, cause);
-  }
+    public ELException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

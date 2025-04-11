@@ -2,15 +2,16 @@
 
 These are json functions that can be useful in transforming your json data.
 
- - `json-string` represents the string version of json.
- - `json-element` represents either the
-the json object or json array.
- - `json-object` and `json-array` represent different collections.
- - `json-null` represents a null element of json.
+- `json-string` represents the string version of json.
+- `json-element` represents either the
+  the json object or json array.
+- `json-object` and `json-array` represent different collections.
+- `json-null` represents a null element of json.
 
 ## Example data
 
 Upload to the workspace `json` an input record such as:
+
 ```
 {
     "name": {
@@ -62,16 +63,20 @@ Below is an example malformed json described as `malformed_json` that is missing
 ```
 
 ## Parse
+
 Parses a json into `json-element`. If there are any issues in parsing, the function returns
 `json-null`
 
 #### Namespace
+
 `json`
 
 #### Input
+
 json(String)
 
 #### Output
+
 parsed json(JsonElement)
 
 #### Example
@@ -90,15 +95,19 @@ When a malformed json `malformed_json` is parsed, then the result of operation i
 ```
 
 ## IsValid
+
 Returns `true` if json is valid, else `false`
 
 #### Namespace
+
 `json`
 
 #### Input
+
 json(String)
 
 #### Output
+
 boolean
 
 #### Example
@@ -116,15 +125,19 @@ When a malformed json `malformed_json` is parsed, then the result of operation i
 ```
 
 ## IsNull
+
 Returns `true` if json is `json-null` object, else `false`
 
 #### Namespace
+
 `json`
 
 #### Input
+
 json(JsonElement)
 
 #### Output
+
 boolean
 
 #### Example
@@ -144,15 +157,19 @@ When a malformed json `malformed_json` is parsed, then the result of operation i
 ```
 
 ## IsObject
+
 Returns `true` if json is `json-object` object, else `false`
 
 #### Namespace
+
 `json`
 
 #### Input
+
 json(JsonElement)
 
 #### Output
+
 boolean
 
 #### Example
@@ -165,20 +182,24 @@ If `body` has the input json specified, then the result of the operation returns
 ```
 
 ## Select
+
 Returns part of json specified by the given JSON Domain-Specific Language.
 
 #### Namespace
+
 `json`
 
 #### Input
+
 json(JsonElement), path(String), \[additional paths(String...)\]
 
 #### Output
+
 selected json(JsonArray)
 
 #### Example
 
-If `body` has the json specified above, then the result of the operation returns `[1, 2.1, 3, null, 4, 5, 6, null]` 
+If `body` has the json specified above, then the result of the operation returns `[1, 2.1, 3, null, 4, 5, 6, null]`
 as the result.
 
 ```
@@ -186,15 +207,19 @@ as the result.
 ```
 
 ## ArrayLength
+
 Returns the length of the json array.
 
 #### Namespace
+
 `json`
 
 #### Input
+
 array(JsonArray)
 
 #### Output
+
 number(`int`)
 
 #### Example

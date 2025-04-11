@@ -16,72 +16,72 @@
 
 package io.cdap.functions;
 
-import java.math.BigDecimal;
 import javax.annotation.Nullable;
+import java.math.BigDecimal;
 
 public final class NumberFunctions {
 
-  /**
-   * @return The number as double.
-   */
-  @Nullable
-  public static Double AsDouble(@Nullable Number value) {
-    return value == null ? null : value.doubleValue();
-  }
+    /**
+     * @return The number as double.
+     */
+    @Nullable
+    public static Double AsDouble(@Nullable Number value) {
+        return value == null ? null : value.doubleValue();
+    }
 
-  /**
-   * @return The number as float.
-   */
-  @Nullable
-  public static Float AsFloat(@Nullable Number value) {
-    return value == null ? null : value.floatValue();
-  }
+    /**
+     * @return The number as float.
+     */
+    @Nullable
+    public static Float AsFloat(@Nullable Number value) {
+        return value == null ? null : value.floatValue();
+    }
 
-  /**
-   * @return The number as integer.
-   */
-  @Nullable
-  public static Integer AsInteger(@Nullable Number value) {
-    return value == null ? null : value.intValue();
-  }
+    /**
+     * @return The number as integer.
+     */
+    @Nullable
+    public static Integer AsInteger(@Nullable Number value) {
+        return value == null ? null : value.intValue();
+    }
 
-  /**
-   * @return Returns the mantissa from the given number. Mantissa definition is used from
-   * https://mathworld.wolfram.com/Mantissa.html
-   */
-  public static double Mantissa(int value) {
-    return 0d;
-  }
+    /**
+     * @return Returns the mantissa from the given number. Mantissa definition is used from
+     * https://mathworld.wolfram.com/Mantissa.html
+     */
+    public static double Mantissa(int value) {
+        return 0d;
+    }
 
-  /**
-   * @return Returns the mantissa from the given number. Mantissa definition is used from
-   * https://mathworld.wolfram.com/Mantissa.html
-   */
-  public static double Mantissa(long value) {
-    return 0d;
-  }
+    /**
+     * @return Returns the mantissa from the given number. Mantissa definition is used from
+     * https://mathworld.wolfram.com/Mantissa.html
+     */
+    public static double Mantissa(long value) {
+        return 0d;
+    }
 
-  /**
-   * @return Returns the mantissa from the given number. Mantissa definition is used from
-   * https://mathworld.wolfram.com/Mantissa.html
-   */
-  public static double Mantissa(float value) {
-    return Mantissa(new BigDecimal(String.valueOf(value)));
-  }
+    /**
+     * @return Returns the mantissa from the given number. Mantissa definition is used from
+     * https://mathworld.wolfram.com/Mantissa.html
+     */
+    public static double Mantissa(float value) {
+        return Mantissa(new BigDecimal(String.valueOf(value)));
+    }
 
-  /**
-   * @return Returns the mantissa from the given number. Mantissa definition is used from
-   * https://mathworld.wolfram.com/Mantissa.html
-   */
-  public static double Mantissa(double value) {
-    return Mantissa(new BigDecimal(String.valueOf(value)));
-  }
+    /**
+     * @return Returns the mantissa from the given number. Mantissa definition is used from
+     * https://mathworld.wolfram.com/Mantissa.html
+     */
+    public static double Mantissa(double value) {
+        return Mantissa(new BigDecimal(String.valueOf(value)));
+    }
 
-  /**
-   * @return Returns the mantissa from the given number. Mantissa definition is used from
-   * https://mathworld.wolfram.com/Mantissa.html. If value is null, it will return 0.
-   */
-  public static double Mantissa(BigDecimal value) {
-    return value == null ? 0d : value.subtract(new BigDecimal(value.intValue())).doubleValue();
-  }
+    /**
+     * @return Returns the mantissa from the given number. Mantissa definition is used from
+     * https://mathworld.wolfram.com/Mantissa.html. If value is null, it will return 0.
+     */
+    public static double Mantissa(BigDecimal value) {
+        return value == null ? 0d : value.subtract(new BigDecimal(value.intValue())).doubleValue();
+    }
 }

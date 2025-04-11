@@ -38,47 +38,47 @@ import java.util.Map;
 @Ignore
 public class WranglerServiceTestBase extends TestBase {
 
-  protected static final class ExecuteResponse {
-    public List<String> headers;
-    public String message;
-    public int items;
-    public List<Map<String, String>> value;
-    public int status;
-  }
+    protected static final class ExecuteResponse {
+        public List<String> headers;
+        public String message;
+        public int items;
+        public List<Map<String, String>> value;
+        public int status;
+    }
 
-  protected void createAndUploadWorkspace(URL baseURL, String workspace, List<String> lines) throws Exception {
-    HttpResponse response = HttpRequests.execute(HttpRequest.put(new URL(baseURL, "workspaces/" + workspace)).build());
-    Assert.assertEquals(200, response.getResponseCode());
+    protected void createAndUploadWorkspace(URL baseURL, String workspace, List<String> lines) throws Exception {
+        HttpResponse response = HttpRequests.execute(HttpRequest.put(new URL(baseURL, "workspaces/" + workspace)).build());
+        Assert.assertEquals(200, response.getResponseCode());
 //    response = HttpRequests.execute(
 //      HttpRequest.post(new URL(baseURL, "workspaces/" + workspace +"/upload"))
 //        .withBody(Joiner.on(URLEncoder.encode("\n", "UTF-8")).join(lines))
 //        .addHeader("recorddelimiter", URLEncoder.encode("\n", "UTF-8"))
 //        .build());
-    Assert.assertEquals(200, response.getResponseCode());
-  }
-
-  protected ExecuteResponse execute(URL baseURL, String workspace, String[] directives) throws Exception {
-    List<Map.Entry<String, String>> queryParams = new ArrayList<>();
-    for (String directive : directives) {
-      queryParams.add(new AbstractMap.SimpleEntry<>("directive", URLEncoder.encode(directive, "UTF-8")));
+        Assert.assertEquals(200, response.getResponseCode());
     }
-    queryParams.add(new AbstractMap.SimpleEntry<>("limit", "100"));
 
-    URL url = new URL(baseURL, "workspaces/" + workspace + "/execute" + createQueryParams(queryParams));
-    HttpResponse response = HttpRequests.execute(HttpRequest.get(url).build());
-    Assert.assertEquals(200, response.getResponseCode());
-    return new Gson().fromJson(response.getResponseBodyAsString(), ExecuteResponse.class);
-  }
+    protected ExecuteResponse execute(URL baseURL, String workspace, String[] directives) throws Exception {
+        List<Map.Entry<String, String>> queryParams = new ArrayList<>();
+        for (String directive : directives) {
+            queryParams.add(new AbstractMap.SimpleEntry<>("directive", URLEncoder.encode(directive, "UTF-8")));
+        }
+        queryParams.add(new AbstractMap.SimpleEntry<>("limit", "100"));
 
-  // returns the query params string, including any leading '?'
-  protected String createQueryParams(List<Map.Entry<String, String>> queryParams) {
-    if (queryParams.isEmpty()) {
-      return "";
+        URL url = new URL(baseURL, "workspaces/" + workspace + "/execute" + createQueryParams(queryParams));
+        HttpResponse response = HttpRequests.execute(HttpRequest.get(url).build());
+        Assert.assertEquals(200, response.getResponseCode());
+        return new Gson().fromJson(response.getResponseBodyAsString(), ExecuteResponse.class);
     }
-    String params = "?" + queryParams.get(0).getKey() + "=" + queryParams.get(0).getValue();
-    for (int i = 1; i < queryParams.size(); i++) {
-      params += "&" + queryParams.get(i).getKey() + "=" + queryParams.get(i).getValue();
+
+    // returns the query params string, including any leading '?'
+    protected String createQueryParams(List<Map.Entry<String, String>> queryParams) {
+        if (queryParams.isEmpty()) {
+            return "";
+        }
+        String params = "?" + queryParams.get(0).getKey() + "=" + queryParams.get(0).getValue();
+        for (int i = 1; i < queryParams.size(); i++) {
+            params += "&" + queryParams.get(i).getKey() + "=" + queryParams.get(i).getValue();
+        }
+        return params;
     }
-    return params;
-  }
 }

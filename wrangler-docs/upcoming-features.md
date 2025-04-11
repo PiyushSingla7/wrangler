@@ -1,6 +1,7 @@
 # Upcoming Features
 
-  * **Conditional Recipe** -- Conditional Recipe allows sub-recipes to be executed based on the condition.
+* **Conditional Recipe** -- Conditional Recipe allows sub-recipes to be executed based on the condition.
+
 ```
 /**
  * Recipe for applying directives based on a type of record.
@@ -42,5 +43,5 @@ if((${rectype} == '001')) {
 }
 ```
 
-  * **Tokenize Text** -- Tokenizes text into Words, Characters, Sentences, Lines and Paragraphs.
-  * **NGram Token Generation** -- Generates N-Gram tokens, where N is configurable.
+* **Tokenize Text** -- Tokenizes text into Words, Characters, Sentences, Lines and Paragraphs.
+* **NGram Token Generation** -- Generates N-Gram tokens, where N is configurable.

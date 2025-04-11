@@ -22,18 +22,18 @@ import com.google.gson.annotations.SerializedName;
  * Information about a BigQuery dataset.
  */
 public class DatasetInfo {
-  private final String name;
-  private final String description;
-  private final String location;
-  private final Long created;
-  @SerializedName("last-modified")
-  private final Long lastModified;
+    private final String name;
+    private final String description;
+    private final String location;
+    private final Long created;
+    @SerializedName("last-modified")
+    private final Long lastModified;
 
-  public DatasetInfo(String name, String description, String location, Long created, Long lastModified) {
-    this.name = name;
-    this.description = description;
-    this.location = location;
-    this.created = created;
-    this.lastModified = lastModified;
-  }
+    public DatasetInfo(String name, String description, String location, Long created, Long lastModified) {
+        this.name = name;
+        this.description = description;
+        this.location = location;
+        this.created = created;
+        this.lastModified = lastModified;
+    }
 }

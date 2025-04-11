@@ -23,69 +23,69 @@ import java.util.Objects;
  */
 public class ConformanceIssue {
 
-  /**
-   * Schema location refers to the part of the schema where this issue occurred. The exact format varies by schema
-   * implementation. For JSON Schema for example, it may look like #/definitions/Blue.
-   */
-  private final String schemaLocation;
+    /**
+     * Schema location refers to the part of the schema where this issue occurred. The exact format varies by schema
+     * implementation. For JSON Schema for example, it may look like #/definitions/Blue.
+     */
+    private final String schemaLocation;
 
-  /**
-   * Data location refers to the part of the input data where this issue occurred. The exact format varies by conformer
-   * implementation. This may be a dot/bracket notation style path or something similar.
-   */
-  private final String dataLocation;
+    /**
+     * Data location refers to the part of the input data where this issue occurred. The exact format varies by conformer
+     * implementation. This may be a dot/bracket notation style path or something similar.
+     */
+    private final String dataLocation;
 
 
-  /**
-   * A human readable description of why the data didn't conform.
-   */
-  private final String error;
+    /**
+     * A human readable description of why the data didn't conform.
+     */
+    private final String error;
 
-  public ConformanceIssue(String schemaLocation, String dataLocation, String error) {
-    this.schemaLocation = schemaLocation;
-    this.dataLocation = dataLocation;
-    this.error = error;
-  }
-
-  public String getSchemaLocation() {
-    return schemaLocation;
-  }
-
-  public String getDataLocation() {
-    return dataLocation;
-  }
-
-  public String getError() {
-    return error;
-  }
-
-  @Override
-  public String toString() {
-    String error = getError();
-    String dataLocation = getDataLocation();
-    if (error.contains(dataLocation)) {
-      return String.format("error at schema %s: %s", getSchemaLocation(), error);
+    public ConformanceIssue(String schemaLocation, String dataLocation, String error) {
+        this.schemaLocation = schemaLocation;
+        this.dataLocation = dataLocation;
+        this.error = error;
     }
-    return String.format(
-      "error at schema %s, at data %s: %s", getSchemaLocation(), dataLocation, error);
-  }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
+    public String getSchemaLocation() {
+        return schemaLocation;
     }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    ConformanceIssue that = (ConformanceIssue) o;
-    return Objects.equals(schemaLocation, that.schemaLocation)
-      && Objects.equals(dataLocation, that.dataLocation)
-      && Objects.equals(error, that.error);
-  }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(schemaLocation, dataLocation, error);
-  }
+    public String getDataLocation() {
+        return dataLocation;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    @Override
+    public String toString() {
+        String error = getError();
+        String dataLocation = getDataLocation();
+        if (error.contains(dataLocation)) {
+            return String.format("error at schema %s: %s", getSchemaLocation(), error);
+        }
+        return String.format(
+                "error at schema %s, at data %s: %s", getSchemaLocation(), dataLocation, error);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ConformanceIssue that = (ConformanceIssue) o;
+        return Objects.equals(schemaLocation, that.schemaLocation)
+                && Objects.equals(dataLocation, that.dataLocation)
+                && Objects.equals(error, that.error);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(schemaLocation, dataLocation, error);
+    }
 }

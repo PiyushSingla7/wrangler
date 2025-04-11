@@ -28,25 +28,25 @@ import java.util.List;
  */
 @PublicEvolving
 public class Ranges implements Token {
-  private final List<Triplet<Numeric, Numeric, String>> values;
+    private final List<Triplet<Numeric, Numeric, String>> values;
 
-  public Ranges(List<Triplet<Numeric, Numeric, String>> values) {
-    this.values = values;
-  }
+    public Ranges(List<Triplet<Numeric, Numeric, String>> values) {
+        this.values = values;
+    }
 
-  @Override
-  public List<Triplet<Numeric, Numeric, String>> value() {
-    return values;
-  }
+    @Override
+    public List<Triplet<Numeric, Numeric, String>> value() {
+        return values;
+    }
 
-  @Override
-  public TokenType type() {
-    return TokenType.RANGES;
-  }
+    @Override
+    public TokenType type() {
+        return TokenType.RANGES;
+    }
 
-  @Override
-  public JsonElement toJson() {
-    JsonObject object = new JsonObject();
-    return object;
-  }
+    @Override
+    public JsonElement toJson() {
+        JsonObject object = new JsonObject();
+        return object;
+    }
 }

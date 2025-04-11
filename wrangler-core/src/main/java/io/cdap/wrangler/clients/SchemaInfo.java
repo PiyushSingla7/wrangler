@@ -22,84 +22,84 @@ import java.util.Set;
  * This class is POJO that provides information about the schema being requested.
  */
 final class SchemaInfo {
-  // Id of the schema being stored in the schema repository.
-  private String id;
+    // Id of the schema being stored in the schema repository.
+    private String id;
 
-  // Each id of the schema is associated with name.
-  private String name;
+    // Each id of the schema is associated with name.
+    private String name;
 
-  // Each schema can have multiple versions, so this will show the version that is being retrieved.
-  private long version;
+    // Each schema can have multiple versions, so this will show the version that is being retrieved.
+    private long version;
 
-  // Schema description.
-  private String description;
+    // Schema description.
+    private String description;
 
-  // Type of the schema.
-  private String type;
+    // Type of the schema.
+    private String type;
 
-  // Current active version of schema.
-  private long current;
+    // Current active version of schema.
+    private long current;
 
-  // Specification of the schema.
-  private String specification;
+    // Specification of the schema.
+    private String specification;
 
-  // List of available versions of schema.
-  private Set<Long> versions;
+    // List of available versions of schema.
+    private Set<Long> versions;
 
-  /**
-   * @return id of the schema being requested.
-   */
-  public String getId() {
-    return id;
-  }
+    /**
+     * @return id of the schema being requested.
+     */
+    public String getId() {
+        return id;
+    }
 
-  /**
-   * @return name of the schema.
-   */
-  public String getName() {
-    return name;
-  }
+    /**
+     * @return name of the schema.
+     */
+    public String getName() {
+        return name;
+    }
 
-  /**
-   * @return version of schema being requested.
-   */
-  public long getVersion() {
-    return version;
-  }
+    /**
+     * @return version of schema being requested.
+     */
+    public long getVersion() {
+        return version;
+    }
 
-  /**
-   * @return description of schema being requested.
-   */
-  public String getDescription() {
-    return description;
-  }
+    /**
+     * @return description of schema being requested.
+     */
+    public String getDescription() {
+        return description;
+    }
 
-  /**
-   * @return string representation of schema being requested.
-   */
-  public String getType() {
-    return type;
-  }
+    /**
+     * @return string representation of schema being requested.
+     */
+    public String getType() {
+        return type;
+    }
 
-  /**
-   * @return the current version of schema that is active.
-   */
-  public long getCurrent() {
-    return current;
-  }
+    /**
+     * @return the current version of schema that is active.
+     */
+    public long getCurrent() {
+        return current;
+    }
 
-  /**
-   * @return schema definition being requested.
-   */
-  public String getSpecification() {
-    return specification;
-  }
+    /**
+     * @return schema definition being requested.
+     */
+    public String getSpecification() {
+        return specification;
+    }
 
-  /**
-   * @return List of available versions of schema.
-   */
-  public Set<Long> getVersions() {
-    return versions;
-  }
+    /**
+     * @return List of available versions of schema.
+     */
+    public Set<Long> getVersions() {
+        return versions;
+    }
 
 }

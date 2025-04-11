@@ -28,39 +28,39 @@ import java.util.Map;
  * Dataprep Service macro evaluator.
  */
 public class ServiceMacroEvaluator implements MacroEvaluator {
-  private static final String SECURE_FUNCTION = "secure";
-  private final String namespace;
-  private final SystemHttpServiceContext context;
-  private final Map<String, String> arguments;
+    private static final String SECURE_FUNCTION = "secure";
+    private final String namespace;
+    private final SystemHttpServiceContext context;
+    private final Map<String, String> arguments;
 
-  public ServiceMacroEvaluator(String namespace, SystemHttpServiceContext context) {
-    this.namespace = namespace;
-    this.context = context;
-    this.arguments = context.getRuntimeArguments();
-  }
+    public ServiceMacroEvaluator(String namespace, SystemHttpServiceContext context) {
+        this.namespace = namespace;
+        this.context = context;
+        this.arguments = context.getRuntimeArguments();
+    }
 
-  @Override
-  public String lookup(String property) throws InvalidMacroException {
-    String val = arguments.get(property);
-    if (val == null) {
-      throw new InvalidMacroException(String.format("Argument '%s' is not defined.", property));
+    @Override
+    public String lookup(String property) throws InvalidMacroException {
+        String val = arguments.get(property);
+        if (val == null) {
+            throw new InvalidMacroException(String.format("Argument '%s' is not defined.", property));
+        }
+        return val;
     }
-    return val;
-  }
 
-  @Override
-  public String evaluate(String macroFunction, String... arguments) throws InvalidMacroException {
-    if (!SECURE_FUNCTION.equals(macroFunction)) {
-      throw new InvalidMacroException(String.format("%s is not a supported macro function.", macroFunction));
+    @Override
+    public String evaluate(String macroFunction, String... arguments) throws InvalidMacroException {
+        if (!SECURE_FUNCTION.equals(macroFunction)) {
+            throw new InvalidMacroException(String.format("%s is not a supported macro function.", macroFunction));
+        }
+        if (arguments.length != 1) {
+            throw new InvalidMacroException("Secure macro function only supports 1 argument.");
+        }
+        try {
+            SecureStoreData secureStoreData = context.get(namespace, arguments[0]);
+            return Bytes.toString(secureStoreData.get());
+        } catch (Exception e) {
+            throw new InvalidMacroException("Failed to resolve macro '" + macroFunction + "(" + arguments[0] + ")'", e);
+        }
     }
-    if (arguments.length != 1) {
-      throw new InvalidMacroException("Secure macro function only supports 1 argument.");
-    }
-    try {
-      SecureStoreData secureStoreData = context.get(namespace, arguments[0]);
-      return Bytes.toString(secureStoreData.get());
-    } catch (Exception e) {
-      throw new InvalidMacroException("Failed to resolve macro '" + macroFunction + "(" + arguments[0] + ")'", e);
-    }
-  }
 }

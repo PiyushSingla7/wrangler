@@ -4,8 +4,8 @@ The TEXT-METRIC directive provides a metric (from 0 to 1) measuring the differen
 between two sequence of characters, using a specified method of measuring the distance
 between strings.
 
-
 ## Syntax
+
 ```
 text-metric <method> <column-1> <column-2> <destination>
 ```
@@ -17,7 +17,6 @@ text-metric <method> <column-1> <column-2> <destination>
 
 **Note:** If either or both of the two columns do not exist, no error will be returned,
 and the destination column will still be created or overwritten.
-
 
 ## Usage Notes
 
@@ -41,10 +40,10 @@ These distance measure methods are supported:
 * `overlap-cofficient`
 * `simon-white`
 
-
 ## Example
 
 Using this record as an example:
+
 ```
 {
   "tweet1": "CheeseBurgers are God tellin us everything's gonna be cool...",
@@ -53,11 +52,13 @@ Using this record as an example:
 ```
 
 Applying this directive:
+
 ```
 text-metric longest-common-subsequence tweet1 tweet2 distance
 ```
 
 would result in this record:
+
 ```
 {
   "tweet1": "CheeseBurgers are God tellin us everything's gonna be cool...",

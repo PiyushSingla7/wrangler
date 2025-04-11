@@ -27,7 +27,7 @@ import java.util.Set;
  * This class performs validation on the column names of the record.
  *
  * <p>
- *   Following are the checks that this validator performs on the column.
+ * Following are the checks that this validator performs on the column.
  *   <ul>
  *     <li> Column name is a an identifier that is a sequence of alphaNumeric and under_score
  *     characters or a sequence.</li>
@@ -37,49 +37,49 @@ import java.util.Set;
  * </p>
  */
 public class ColumnNameValidator implements Validator<String> {
-  private static final String RESERVED_WORDS_FILE = "reserved-column-names.txt";
-  private final Set<String> reservedWords = new HashSet<>();
+    private static final String RESERVED_WORDS_FILE = "reserved-column-names.txt";
+    private final Set<String> reservedWords = new HashSet<>();
 
-  /**
-   * Initializes this validator.
-   *
-   * @throws Exception thrown when reserved words file is not accessible.
-   */
-  public void initialize() throws Exception {
-    InputStream in = ColumnNameValidator.class.getClassLoader().getResourceAsStream(RESERVED_WORDS_FILE);
-    if (in == null) {
-      throw new Exception("Unable to load '" + RESERVED_WORDS_FILE + "' from the resources");
+    /**
+     * Initializes this validator.
+     *
+     * @throws Exception thrown when reserved words file is not accessible.
+     */
+    public void initialize() throws Exception {
+        InputStream in = ColumnNameValidator.class.getClassLoader().getResourceAsStream(RESERVED_WORDS_FILE);
+        if (in == null) {
+            throw new Exception("Unable to load '" + RESERVED_WORDS_FILE + "' from the resources");
+        }
+        InputStreamReader isr = new InputStreamReader(in);
+        try (BufferedReader reader = new BufferedReader(isr)) {
+            String word;
+            while ((word = reader.readLine()) != null) {
+                reservedWords.add(word.toLowerCase(Locale.ENGLISH));
+            }
+        }
     }
-    InputStreamReader isr = new InputStreamReader(in);
-    try (BufferedReader reader = new BufferedReader(isr)) {
-      String word;
-      while ((word = reader.readLine()) != null) {
-        reservedWords.add(word.toLowerCase(Locale.ENGLISH));
-      }
-    }
-  }
 
-  /**
-   * Validates the T properties.
-   *
-   * @param name to be validated.
-   * @throws ValidatorException thrown when there are issues with validation.
-   */
-  @Override
-  public void validate(String name) throws ValidatorException {
-    // Only alphanumeric and underscore (_) allowed.
-    if (!name.matches("^[a-zA-Z0-9_]*$")) {
-      throw new ValidatorException("Column '" + name + "' contains non-alphanumeric characters");
+    /**
+     * Validates the T properties.
+     *
+     * @param name to be validated.
+     * @throws ValidatorException thrown when there are issues with validation.
+     */
+    @Override
+    public void validate(String name) throws ValidatorException {
+        // Only alphanumeric and underscore (_) allowed.
+        if (!name.matches("^[a-zA-Z0-9_]*$")) {
+            throw new ValidatorException("Column '" + name + "' contains non-alphanumeric characters");
+        }
+        // Reserved words not allowed
+        if (reservedWords.contains(name)) {
+            throw new ValidatorException("Column '" + name + "' is a reserved word.");
+        }
+        // Column name length.
+        if (name.length() > 255) {
+            throw new ValidatorException("Column '" + name + "' is greater than 255 characters.");
+        }
     }
-    // Reserved words not allowed
-    if (reservedWords.contains(name)) {
-      throw new ValidatorException("Column '" + name + "' is a reserved word.");
-    }
-    // Column name length.
-    if (name.length() > 255) {
-      throw new ValidatorException("Column '" + name + "' is greater than 255 characters.");
-    }
-  }
 }
 
 

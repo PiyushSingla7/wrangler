@@ -22,27 +22,27 @@ import com.google.gson.annotations.SerializedName;
  * Information about a GCS bucket.
  */
 public class GCSBucketInfo {
-  private final String name;
-  private final String type;
-  private final String owner;
-  @SerializedName("generated-id")
-  private final String generatedId;
-  @SerializedName("meta-generation")
-  private final long metaGeneration;
-  private final long created;
-  private final boolean wrangle;
-  private final boolean directory;
+    private final String name;
+    private final String type;
+    private final String owner;
+    @SerializedName("generated-id")
+    private final String generatedId;
+    @SerializedName("meta-generation")
+    private final long metaGeneration;
+    private final long created;
+    private final boolean wrangle;
+    private final boolean directory;
 
-  public GCSBucketInfo(String name, String type, String owner, long metaGeneration, String generatedId,
-                       long created, boolean wrangle) {
-    this.name = name;
-    this.type = type;
-    this.owner = owner;
-    this.metaGeneration = metaGeneration;
-    this.generatedId = generatedId;
-    this.created = created;
-    this.wrangle = wrangle;
-    // this is constant, but is part of the response so must be a field in this class
-    this.directory = true;
-  }
+    public GCSBucketInfo(String name, String type, String owner, long metaGeneration, String generatedId,
+                         long created, boolean wrangle) {
+        this.name = name;
+        this.type = type;
+        this.owner = owner;
+        this.metaGeneration = metaGeneration;
+        this.generatedId = generatedId;
+        this.created = created;
+        this.wrangle = wrangle;
+        // this is constant, but is part of the response so must be a field in this class
+        this.directory = true;
+    }
 }

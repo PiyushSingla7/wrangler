@@ -25,69 +25,69 @@ import java.util.UUID;
  * Recipe id
  */
 public class RecipeId {
-  private final NamespaceSummary namespace;
-  private final String recipeId;
-
-  private RecipeId(NamespaceSummary namespace, String recipeId) {
-    this.namespace = namespace;
-    this.recipeId = recipeId;
-  }
-
-  public NamespaceSummary getNamespace() {
-    return namespace;
-  }
-
-  public String getRecipeId() {
-    return recipeId;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-
-    RecipeId other = (RecipeId) o;
-    return Objects.equals(namespace, other.namespace) &&
-      Objects.equals(recipeId, other.recipeId);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(namespace, recipeId);
-  }
-
-  public static Builder builder(NamespaceSummary namespace) {
-    return new Builder(namespace);
-  }
-
-  public static Builder builder(RecipeId existing) {
-    return new Builder(existing.getNamespace()).setRecipeId(existing.getRecipeId());
-  }
-
-  /**
-   * Creates a Recipe id object
-   */
-  public static class Builder {
     private final NamespaceSummary namespace;
-    private String recipeId;
+    private final String recipeId;
 
-    Builder(NamespaceSummary namespace) {
-      this.namespace = new NamespaceSummary(namespace.getName(), null, namespace.getGeneration());
-      this.recipeId = UUID.randomUUID().toString();
+    private RecipeId(NamespaceSummary namespace, String recipeId) {
+        this.namespace = namespace;
+        this.recipeId = recipeId;
     }
 
-    public Builder setRecipeId(String recipeId) {
-      this.recipeId = recipeId;
-      return this;
+    public NamespaceSummary getNamespace() {
+        return namespace;
     }
 
-    public RecipeId build() {
-      return new RecipeId(namespace, recipeId);
+    public String getRecipeId() {
+        return recipeId;
     }
-  }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        RecipeId other = (RecipeId) o;
+        return Objects.equals(namespace, other.namespace) &&
+                Objects.equals(recipeId, other.recipeId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(namespace, recipeId);
+    }
+
+    public static Builder builder(NamespaceSummary namespace) {
+        return new Builder(namespace);
+    }
+
+    public static Builder builder(RecipeId existing) {
+        return new Builder(existing.getNamespace()).setRecipeId(existing.getRecipeId());
+    }
+
+    /**
+     * Creates a Recipe id object
+     */
+    public static class Builder {
+        private final NamespaceSummary namespace;
+        private String recipeId;
+
+        Builder(NamespaceSummary namespace) {
+            this.namespace = new NamespaceSummary(namespace.getName(), null, namespace.getGeneration());
+            this.recipeId = UUID.randomUUID().toString();
+        }
+
+        public Builder setRecipeId(String recipeId) {
+            this.recipeId = recipeId;
+            return this;
+        }
+
+        public RecipeId build() {
+            return new RecipeId(namespace, recipeId);
+        }
+    }
 }

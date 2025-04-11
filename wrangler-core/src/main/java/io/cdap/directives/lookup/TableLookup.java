@@ -22,12 +22,7 @@ import io.cdap.cdap.api.annotation.Plugin;
 import io.cdap.cdap.api.common.Bytes;
 import io.cdap.cdap.api.data.DatasetInstantiationException;
 import io.cdap.cdap.etl.api.Lookup;
-import io.cdap.wrangler.api.Arguments;
-import io.cdap.wrangler.api.Directive;
-import io.cdap.wrangler.api.DirectiveExecutionException;
-import io.cdap.wrangler.api.DirectiveParseException;
-import io.cdap.wrangler.api.ExecutorContext;
-import io.cdap.wrangler.api.Row;
+import io.cdap.wrangler.api.*;
 import io.cdap.wrangler.api.annotations.Categories;
 import io.cdap.wrangler.api.lineage.Lineage;
 import io.cdap.wrangler.api.lineage.Many;
@@ -46,90 +41,90 @@ import java.util.Map;
  */
 @Plugin(type = Directive.TYPE)
 @Name(TableLookup.NAME)
-@Categories(categories = { "lookup"})
+@Categories(categories = {"lookup"})
 @Description("Uses the given column as a key to perform a lookup into the specified table.")
 public class TableLookup implements Directive, Lineage {
-  public static final String NAME = "table-lookup";
-  private String column;
-  private String table;
+    public static final String NAME = "table-lookup";
+    private String column;
+    private String table;
 
-  private boolean initialized;
-  private io.cdap.cdap.etl.api.lookup.TableLookup tableLookup;
+    private boolean initialized;
+    private io.cdap.cdap.etl.api.lookup.TableLookup tableLookup;
 
-  @Override
-  public UsageDefinition define() {
-    UsageDefinition.Builder builder = UsageDefinition.builder(NAME);
-    builder.define("column", TokenType.COLUMN_NAME);
-    builder.define("table", TokenType.TEXT);
-    return builder.build();
-  }
-
-  @Override
-  public void initialize(Arguments args) throws DirectiveParseException {
-    this.column = ((ColumnName) args.value("column")).value();
-    this.table = ((Text) args.value("table")).value();
-    this.initialized = false;
-  }
-
-  @Override
-  public void destroy() {
-    // no-op
-  }
-
-  private void ensureInitialized(ExecutorContext context) throws DirectiveExecutionException {
-    if (initialized) {
-      return;
+    @Override
+    public UsageDefinition define() {
+        UsageDefinition.Builder builder = UsageDefinition.builder(NAME);
+        builder.define("column", TokenType.COLUMN_NAME);
+        builder.define("table", TokenType.TEXT);
+        return builder.build();
     }
-    Lookup lookup;
-    try {
-      lookup = context.provide(table, Collections.<String, String>emptyMap());
-    } catch (DatasetInstantiationException e) {
-      throw new DirectiveExecutionException(
-        NAME, String.format("Dataset '%s' could not be instantiated. Make sure that a dataset '%s' of " +
-                              "type Table exists.", table, table), e);
-    }
-    if (!(lookup instanceof io.cdap.cdap.etl.api.lookup.TableLookup)) {
-      throw new DirectiveExecutionException(
-        NAME, "Lookup is not being performed on a table. Lookup can be performed only on tables.");
-    }
-    tableLookup = (io.cdap.cdap.etl.api.lookup.TableLookup) lookup;
-    initialized = true;
-  }
 
-  @Override
-  public List<Row> execute(List<Row> rows, ExecutorContext context) throws DirectiveExecutionException {
-    ensureInitialized(context);
-    for (Row row : rows) {
-      int idx = row.find(column);
-      if (idx == -1) {
-        continue;
-      }
-      Object object = row.getValue(idx);
-      if (object == null) {
-        throw new DirectiveExecutionException(
-          NAME, String.format("Column '%s' has null value. It should be a non-null 'String'.", column)
-        );
-      }
-
-      if (!(object instanceof String)) {
-        throw new DirectiveExecutionException(
-          NAME, String.format("Column '%s' is of invalid type '%s'. It should be of type 'String'.",
-                              column, object.getClass().getSimpleName())
-        );
-      }
-      io.cdap.cdap.api.dataset.table.Row lookedUpRow = tableLookup.lookup((String) object);
-      for (Map.Entry<byte[], byte[]> entry : lookedUpRow.getColumns().entrySet()) {
-        row.add(column + "_" + Bytes.toString(entry.getKey()), Bytes.toString(entry.getValue()));
-      }
+    @Override
+    public void initialize(Arguments args) throws DirectiveParseException {
+        this.column = ((ColumnName) args.value("column")).value();
+        this.table = ((Text) args.value("table")).value();
+        this.initialized = false;
     }
-    return rows;
-  }
 
-  @Override
-  public Mutation lineage() {
-    return Mutation.builder()
-      .readable("Looking up row in table '%s' based on column '%s'", table, column)
-      .all(Many.of(column))
-      .build();
-  }
+    @Override
+    public void destroy() {
+        // no-op
+    }
+
+    private void ensureInitialized(ExecutorContext context) throws DirectiveExecutionException {
+        if (initialized) {
+            return;
+        }
+        Lookup lookup;
+        try {
+            lookup = context.provide(table, Collections.<String, String>emptyMap());
+        } catch (DatasetInstantiationException e) {
+            throw new DirectiveExecutionException(
+                    NAME, String.format("Dataset '%s' could not be instantiated. Make sure that a dataset '%s' of " +
+                    "type Table exists.", table, table), e);
+        }
+        if (!(lookup instanceof io.cdap.cdap.etl.api.lookup.TableLookup)) {
+            throw new DirectiveExecutionException(
+                    NAME, "Lookup is not being performed on a table. Lookup can be performed only on tables.");
+        }
+        tableLookup = (io.cdap.cdap.etl.api.lookup.TableLookup) lookup;
+        initialized = true;
+    }
+
+    @Override
+    public List<Row> execute(List<Row> rows, ExecutorContext context) throws DirectiveExecutionException {
+        ensureInitialized(context);
+        for (Row row : rows) {
+            int idx = row.find(column);
+            if (idx == -1) {
+                continue;
+            }
+            Object object = row.getValue(idx);
+            if (object == null) {
+                throw new DirectiveExecutionException(
+                        NAME, String.format("Column '%s' has null value. It should be a non-null 'String'.", column)
+                );
+            }
+
+            if (!(object instanceof String)) {
+                throw new DirectiveExecutionException(
+                        NAME, String.format("Column '%s' is of invalid type '%s'. It should be of type 'String'.",
+                        column, object.getClass().getSimpleName())
+                );
+            }
+            io.cdap.cdap.api.dataset.table.Row lookedUpRow = tableLookup.lookup((String) object);
+            for (Map.Entry<byte[], byte[]> entry : lookedUpRow.getColumns().entrySet()) {
+                row.add(column + "_" + Bytes.toString(entry.getKey()), Bytes.toString(entry.getValue()));
+            }
+        }
+        return rows;
+    }
+
+    @Override
+    public Mutation lineage() {
+        return Mutation.builder()
+                .readable("Looking up row in table '%s' based on column '%s'", table, column)
+                .all(Many.of(column))
+                .build();
+    }
 }

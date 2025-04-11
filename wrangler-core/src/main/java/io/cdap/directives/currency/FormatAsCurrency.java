@@ -19,14 +19,7 @@ package io.cdap.directives.currency;
 import io.cdap.cdap.api.annotation.Description;
 import io.cdap.cdap.api.annotation.Name;
 import io.cdap.cdap.api.annotation.Plugin;
-import io.cdap.wrangler.api.Arguments;
-import io.cdap.wrangler.api.Directive;
-import io.cdap.wrangler.api.DirectiveExecutionException;
-import io.cdap.wrangler.api.DirectiveParseException;
-import io.cdap.wrangler.api.ErrorRowException;
-import io.cdap.wrangler.api.ExecutorContext;
-import io.cdap.wrangler.api.Optional;
-import io.cdap.wrangler.api.Row;
+import io.cdap.wrangler.api.*;
 import io.cdap.wrangler.api.annotations.Categories;
 import io.cdap.wrangler.api.lineage.Lineage;
 import io.cdap.wrangler.api.lineage.Mutation;
@@ -48,65 +41,65 @@ import java.util.Locale;
 @Categories(categories = {"currency"})
 @Description("Formats a number as currency using the locale specified. Default locale is en_US.")
 public class FormatAsCurrency implements Directive, Lineage {
-  public static final String NAME = "format-as-currency";
-  private String source;
-  private String destination;
-  private String locale;
-  private NumberFormat format;
-  private Locale lcl;
+    public static final String NAME = "format-as-currency";
+    private String source;
+    private String destination;
+    private String locale;
+    private NumberFormat format;
+    private Locale lcl;
 
-  @Override
-  public UsageDefinition define() {
-    UsageDefinition.Builder builder = UsageDefinition.builder(NAME);
-    builder.define("source", TokenType.COLUMN_NAME);
-    builder.define("destination", TokenType.COLUMN_NAME);
-    builder.define("locale", TokenType.TEXT, Optional.TRUE);
-    return builder.build();
-  }
-
-  @Override
-  public void initialize(Arguments args) throws DirectiveParseException {
-    this.source = ((ColumnName) args.value("source")).value();
-    this.destination = ((ColumnName) args.value("destination")).value();
-
-    if (args.contains("locale")) {
-      this.locale = ((Text) args.value("locale")).value();
-    } else {
-      this.locale = "en_US";
+    @Override
+    public UsageDefinition define() {
+        UsageDefinition.Builder builder = UsageDefinition.builder(NAME);
+        builder.define("source", TokenType.COLUMN_NAME);
+        builder.define("destination", TokenType.COLUMN_NAME);
+        builder.define("locale", TokenType.TEXT, Optional.TRUE);
+        return builder.build();
     }
 
-    this.lcl = LocaleUtils.toLocale(locale);
-    this.format = NumberFormat.getCurrencyInstance(lcl);
-  }
+    @Override
+    public void initialize(Arguments args) throws DirectiveParseException {
+        this.source = ((ColumnName) args.value("source")).value();
+        this.destination = ((ColumnName) args.value("destination")).value();
 
-  @Override
-  public void destroy() {
-    // no-op
-  }
-
-  @Override
-  public List<Row> execute(List<Row> rows, ExecutorContext context)
-    throws DirectiveExecutionException, ErrorRowException {
-    for (Row row : rows) {
-      int idx = row.find(source);
-      if (idx != -1) {
-        Object object = row.getValue(idx);
-        if (object == null || !(object instanceof Double)) {
-          continue;
+        if (args.contains("locale")) {
+            this.locale = ((Text) args.value("locale")).value();
+        } else {
+            this.locale = "en_US";
         }
-        Double value = (Double) object;
-        String format = this.format.format(value);
-        row.addOrSet(destination, format);
-      }
-    }
-    return rows;
-  }
 
-  @Override
-  public Mutation lineage() {
-    return Mutation.builder()
-      .readable("Formatted column '%s' to currency locale '%s' into '%s'", source, destination, locale)
-      .conditional(source, destination)
-      .build();
-  }
+        this.lcl = LocaleUtils.toLocale(locale);
+        this.format = NumberFormat.getCurrencyInstance(lcl);
+    }
+
+    @Override
+    public void destroy() {
+        // no-op
+    }
+
+    @Override
+    public List<Row> execute(List<Row> rows, ExecutorContext context)
+            throws DirectiveExecutionException, ErrorRowException {
+        for (Row row : rows) {
+            int idx = row.find(source);
+            if (idx != -1) {
+                Object object = row.getValue(idx);
+                if (object == null || !(object instanceof Double)) {
+                    continue;
+                }
+                Double value = (Double) object;
+                String format = this.format.format(value);
+                row.addOrSet(destination, format);
+            }
+        }
+        return rows;
+    }
+
+    @Override
+    public Mutation lineage() {
+        return Mutation.builder()
+                .readable("Formatted column '%s' to currency locale '%s' into '%s'", source, destination, locale)
+                .conditional(source, destination)
+                .build();
+    }
 }

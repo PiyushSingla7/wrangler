@@ -23,42 +23,42 @@ import org.junit.Test;
  */
 public class ColumnNameValidatorTest {
 
-  @Test
-  public void testGoodColumnNames() throws Exception {
-    Validator validator = new ColumnNameValidator();
-    validator.initialize();
-    validator.validate("first_name");
-    validator.validate("id");
-    validator.validate("last_name");
-    validator.validate("emailid");
-    validator.validate("address");
-    validator.validate("adhara_number");
-  }
+    @Test
+    public void testGoodColumnNames() throws Exception {
+        Validator validator = new ColumnNameValidator();
+        validator.initialize();
+        validator.validate("first_name");
+        validator.validate("id");
+        validator.validate("last_name");
+        validator.validate("emailid");
+        validator.validate("address");
+        validator.validate("adhara_number");
+    }
 
-  @Test(expected = ValidatorException.class)
-  public void testReservedWord() throws Exception {
-    Validator validator = new ColumnNameValidator();
-    validator.initialize();
-    validator.validate("timestamp");
-  }
+    @Test(expected = ValidatorException.class)
+    public void testReservedWord() throws Exception {
+        Validator validator = new ColumnNameValidator();
+        validator.initialize();
+        validator.validate("timestamp");
+    }
 
-  @Test(expected = ValidatorException.class)
-  public void testNonAlphaNumeric() throws Exception {
-    Validator validator = new ColumnNameValidator();
-    validator.initialize();
-    validator.validate("event.timestamp");
-  }
+    @Test(expected = ValidatorException.class)
+    public void testNonAlphaNumeric() throws Exception {
+        Validator validator = new ColumnNameValidator();
+        validator.initialize();
+        validator.validate("event.timestamp");
+    }
 
-  @Test(expected = ValidatorException.class)
-  public void testLongColumnName() throws Exception {
-    Validator validator = new ColumnNameValidator();
-    validator.initialize();
-    validator.validate("eventsdakjdadkjadkajdadjkadajkdaldjadljadalkjdakldjaldkjasdlajdsakdjalkdjadkljadakjda" +
-                         "asdakdaldkajdlkasjdsalkdjadlkjadlkjadlakjdaldkjaldkjadlkjadakjdadjadlkajdlakjdsakd" +
-                         "asdakldjalkdjadlkjadlakjdlakjdaslkdjadlkjsadlkajdalkdjadlkjadlkajdajdasdjkasda" +
-                         "adlkajdalkdjadlkjadlkjadsajkldjadlkajdlakjdaslkdjalkdjadlkjadlakjdaslkdjsadkljsadjas" +
-                         "asdaksdjaslkdjaslkdjadlkjadlkasjdalkdjaldkjadlajkdlakjdsalkdjadlkjasdlskajdsalkjdsad" +
-                         "aldjadlkajdaslkdjsaldkjasdlkajdlkasjdaljdasldkjadlkasjdalkjdaslkjdaldkjasdlkjadja" +
-                         "adajkdlaksjdalkdjsaldkasdlkasjdaslkjdsalkdjsadlkjasdlaskjdsalkjdasldkjadlkjasdadaljkda");
-  }
+    @Test(expected = ValidatorException.class)
+    public void testLongColumnName() throws Exception {
+        Validator validator = new ColumnNameValidator();
+        validator.initialize();
+        validator.validate("eventsdakjdadkjadkajdadjkadajkdaldjadljadalkjdakldjaldkjasdlajdsakdjalkdjadkljadakjda" +
+                "asdakdaldkajdlkasjdsalkdjadlkjadlkjadlakjdaldkjaldkjadlkjadakjdadjadlkajdlakjdsakd" +
+                "asdakldjalkdjadlkjadlakjdlakjdaslkdjadlkjsadlkajdalkdjadlkjadlkajdajdasdjkasda" +
+                "adlkajdalkdjadlkjadlkjadsajkldjadlkajdlakjdaslkdjalkdjadlkjadlakjdaslkdjsadkljsadjas" +
+                "asdaksdjaslkdjaslkdjadlkjadlkasjdalkdjaldkjadlajkdlakjdsalkdjadlkjasdlskajdsalkjdsad" +
+                "aldjadlkajdaslkdjsaldkjasdlkajdlkasjdaljdasldkjadlkasjdalkjdaslkjdaldkjasdlkjadja" +
+                "adajkdlaksjdalkdjsaldkasdlkasjdaslkjdsalkdjsadlkjasdlaskjdsalkjdasldkjadlkjasdadaljkda");
+    }
 }

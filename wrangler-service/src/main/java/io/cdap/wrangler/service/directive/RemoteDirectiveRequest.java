@@ -26,38 +26,38 @@ import java.util.Map;
  */
 public class RemoteDirectiveRequest {
 
-  private final String recipe;
-  private final Map<String, DirectiveClass> systemDirectives;
-  private final String pluginNameSpace;
-  private final byte[] data;
-  private final Schema inputSchema;
+    private final String recipe;
+    private final Map<String, DirectiveClass> systemDirectives;
+    private final String pluginNameSpace;
+    private final byte[] data;
+    private final Schema inputSchema;
 
-  RemoteDirectiveRequest(String recipe, Map<String, DirectiveClass> systemDirectives,
-                         String pluginNameSpace, byte[] data, Schema inputSchema) {
-    this.recipe = recipe;
-    this.systemDirectives = new HashMap<>(systemDirectives);
-    this.pluginNameSpace = pluginNameSpace;
-    this.data = data;
-    this.inputSchema = inputSchema;
-  }
+    RemoteDirectiveRequest(String recipe, Map<String, DirectiveClass> systemDirectives,
+                           String pluginNameSpace, byte[] data, Schema inputSchema) {
+        this.recipe = recipe;
+        this.systemDirectives = new HashMap<>(systemDirectives);
+        this.pluginNameSpace = pluginNameSpace;
+        this.data = data;
+        this.inputSchema = inputSchema;
+    }
 
-  public String getRecipe() {
-    return recipe;
-  }
+    public String getRecipe() {
+        return recipe;
+    }
 
-  public Map<String, DirectiveClass> getSystemDirectives() {
-    return systemDirectives;
-  }
+    public Map<String, DirectiveClass> getSystemDirectives() {
+        return systemDirectives;
+    }
 
-  public byte[] getData() {
-    return data;
-  }
+    public byte[] getData() {
+        return data;
+    }
 
-  public String getPluginNameSpace() {
-    return pluginNameSpace;
-  }
+    public String getPluginNameSpace() {
+        return pluginNameSpace;
+    }
 
-  public Schema getInputSchema() {
-    return inputSchema;
-  }
+    public Schema getInputSchema() {
+        return inputSchema;
+    }
 }

@@ -2,8 +2,8 @@
 
 The JSON-PATH directive uses a DSL for reading JSON records.
 
-
 ## Syntax
+
 ```
 json-path <source-column> <destination-column> <expression>
 ```
@@ -14,31 +14,30 @@ json-path <source-column> <destination-column> <expression>
   the expression will be stored
 * `<expression>` is a JSON path expression; see _Usage Notes_ below for details
 
-
 ## Usage Notes
 
 An expression always refers to a JSON structure in the same way that an XPath expression
 is used in combination with an XML document. The "root member object" is always referred
 to as `$` regardless if it is an object or an array.
 
-
 ### Notation
 
 Expressions can use either the "dot–notation":
+
 ```
 $.name.first
 ```
 
 or the "bracket–notation":
+
 ```
 $['name']['first']
 ```
 
-
 ### Operators
 
 | Operator                  | Description                                                 |
-| ------------------------- | ----------------------------------------------------------- |
+|---------------------------|-------------------------------------------------------------|
 | `$`                       | The root element to query; this starts all path expressions |
 | `@`                       | The current node being processed by a filter predicate      |
 | `*`                       | Wildcard; available anywhere a name or numeric are required |
@@ -49,24 +48,23 @@ $['name']['first']
 | `[start:end]`             | Array slice operator                                        |
 | `[?(<expression>)]`       | Filter expression; must evaluate to a boolean value         |
 
-
 ### Functions
 
 Functions can be invoked at the tail end of a path: the input to a function is the output
 of the path expression. The function output is dictated by the function itself.
 
 | Function   | Returns                                             | Output  |
-| ---------- | --------------------------------------------------- | ------- |
+|------------|-----------------------------------------------------|---------|
 | `min()`    | The min value of an array of numbers                | Double  |
 | `max()`    | The max value of an array of numbers                | Double  |
 | `avg()`    | The average value of an array of numbers            | Double  |
 | `stddev()` | The standard deviation value of an array of numbers | Double  |
 | `length()` | The length of an array                              | Integer |
 
-
 ### Filter Operators
 
 Filters are logical expressions used to filter arrays. A typical filter would be:
+
 ```
 [?(@.age>18)]
 ```
@@ -79,7 +77,7 @@ where `@` represents the current item being processed.
   `[?(@.color=='blue')]` or `[?(@.color=="blue")]`
 
 | Filter Operator | Description                                                               |
-| --------------- | ------------------------------------------------------------------------- |
+|-----------------|---------------------------------------------------------------------------|
 | `==`            | Left is equal in type and value to right (note `1` is not equal to `'1'`) |
 | `!=`            | Left is not equal to right                                                |
 | `<`             | Left is less than right                                                   |
@@ -92,10 +90,10 @@ where `@` represents the current item being processed.
 | `size`          | Size of left (array or string) matches right                              |
 | `empty`         | Left (array or string) is empty                                           |
 
-
 ## Examples
 
 Using this record as an example:
+
 ```json
 {
     "store": {
@@ -136,9 +134,8 @@ Using this record as an example:
 }
 ```
 
-
 | JSON Path (click link to test)                                                                                 | Result                                                       |
-| -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
+|----------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------|
 | [$.store.book[*].author](http://jsonpath.herokuapp.com/?path=$.store.book[*].author)                           | The authors of all books                                     |
 | [$..author](http://jsonpath.herokuapp.com/?path=$..author)                                                     | All authors                                                  |
 | [$.store.*](http://jsonpath.herokuapp.com/?path=$.store.*)                                                     | All things, both books and bicycles                          |

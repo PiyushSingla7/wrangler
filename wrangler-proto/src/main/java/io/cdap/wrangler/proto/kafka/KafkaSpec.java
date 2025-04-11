@@ -21,14 +21,14 @@ import io.cdap.wrangler.proto.PluginSpec;
 
 /**
  * Plugin specification for a Kafka pipeline source.
- *
+ * <p>
  * TODO: clean up this API. There is no reason for this class to exist.
  */
 public class KafkaSpec {
-  @SerializedName("Kafka")
-  private final PluginSpec spec;
+    @SerializedName("Kafka")
+    private final PluginSpec spec;
 
-  public KafkaSpec(PluginSpec spec) {
-    this.spec = spec;
-  }
+    public KafkaSpec(PluginSpec spec) {
+        this.spec = spec;
+    }
 }

@@ -20,9 +20,9 @@ package io.cdap.wrangler.service.spanner;
  * Spanner instance information
  */
 public class SpannerInstance {
-  private final String name;
+    private final String name;
 
-  SpannerInstance(String name) {
-    this.name = name;
-  }
+    SpannerInstance(String name) {
+        this.name = name;
+    }
 }

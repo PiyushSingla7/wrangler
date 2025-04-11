@@ -28,43 +28,43 @@ import java.util.List;
 
 public class CurrentDateTimeTest {
 
-  @Test
-  public void testDefaultZone() throws Exception {
-    String colName = "col1";
-    String[] directives = new String[]{
-      String.format("%s :%s", CurrentDateTime.NAME, colName)
-    };
-    Row row1 = new Row();
-    row1.add(colName, null);
-    List<Row> result = TestingRig.execute(directives, Collections.singletonList(row1));
-    Assert.assertTrue(result.get(0).getValue(colName) instanceof LocalDateTime);
-  }
+    @Test
+    public void testDefaultZone() throws Exception {
+        String colName = "col1";
+        String[] directives = new String[]{
+                String.format("%s :%s", CurrentDateTime.NAME, colName)
+        };
+        Row row1 = new Row();
+        row1.add(colName, null);
+        List<Row> result = TestingRig.execute(directives, Collections.singletonList(row1));
+        Assert.assertTrue(result.get(0).getValue(colName) instanceof LocalDateTime);
+    }
 
-  @Test
-  public void testAddColumn() throws Exception {
-    String colName = "col1";
-    String[] directives = new String[]{
-      String.format("%s :%s", CurrentDateTime.NAME, colName)
-    };
-    //Skip column - it should be automatically added
-    Row row1 = new Row();
-    Row row2 = new Row();
-    List<Row> result = TestingRig.execute(directives, Arrays.asList(row1, row2));
-    Row resultRow1 = result.get(0);
-    Assert.assertEquals(1, resultRow1.width());
-    Assert.assertTrue(resultRow1.getValue(colName) instanceof LocalDateTime);
-    Row resultRow2 = result.get(1);
-    Assert.assertEquals(1, resultRow2.width());
-    Assert.assertTrue(resultRow2.getValue(colName) instanceof LocalDateTime);
-  }
+    @Test
+    public void testAddColumn() throws Exception {
+        String colName = "col1";
+        String[] directives = new String[]{
+                String.format("%s :%s", CurrentDateTime.NAME, colName)
+        };
+        //Skip column - it should be automatically added
+        Row row1 = new Row();
+        Row row2 = new Row();
+        List<Row> result = TestingRig.execute(directives, Arrays.asList(row1, row2));
+        Row resultRow1 = result.get(0);
+        Assert.assertEquals(1, resultRow1.width());
+        Assert.assertTrue(resultRow1.getValue(colName) instanceof LocalDateTime);
+        Row resultRow2 = result.get(1);
+        Assert.assertEquals(1, resultRow2.width());
+        Assert.assertTrue(resultRow2.getValue(colName) instanceof LocalDateTime);
+    }
 
-  @Test(expected = RecipeException.class)
-  public void testInvalidZone() throws Exception {
-    String zone = "abcd";
-    String colName = "col1";
-    String[] directives = new String[]{String.format("%s :%s '%s'", CurrentDateTime.NAME, colName, zone)};
-    Row row1 = new Row();
-    row1.add(colName, null);
-    TestingRig.execute(directives, Collections.singletonList(row1));
-  }
+    @Test(expected = RecipeException.class)
+    public void testInvalidZone() throws Exception {
+        String zone = "abcd";
+        String colName = "col1";
+        String[] directives = new String[]{String.format("%s :%s '%s'", CurrentDateTime.NAME, colName, zone)};
+        Row row1 = new Row();
+        row1.add(colName, null);
+        TestingRig.execute(directives, Collections.singletonList(row1));
+    }
 }

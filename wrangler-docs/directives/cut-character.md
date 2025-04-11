@@ -3,14 +3,13 @@
 The CUT-CHARACTER directive selects parts of a string value, accepting standard [cut
 options](http://man7.org/linux/man-pages/man1/cut.1.html).
 
-
 ## Syntax
+
 ```
 cut-character <source> <destination> <type> <range|indexes>
 ```
 
 The `<type> <range|indexes>` are the standard [cut options](http://man7.org/linux/man-pages/man1/cut.1.html).
-
 
 ## Usage Notes
 
@@ -22,10 +21,10 @@ Each range is prefaced with a type (`-b` byte, `-c` character, `-f` field) and w
 * `N-M` From the N'th to M'th (included) byte, character, or field
 * `-M ` From the first to M'th (included) byte, character, or field
 
-
 ## Example
 
 Using this record as an example:
+
 ```
 {
   "body": "one two three four five six seven eight"
@@ -33,6 +32,7 @@ Using this record as an example:
 ```
 
 Applying these directives:
+
 ```
 cut-character body one -c 1-3
 cut-character body two -c 5-7
@@ -44,6 +44,7 @@ cut-character body seven -c 1,2,3-5
 ```
 
 would result in this record:
+
 ```
 {
   "body": "one two three four five six seven eight",

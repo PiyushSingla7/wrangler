@@ -30,31 +30,31 @@ import java.util.List;
  */
 @PublicEvolving
 public class NumericList implements Token {
-  private final List<LazyNumber> values;
+    private final List<LazyNumber> values;
 
-  public NumericList(List<LazyNumber> values) {
-    this.values = values;
-  }
-
-  @Override
-  public List<LazyNumber> value() {
-    return values;
-  }
-
-  @Override
-  public TokenType type() {
-    return TokenType.NUMERIC_LIST;
-  }
-
-  @Override
-  public JsonElement toJson() {
-    JsonObject object = new JsonObject();
-    object.addProperty("type", TokenType.NUMERIC_LIST.name());
-    JsonArray array = new JsonArray();
-    for (LazyNumber value : values) {
-      array.add(new JsonPrimitive(value));
+    public NumericList(List<LazyNumber> values) {
+        this.values = values;
     }
-    object.add("value", array);
-    return object;
-  }
+
+    @Override
+    public List<LazyNumber> value() {
+        return values;
+    }
+
+    @Override
+    public TokenType type() {
+        return TokenType.NUMERIC_LIST;
+    }
+
+    @Override
+    public JsonElement toJson() {
+        JsonObject object = new JsonObject();
+        object.addProperty("type", TokenType.NUMERIC_LIST.name());
+        JsonArray array = new JsonArray();
+        for (LazyNumber value : values) {
+            array.add(new JsonPrimitive(value));
+        }
+        object.add("value", array);
+        return object;
+    }
 }

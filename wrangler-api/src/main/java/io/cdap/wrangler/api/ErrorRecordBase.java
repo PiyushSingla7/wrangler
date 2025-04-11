@@ -16,43 +16,41 @@
 
 package io.cdap.wrangler.api;
 
-import java.util.List;
-
 /**
  * Base class for error record that includes the critical fields.
  */
 public class ErrorRecordBase {
 
-  // Message as to why the row errored.
-  protected final String message;
-  // Code associated with the message.
-  protected final int code;
-  protected final boolean showInWrangler;
+    // Message as to why the row errored.
+    protected final String message;
+    // Code associated with the message.
+    protected final int code;
+    protected final boolean showInWrangler;
 
-  public ErrorRecordBase(String message, int code, boolean showInWrangler) {
-    this.message = message;
-    this.code = code;
-    this.showInWrangler = showInWrangler;
-  }
+    public ErrorRecordBase(String message, int code, boolean showInWrangler) {
+        this.message = message;
+        this.code = code;
+        this.showInWrangler = showInWrangler;
+    }
 
-  /**
-   * @return Message associated with the {@link Row}.
-   */
-  public String getMessage() {
-    return message;
-  }
+    /**
+     * @return Message associated with the {@link Row}.
+     */
+    public String getMessage() {
+        return message;
+    }
 
-  /**
-   * @return Code associated with the error.
-   */
-  public int getCode() {
-    return code;
-  }
+    /**
+     * @return Code associated with the error.
+     */
+    public int getCode() {
+        return code;
+    }
 
-  /**
-   * @return Flag indicating whether this record should prevent further wrangling.
-   */
-  public boolean isShownInWrangler() {
-    return showInWrangler;
-  }
+    /**
+     * @return Flag indicating whether this record should prevent further wrangling.
+     */
+    public boolean isShownInWrangler() {
+        return showInWrangler;
+    }
 }

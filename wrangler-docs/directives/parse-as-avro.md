@@ -5,6 +5,7 @@ records or file. This directive requires the registration of schema to be
 decoded with [Schema Registry](../service/schema-registry.md)
 
 ## Syntax
+
 ```
 parse-as-avro <column> <schema-id> <json|binary> [<version>]
 ```

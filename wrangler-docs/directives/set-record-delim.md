@@ -2,8 +2,8 @@
 
 The SET-RECORD-DELIM directive sets the record delimiter.
 
-
 ## Syntax
+
 ```
  set-record-delim <column> <delimiter> [<limit>]
 ```

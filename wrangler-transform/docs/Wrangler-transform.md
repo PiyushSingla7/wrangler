@@ -7,13 +7,13 @@ plugin.
 ## Plugin Configuration
 
 | Configuration         | Required | Default | Description                                                           |
-|-----------------------| :------: |:-------:|-----------------------------------------------------------------------|
-| Input Field           | No       |   `*`   | The name of the input field (or `*` for all fields)                   |
-| Precondition Language | No       | `JEXL`  | This is a language selector for preconditions (SQL/JEXL)              |
-| Precondition (JEXL)   | No       | `false` | A JEXL filter to be applied before a record is passed to data prep    |
-| Precondition (SQL)    | No       | `false` | A SQL filter to be applied before a record is passed to data prep     |
-| Directives            | Yes      |   n/a   | The series of data prep directives to be applied on the input records |
-| Failure Threshold     | No       |   `1`   | Maximum number of errors tolerated before exiting pipeline processing |
+|-----------------------|:--------:|:-------:|-----------------------------------------------------------------------|
+| Input Field           |    No    |   `*`   | The name of the input field (or `*` for all fields)                   |
+| Precondition Language |    No    | `JEXL`  | This is a language selector for preconditions (SQL/JEXL)              |
+| Precondition (JEXL)   |    No    | `false` | A JEXL filter to be applied before a record is passed to data prep    |
+| Precondition (SQL)    |    No    | `false` | A SQL filter to be applied before a record is passed to data prep     |
+| Directives            |   Yes    |   n/a   | The series of data prep directives to be applied on the input records |
+| Failure Threshold     |    No    |   `1`   | Maximum number of errors tolerated before exiting pipeline processing |
 
 ## Directives
 

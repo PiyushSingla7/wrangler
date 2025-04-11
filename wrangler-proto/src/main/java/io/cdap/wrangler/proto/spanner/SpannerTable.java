@@ -20,9 +20,9 @@ package io.cdap.wrangler.proto.spanner;
  * Spanner table information
  */
 public class SpannerTable {
-  private final String name;
+    private final String name;
 
-  public SpannerTable(String name) {
-    this.name = name;
-  }
+    public SpannerTable(String name) {
+        this.name = name;
+    }
 }

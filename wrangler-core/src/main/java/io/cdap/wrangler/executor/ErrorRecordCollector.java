@@ -27,40 +27,40 @@ import java.util.List;
  */
 @Public
 public final class ErrorRecordCollector {
-  // Array of records that are erroed.
-  private final List<ErrorRecord> errors;
+    // Array of records that are erroed.
+    private final List<ErrorRecord> errors;
 
-  public ErrorRecordCollector() {
-    errors = new ArrayList<>();
-  }
+    public ErrorRecordCollector() {
+        errors = new ArrayList<>();
+    }
 
-  /**
-   * @return Size of the errored list.
-   */
-  public int size() {
-    return errors.size();
-  }
+    /**
+     * @return Size of the errored list.
+     */
+    public int size() {
+        return errors.size();
+    }
 
-  /**
-   * Resets the error list.
-   */
-  public void reset() {
-    errors.clear();
-  }
+    /**
+     * Resets the error list.
+     */
+    public void reset() {
+        errors.clear();
+    }
 
-  /**
-   * Adds a {@link ErrorRecord} to the error collector.
-   *
-   * @param record
-   */
-  public void add(ErrorRecord record) {
-    errors.add(record);
-  }
+    /**
+     * Adds a {@link ErrorRecord} to the error collector.
+     *
+     * @param record
+     */
+    public void add(ErrorRecord record) {
+        errors.add(record);
+    }
 
-  /**
-   * @return List of errors.
-   */
-  public List<ErrorRecord> get() {
-    return errors;
-  }
+    /**
+     * @return List of errors.
+     */
+    public List<ErrorRecord> get() {
+        return errors;
+    }
 }
